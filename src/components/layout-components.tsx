@@ -12,11 +12,16 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 
 	useEffect(() => {
-		localStorage.setItem(lsKeyName, JSON.stringify(isDarkTheme));
+		doesWindowExist() && localStorage.setItem(lsKeyName, JSON.stringify(isDarkTheme));
 	}, [isDarkTheme]);
 
+	// Check if the window exists so that we do not run browser code on the server
+	function doesWindowExist(): boolean {
+		return typeof window !== 'undefined';
+	}
+
 	function getIsDarkMode() {
-		const loadedVal = localStorage.getItem(lsKeyName);
+		const loadedVal = doesWindowExist() && localStorage.getItem(lsKeyName);
 
 		return loadedVal ? JSON.parse(loadedVal) : false;
 	}
