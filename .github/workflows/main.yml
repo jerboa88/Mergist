@@ -37,5 +37,5 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
           # github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_token: ${{ secrets.MERGIST_DEPLOY_PAT }}
+          personal_token: ${{ secrets.MERGIST_DEPLOY_PAT }}
           publish_dir: ./public
