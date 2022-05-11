@@ -39,3 +39,4 @@ jobs:
           # github_token: ${{ secrets.GITHUB_TOKEN }}
           personal_token: ${{ secrets.MERGIST_DEPLOY_PAT }}
           publish_dir: ./public
+          cname: mergist.johng.io
