@@ -21,7 +21,7 @@ export function DropzoneWrapper(props: { className: string; children: ReactNode;
 	return (
 		<label className={`cursor-pointer ${props.className}`}>
 			{props.children}
-			<input type="file" className="hidden" onChange={handleAddFiles} multiple />
+			<input className="hidden" type="file" accept="application/pdf" onChange={handleAddFiles} multiple />
 		</label>
 	);
 }
