@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactNode } from 'react';
+import React, { ChangeEvent, ReactNode, useRef, useState, MouseEvent, useCallback, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -32,7 +32,7 @@ DropzoneWrapper.defaultProps = {
 
 
 // A large dropzone component. Accepts a callback function that fires when a file is dropped
-export function LargeDropzone(props: { className: string; onFilesAdded: (files: FileList) => void; }) {
+export function LargeDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
 	return (
 		<DropzoneWrapper className="flex flex-col flex-1" onFilesAdded={props.onFilesAdded}>
 			<div className="flex flex-col justify-center flex-1 m-8 p-8 gap-8 text-center z-20 bg-base-100 hover:bg-base-200 border-2 border-dashed rounded-lg transition-color duration-200">
@@ -43,6 +43,76 @@ export function LargeDropzone(props: { className: string; onFilesAdded: (files: 
 	);
 }
 
-LargeDropzone.defaultProps = {
-	className: ''
-};
+
+// A full screen dropzone component. Accepts a callback function that fires when a file is dropped
+// https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
+export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
+	const [isDragging, setIsDragging] = useState(false);
+
+	const dragCounter = useRef(0);
+
+
+	// Prevent propagation of default events
+	function blockDefaultEvent(event: MouseEvent<HTMLDivElement, MouseEvent>) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
+
+	const handleDrag = useCallback((event) => {
+		blockDefaultEvent(event);
+	}, []);
+
+	const handleDragIn = useCallback((event) => {
+		blockDefaultEvent(event);
+
+		dragCounter.current++;
+
+		if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
+			setIsDragging(true);
+		}
+	}, []);
+
+	const handleDragOut = useCallback((event) => {
+		blockDefaultEvent(event);
+
+		dragCounter.current--;
+
+		if (dragCounter.current > 0) {
+			return;
+		}
+
+		setIsDragging(false);
+	}, []);
+
+	const handleDrop = useCallback((event) => {
+		blockDefaultEvent(event);
+		setIsDragging(false);
+
+		if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+			dragCounter.current = 0;
+
+			props.onFilesAdded(event.dataTransfer.files);
+			event.dataTransfer.clearData();
+		}
+	}, [props.onFilesAdded]);
+
+
+	useEffect(() => {
+		window.addEventListener('dragenter', handleDragIn);
+		window.addEventListener('dragleave', handleDragOut);
+		window.addEventListener('dragover', handleDrag);
+		window.addEventListener('drop', handleDrop);
+
+		return () => {
+			window.removeEventListener('dragenter', handleDragIn);
+			window.removeEventListener('dragleave', handleDragOut);
+			window.removeEventListener('dragover', handleDrag);
+			window.removeEventListener('drop', handleDrop);
+		};
+	});
+
+
+	return (
+		<div className={`fixed inset-0 flex flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />
+	);
+}

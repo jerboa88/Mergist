@@ -10,7 +10,7 @@ import config from '../../gatsby-config';
 import { PDFFileMapInterface } from '../common/types';
 import { loadMetadata, PDFManager, StatusMsg } from '../common/utilities';
 import { Main, PageLayout, Section } from '../components/layout-components';
-import { LargeDropzone } from '../components/dropzone-components';
+import { FullPageDropzone, LargeDropzone } from '../components/dropzone-components';
 import SortableItem from '../components/sortable-item';
 import Alert from '../components/alert';
 import MergeButton from '../components/merge-button';
@@ -23,74 +23,12 @@ export default function IndexPage() {
   const [fileIds, setFileIds] = useState<string[]>([]);
   const [files, setFiles] = useState<PDFFileMapInterface>({});
   const [statusMsgs, setStatusMsgs] = useState<StatusMsg[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
   const [mergedPdfUrl, setMergedPdfUrl] = useState<string>('');
   const [currentProgress, setCurrentProgress] = useState<number>(0);
 
-  const dragCounter = useRef(0);
   const metadata = loadMetadata(config);
   const pdfManager = new PDFManager(metadata.shortTitle, metadata.siteUrl);
 
-
-  // Prevent propagation of default events
-  function blockDefaultEvent(event: MouseEvent<HTMLDivElement, MouseEvent>) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  // Fullscreen drag and drop implementation
-  // https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
-  const handleDrag = useCallback((event) => {
-    blockDefaultEvent(event);
-  }, []);
-
-  const handleDragIn = useCallback((event) => {
-    blockDefaultEvent(event);
-
-    dragCounter.current++;
-
-    if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-      setIsDragging(true);
-    }
-  }, []);
-
-  const handleDragOut = useCallback((event) => {
-    blockDefaultEvent(event);
-
-    dragCounter.current--;
-
-    if (dragCounter.current > 0) {
-      return;
-    }
-
-    setIsDragging(false);
-  }, []);
-
-  const handleDrop = useCallback((event) => {
-    blockDefaultEvent(event);
-    setIsDragging(false);
-
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      dragCounter.current = 0;
-
-      handleAddFiles(event.dataTransfer.files);
-      event.dataTransfer.clearData();
-    }
-  }, [fileIds, files]);
-
-  useEffect(() => {
-    window.addEventListener('dragenter', handleDragIn);
-    window.addEventListener('dragleave', handleDragOut);
-    window.addEventListener('dragover', handleDrag);
-    window.addEventListener('drop', handleDrop);
-
-    return () => {
-      window.removeEventListener('dragenter', handleDragIn);
-      window.removeEventListener('dragleave', handleDragOut);
-      window.removeEventListener('dragover', handleDrag);
-      window.removeEventListener('drop', handleDrop);
-    };
-  });
 
   // Update the list of files and fileIds, resetting progress and the download URL
   function updateState(newFileIds: string[], newFiles: PDFFileMapInterface | null = null) {
@@ -106,19 +44,25 @@ export default function IndexPage() {
     setMergedPdfUrl('');
   }
 
-  function handleAddFiles(inputFiles: FileList) {
+  const handleAddFiles = useCallback((inputFiles: FileList) => {
     const [validFileList, statusMsgList] = pdfManager.filterInvalidFiles(files, Array.from(inputFiles));
-    const tempFileMap = files;
-    const newFileIds = [] as string[];
 
-    for (const file of validFileList) {
-      newFileIds.push(file.id);
-      tempFileMap[file.id] = file;
+    if (validFileList.length > 0) {
+      const tempFileMap = files;
+      const newFileIds = [] as string[];
+
+      for (const file of validFileList) {
+        newFileIds.push(file.id);
+        tempFileMap[file.id] = file;
+      }
+
+      updateState(fileIds.concat(newFileIds), tempFileMap);
     }
 
-    updateState(fileIds.concat(newFileIds), tempFileMap);
-    setStatusMsgs(statusMsgList);
-  }
+    if (statusMsgList.length > 0) {
+      setStatusMsgs(statusMsgList);
+    }
+  }, [fileIds, files]);
 
   // Handle clicks on merge button
   async function handleMerge() {
@@ -159,7 +103,7 @@ export default function IndexPage() {
       </Header>
 
       <Main>
-        <div className={`fixed inset-0 flex flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />
+        <FullPageDropzone onFilesAdded={handleAddFiles} />
 
         <Section visible={statusMsgs.length > 0} className="gap-5">
           {statusMsgs.map(statusMsg => <Alert key={statusMsg.getId} statusMsg={statusMsg} />)}
@@ -167,7 +111,7 @@ export default function IndexPage() {
 
         <div tabIndex={0} className="collapse collapse-open flex-1 bg-base-100 border border-base-300 rounded-box">
           <Section visible={fileIds.length === 0} className="flex-1">
-            <LargeDropzone className='bg-base-100' onFilesAdded={handleAddFiles} />
+            <LargeDropzone onFilesAdded={handleAddFiles} />
           </Section>
 
           <Section visible={fileIds.length > 0}>
