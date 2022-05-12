@@ -8,7 +8,12 @@ module.exports = {
 		'./src/**/*.{js,jsx,ts,tsx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				// Default font for headings (ie. page title)
+				'heading': ['Luckiest Guy', 'Impact', 'Arial Black', 'Arial', 'sans-serif'],
+			}
+		}
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
@@ -30,5 +35,5 @@ module.exports = {
 			},
 		],
 		darkTheme: 'dark'
-	}
+	},
 };

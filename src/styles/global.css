@@ -1,4 +1,8 @@
-/* Inject Tailwind base styles */
+/* Tailwind base styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Other styles */
+@import '@fortawesome/fontawesome-svg-core/styles';
+@import './fonts/luckiest-guy.css';
