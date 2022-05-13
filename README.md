@@ -1,11 +1,12 @@
 <!-- Project Header -->
 <div align="center">
-  <img class="projectLogo" src="src/images/og-image.png" alt="Project logo" title="Project logo" width="256">
 	<h1 class="projectName">
-    <a href="https://mergist.johng.io">
-      Mergist - Online PDF Merger
-    </a>
+
   </h1>
+
+  <a href="https://johng.io" title="Mergist - Online PDF Merger">
+    <img class="projectLogo" src="src/images/text-logo.png" alt="Project logo" title="Project logo" width="256">
+  </a>
 
   <p class="projectBadges">
     <img src="https://img.shields.io/badge/type-Web_App-ff5722.svg" alt="Project type" title="Project type">
