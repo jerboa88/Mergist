@@ -38,12 +38,7 @@ You can either run the app in development mode with `gatsby develop` or use `gat
 
 
 ## Contributing
-Please feel free to create an issue or pull request if you encounter any issues. By contributing you agree to release your work under the same license as this project.
-
-**More implementation details:**
-- Typescript only
-- DaisyUI component classes are used to style most components, with Tailwind CSS (via PostCSS) used for additional styling
-- Deployment is done using a custom GitHub Actions workflow which builds the app using Gatsby and commits it to the `gh-pages` branch where it is published by GitHub
+This a personal project but feel free to create an issue if you encounter any problems with the site. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 
 ## License
