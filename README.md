@@ -28,22 +28,19 @@
 ## Installation
 1. Install Node.js and NPM if they are not already set up on your system. See [nodejs.org](https://nodejs.org/) for more details.
 2. Clone the repo and enter the project root with `cd Mergist`.
-3. Use `npm install` to install the app and all of it's dependencies.
+3. Use `npm install` to install the app and all of its dependencies.
 
 
 ## Usage
-Mergist is a static site built using the Gatsby framework. The Gatsby CLI should already be installed after running the install command above.
+Mergist is a static site built using the Gatsby framework. The Gatsby CLI should already be installed after running the install command above. There are two options to serve the site:
+1. Use `gatsby develop` to run the app in development mode. This will automatically reload the page when changes are made. The site should be visible at [localhost:8000](https://localhost:8000) by default
+2. Use `gatsby build` to generate a production build of the app, then use `gatsby serve` to serve it. The site should be visible at [localhost:9000](https://localhost:9000) by default
 
-You can either run the app in development mode with `gatsby develop` or use `gatsby serve` to preview the production build. After the build completes, the site should be accessible at `http://localhost:8000/`.
+Additional commands and options are available. See the [Gatsby CLI docs](https://www.gatsbyjs.com/docs/reference/gatsby-cli/) for more details.
 
 
 ## Contributing
-Please feel free to create an issue or pull request if you encounter any issues. By contributing you agree to release your work under the same license as this project.
-
-**More implementation details:**
-- Typescript only
-- DaisyUI component classes are used to style most components, with Tailwind CSS (via PostCSS) used for additional styling
-- Deployment is done using a custom GitHub Actions workflow which builds the app using Gatsby and commits it to the `gh-pages` branch where it is published by GitHub
+This a personal project but feel free to create an issue if you encounter any problems with the site. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 
 ## License
