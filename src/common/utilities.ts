@@ -145,7 +145,7 @@ export class PDFManager {
 	}
 
 
-	// Combine multiple PDF files into a single one
+	// Combine multiple PDF files into a single one using PDF-LIB
 	// https://stackoverflow.com/a/65555135/1378560
 	public async createMergedFile(existingFileMap: PDFFileMapInterface, fileIds: string[], onProgress: (progress: number) => void): Promise<[string, StatusMsg[]]> {
 		try {

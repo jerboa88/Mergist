@@ -3,7 +3,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faEarthAmericas, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from '../components/layout-components';
 import AboutModal from '../components/about-modal';
-import { IconButtonLink } from '../components/buttons';
+import { IconButtonLink } from '../components/button-components';
 import ThemeToggle from '../components/theme-toggle';
 
 
@@ -20,18 +20,18 @@ export default function Footer(props: { className: string; author: string; githu
 					<ThemeToggle />
 
 					<div className="flex flex-row w-full justify-between">
-						<IconButtonLink href={props.githubUrl} icon={faGithub} className="flex-none flex-nowrap">
+						<IconButtonLink href={props.githubUrl} icon={faGithub}>
 							GitHub
 						</IconButtonLink>
-						<IconButtonLink href={props.homepageUrl} icon={faEarthAmericas} className="flex-none flex-nowrap">
+						<IconButtonLink href={props.homepageUrl} icon={faEarthAmericas}>
 							{props.homepageLabel}
 						</IconButtonLink>
-						<IconButtonLink href={`#${modalId}`} icon={faCircleQuestion} className="flex-none flex-nowrap">
+						<IconButtonLink href={`#${modalId}`} icon={faCircleQuestion}>
 							About
 						</IconButtonLink>
 					</div>
-				</SingleColumnLayout>
-			</footer>
+				</SingleColumnLayout >
+			</footer >
 		</>
 	);
 }

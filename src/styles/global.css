@@ -6,3 +6,26 @@
 /* Other styles */
 @import '@fortawesome/fontawesome-svg-core/styles';
 @import './fonts/luckiest-guy.css';
+
+/* Override disabled button styles since DaisyUI insists on making disabled buttons gray */
+.btn[disabled] {
+	opacity: 0.4;
+}
+
+.btn-primary[disabled] {
+	border-color: hsl(var(--p));
+	background-color: hsl(var(--p));
+	color: hsl(var(--pc));
+}
+
+.btn-secondary[disabled] {
+	border-color: hsl(var(--s));
+	background-color: hsl(var(--s));
+	color: hsl(var(--sc));
+}
+
+.btn-accent[disabled] {
+	border-color: hsl(var(--a));
+	background-color: hsl(var(--a));
+	color: hsl(var(--ac));
+}

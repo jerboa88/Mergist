@@ -13,8 +13,7 @@ import { Main, PageLayout, Section } from '../components/layout-components';
 import { FullPageDropzone, LargeDropzone } from '../components/dropzone-components';
 import SortableItem from '../components/sortable-item';
 import Alert from '../components/alert';
-import MergeButton from '../components/merge-button';
-import { AddFilesButton } from '../components/buttons';
+import { ActionButton, AddFilesButton, RemoveFilesButton } from '../components/button-components';
 import Footer from '../components/footer';
 import Header from '../components/header';
 
@@ -30,6 +29,11 @@ export default function IndexPage() {
   const pdfManager = new PDFManager(metadata.shortTitle, metadata.siteUrl);
 
 
+  function resetProgress() {
+    setCurrentProgress(0);
+    setMergedPdfUrl('');
+  }
+
   // Update the list of files and fileIds, resetting progress and the download URL
   function updateState(newFileIds: string[], newFiles: PDFFileMapInterface | null = null) {
     pdfManager.removeMergedFile(mergedPdfUrl);
@@ -40,8 +44,7 @@ export default function IndexPage() {
     }
 
     setFileIds(newFileIds);
-    setCurrentProgress(0);
-    setMergedPdfUrl('');
+    resetProgress();
   }
 
   const handleAddFiles = useCallback((inputFiles: FileList) => {
@@ -67,6 +70,11 @@ export default function IndexPage() {
   // Handle clicks on merge button
   async function handleMerge() {
     const [downloadUrl, statusMsgList] = await pdfManager.createMergedFile(files, fileIds, setCurrentProgress);
+
+    // Reset progress if there were any critical errors
+    if (downloadUrl === '') {
+      resetProgress();
+    }
 
     setMergedPdfUrl(downloadUrl);
     setStatusMsgs(statusMsgList);
@@ -106,7 +114,9 @@ export default function IndexPage() {
         <FullPageDropzone onFilesAdded={handleAddFiles} />
 
         <Section visible={statusMsgs.length > 0} className="gap-5">
-          {statusMsgs.map(statusMsg => <Alert key={statusMsg.getId} statusMsg={statusMsg} />)}
+          {statusMsgs.map(statusMsg => (
+            <Alert key={statusMsg.getId} statusMsg={statusMsg} />
+          ))}
         </Section>
 
         <div tabIndex={0} className="collapse collapse-open flex-1 bg-base-100 border border-base-300 rounded-box">
@@ -118,11 +128,8 @@ export default function IndexPage() {
             <div className="flex flex-row justify-between items-center p-6 collapse-title text-lg font-medium">
               <h5 className="pl-4">{fileIds.length} file{fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})</h5>
               <div className="flex flex-row gap-2">
-                <AddFilesButton onFilesAdded={handleAddFiles} />
-                <button className="btn btn-primary gap-2" onClick={handleRemoveAllFiles}>
-                  <FontAwesomeIcon icon={faTrash} />
-                  Remove All
-                </button>
+                <AddFilesButton onClick={handleAddFiles} />
+                <RemoveFilesButton onClick={handleRemoveAllFiles} />
               </div>
             </div>
 
@@ -136,7 +143,7 @@ export default function IndexPage() {
 
         <Section visible={fileIds.length > 0}>
           <div className="flex flex-row justify-center gap-8">
-            <MergeButton numOfFiles={fileIds.length} progress={currentProgress} downloadUrl={mergedPdfUrl} onClick={handleMerge} />
+            <ActionButton numOfFiles={fileIds.length} progress={currentProgress} downloadUrl={mergedPdfUrl} onClick={handleMerge} />
           </div>
         </Section>
       </Main>
