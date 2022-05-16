@@ -1,13 +1,13 @@
 import React, { ChangeEvent, ReactNode, useRef, useState, MouseEvent, useCallback, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { ignoreDefault } from '../common/utilities';
 
 
 // Enables dropzone functionality for a child component. Accepts a callback function that fires when a file is dropped
 export function DropzoneWrapper(props: { className: string; children: ReactNode; onFilesAdded: (files: FileList) => void; }) {
 	function handleAddFiles(event: ChangeEvent<HTMLInputElement>) {
-		event.preventDefault();
-		event.stopPropagation();
+		ignoreDefault(event);
 
 		const files = event.target.files;
 

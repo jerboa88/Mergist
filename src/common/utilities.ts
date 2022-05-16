@@ -1,7 +1,7 @@
 // Common methods used in the project
+import { createContext, SyntheticEvent } from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
-import { createContext } from 'react';
 import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from './types';
 
 
@@ -16,6 +16,12 @@ export const ThemeContext = createContext({
 export function loadMetadata(config: GatsbyConfig): MetadataInterface {
 	// Cast to match expected return type. siteMetadata type is enforced in gatsby-config.js
 	return config.siteMetadata as MetadataInterface;
+}
+
+// Stop default behavior for mouse events
+export function ignoreDefault(event: SyntheticEvent<HTMLElement>): void {
+	event.preventDefault();
+	event.stopPropagation();
 }
 
 

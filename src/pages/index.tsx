@@ -1,9 +1,5 @@
 // External deps
-import React, { useState, useEffect, useRef, MouseEvent, useCallback } from 'react';
-import { Reorder } from 'framer-motion';
-import prettyBytes from 'pretty-bytes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useCallback } from 'react';
 
 // Local deps
 import config from '../../gatsby-config';
@@ -11,11 +7,11 @@ import { PDFFileMapInterface } from '../common/types';
 import { loadMetadata, PDFManager, StatusMsg } from '../common/utilities';
 import { Main, PageLayout, Section } from '../components/layout-components';
 import { FullPageDropzone, LargeDropzone } from '../components/dropzone-components';
-import SortableItem from '../components/sortable-item';
 import Alert from '../components/alert';
-import { ActionButton, AddFilesButton, RemoveFilesButton } from '../components/button-components';
+import { ActionButton } from '../components/button-components';
 import Footer from '../components/footer';
 import Header from '../components/header';
+import SortableFileList from '../components/sortable-file-list';
 
 
 export default function IndexPage() {
@@ -29,11 +25,6 @@ export default function IndexPage() {
   const pdfManager = new PDFManager(metadata.shortTitle, metadata.siteUrl);
 
 
-  function resetProgress() {
-    setCurrentProgress(0);
-    setMergedPdfUrl('');
-  }
-
   // Update the list of files and fileIds, resetting progress and the download URL
   function updateState(newFileIds: string[], newFiles: PDFFileMapInterface | null = null) {
     pdfManager.removeMergedFile(mergedPdfUrl);
@@ -44,7 +35,8 @@ export default function IndexPage() {
     }
 
     setFileIds(newFileIds);
-    resetProgress();
+    setCurrentProgress(0);
+    setMergedPdfUrl('');
   }
 
   const handleAddFiles = useCallback((inputFiles: FileList) => {
@@ -67,23 +59,6 @@ export default function IndexPage() {
     }
   }, [fileIds, files]);
 
-  // Handle clicks on merge button
-  async function handleMerge() {
-    const [downloadUrl, statusMsgList] = await pdfManager.createMergedFile(files, fileIds, setCurrentProgress);
-
-    // Reset progress if there were any critical errors
-    if (downloadUrl === '') {
-      resetProgress();
-    }
-
-    setMergedPdfUrl(downloadUrl);
-    setStatusMsgs(statusMsgList);
-  }
-
-  function handleReorderFiles(fileIds: string[]): void {
-    updateState(fileIds);
-  }
-
   // Remove a single file from the list given its id
   function handleRemoveFile(id: string) {
     const newFiles = files;
@@ -99,8 +74,22 @@ export default function IndexPage() {
     updateState([], {});
   }
 
-  function getEstimatedFileSize() {
-    return prettyBytes(Object.values(files).reduce((partialSum, pdfFile) => partialSum + pdfFile.getSize, 0));
+  function handleReorderFiles(fileIds: string[]): void {
+    updateState(fileIds);
+  }
+
+  // Handle clicks on merge button
+  async function handleMerge() {
+    const [downloadUrl, statusMsgList] = await pdfManager.createMergedFile(files, fileIds, setCurrentProgress);
+
+    // Reset progress if there were any critical errors
+    if (downloadUrl === '') {
+      setMergedPdfUrl('');
+    }
+
+    setMergedPdfUrl(downloadUrl);
+    setStatusMsgs(statusMsgList);
+    setCurrentProgress(0);
   }
 
 
@@ -125,19 +114,7 @@ export default function IndexPage() {
           </Section>
 
           <Section visible={fileIds.length > 0}>
-            <div className="flex flex-row justify-between items-center p-6 collapse-title text-lg font-medium">
-              <h5 className="pl-4">{fileIds.length} file{fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})</h5>
-              <div className="flex flex-row gap-2">
-                <AddFilesButton onClick={handleAddFiles} />
-                <RemoveFilesButton onClick={handleRemoveAllFiles} />
-              </div>
-            </div>
-
-            <Reorder.Group axis="y" values={fileIds} onReorder={handleReorderFiles} className="flex flex-col px-6 py-7 gap-5 bg-base-300 shadow-inner">
-              {fileIds.map((fileId) => (
-                <SortableItem key={fileId} id={fileId} name={files[fileId].getName} size={files[fileId].getSize} onRemove={handleRemoveFile} />
-              ))}
-            </Reorder.Group>
+            <SortableFileList fileIds={fileIds} files={files} onReorder={handleReorderFiles} onFileAdded={handleAddFiles} onFileRemoved={handleRemoveFile} onAllFilesRemoved={handleRemoveAllFiles} disabled={currentProgress > 0} />
           </Section>
         </div>
 
