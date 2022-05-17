@@ -27,7 +27,6 @@ export type MetadataInterface = {
 	author: string;
 	siteUrl: string;
 	githubUrl: string;
-	homepageUrl: string;
 	homepageDomain: string;
 	lightTheme: DaisyUiThemeInterface;
 	darkTheme: DaisyUiThemeInterface;

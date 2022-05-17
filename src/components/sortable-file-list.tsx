@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
+import { defaultTransition, ignoreDefault } from '../common/utilities';
 import { PDFFileMapInterface } from '../common/types';
 import { AddFilesButton, RemoveFilesButton } from '../components/button-components';
-import { ignoreDefault } from '../common/utilities';
 
 
 // Base components
@@ -45,14 +45,7 @@ function SortableItem(props: { id: string; name: string; size: number; onRemove:
 		exit: {
 			scale: 0
 		},
-		transition: {
-			duration: .25,
-			scale: {
-				type: 'spring',
-				duration: .25,
-				bounce: .25,
-			}
-		}
+		...defaultTransition
 	}
 
 	return (

@@ -6,9 +6,8 @@
 
 import React, { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileCirclePlus, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faFileCirclePlus, faTrash, faLayerGroup, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { DropzoneWrapper } from '../components/dropzone-components';
-import { faLayerGroup, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 
 
@@ -89,17 +88,6 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 
 
 // Exports
-export function IconButtonLink(props: { href: string; icon: IconDefinition; children: ReactNode }) {
-	return (
-		<a href={props.href} className="btn btn-ghost text-secondary flex-none flex-nowrap gap-2">
-			<FontAwesomeIcon icon={props.icon} />
-			{props.children}
-		</a>
-	);
-}
-
-
-
 export function AddFilesButton(props: { onClick: (files: FileList) => void; }) {
 	return (
 		// DropzoneWrapper isn't technically needed here but it lets us reuse the same event handling logic

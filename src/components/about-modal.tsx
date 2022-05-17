@@ -1,15 +1,15 @@
 import React from 'react';
-import { ExternalLink } from '../components/links';
+import { InlineLink } from '../components/link-components';
 
 
 export default function AboutModal(props: { id: string; author: string; authorUrl: string; }) {
-	const authorLink = <ExternalLink to={props.authorUrl} rel="author">{props.author}</ExternalLink>;
-	const reactLink = <ExternalLink to="https://reactjs.org/">React</ExternalLink>;
-	const gatsbyLink = <ExternalLink to="https://www.gatsbyjs.org/">Gatsby</ExternalLink>;
-	const githubPagesLink = <ExternalLink to="https://pages.github.com/">GitHub Pages</ExternalLink>;
-	const pancakeIconLink = <ExternalLink to="https://thenounproject.com/icon/pancakes-1974111/">"Pancakes" icon</ExternalLink>;
-	const pancakeIconLicenseLink = <ExternalLink to="https://creativecommons.org/licenses/by/3.0/">CC BY</ExternalLink>;
-	const fontAwesomeLink = <ExternalLink to="http://fontawesome.io/">FontAwesome</ExternalLink>;
+	const authorLink = <InlineLink to={props.authorUrl} rel="author">{props.author}</InlineLink>;
+	const reactLink = <InlineLink to="https://reactjs.org/">React</InlineLink>;
+	const gatsbyLink = <InlineLink to="https://www.gatsbyjs.org/">Gatsby</InlineLink>;
+	const githubPagesLink = <InlineLink to="https://pages.github.com/">GitHub Pages</InlineLink>;
+	const pancakeIconLink = <InlineLink to="https://thenounproject.com/icon/pancakes-1974111/">"Pancakes" icon</InlineLink>;
+	const pancakeIconLicenseLink = <InlineLink to="https://creativecommons.org/licenses/by/3.0/">CC BY</InlineLink>;
+	const fontAwesomeLink = <InlineLink to="https://fontawesome.io/">FontAwesome</InlineLink>;
 
 	return (
 		<div className="modal" id={props.id}>

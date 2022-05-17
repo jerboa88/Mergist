@@ -95,7 +95,7 @@ export default function IndexPage() {
 
   return (
     <PageLayout metadata={metadata}>
-      <Header title={metadata.shortTitle} url={metadata.siteUrl}>
+      <Header title={metadata.shortTitle}>
         {metadata.description}
       </Header>
 
@@ -125,7 +125,7 @@ export default function IndexPage() {
         </Section>
       </Main>
 
-      <Footer author={metadata.author} githubUrl={metadata.githubUrl} homepageUrl={metadata.homepageUrl} homepageLabel={metadata.homepageDomain} />
+      <Footer author={metadata.author} githubUrl={metadata.githubUrl} homepageDomain={metadata.homepageDomain} />
     </PageLayout>
   );
 }

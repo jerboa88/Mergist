@@ -3,30 +3,30 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faEarthAmericas, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from '../components/layout-components';
 import AboutModal from '../components/about-modal';
-import { IconButtonLink } from '../components/button-components';
+import { IconButtonLink } from '../components/link-components';
 import ThemeToggle from '../components/theme-toggle';
 
 
-export default function Footer(props: { className: string; author: string; githubUrl: string; homepageUrl: string; homepageLabel: string; }) {
+export default function Footer(props: { className: string; author: string; githubUrl: string; homepageDomain: string; }) {
 	const modalId = 'about-modal';
-
+	const homepageUrl = `https://${props.homepageDomain}`;
 
 	return (
 		<>
-			<AboutModal id={modalId} author={props.author} authorUrl={props.homepageUrl} />
+			<AboutModal id={modalId} author={props.author} authorUrl={homepageUrl} />
 
 			<footer className="footer footer-center py-8 bg-base-300">
 				<SingleColumnLayout>
 					<ThemeToggle />
 
 					<div className="flex flex-row w-full justify-between">
-						<IconButtonLink href={props.githubUrl} icon={faGithub}>
+						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub
 						</IconButtonLink>
-						<IconButtonLink href={props.homepageUrl} icon={faEarthAmericas}>
-							{props.homepageLabel}
+						<IconButtonLink to={homepageUrl} icon={faEarthAmericas}>
+							{props.homepageDomain}
 						</IconButtonLink>
-						<IconButtonLink href={`#${modalId}`} icon={faCircleQuestion}>
+						<IconButtonLink to={`#${modalId}`} icon={faCircleQuestion} isInternal>
 							About
 						</IconButtonLink>
 					</div>

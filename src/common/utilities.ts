@@ -12,6 +12,19 @@ export const ThemeContext = createContext({
 });
 
 
+// Default transition settings for scaling animations
+export const defaultTransition = {
+	transition: {
+		duration: .25,
+		scale: {
+			type: 'spring',
+			duration: .25,
+			bounce: .25,
+		}
+	}
+}
+
+
 // Load site metadata from gatsby-config.js
 export function loadMetadata(config: GatsbyConfig): MetadataInterface {
 	// Cast to match expected return type. siteMetadata type is enforced in gatsby-config.js

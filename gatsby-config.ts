@@ -19,7 +19,6 @@ const config: GatsbyConfig = {
 		author: 'John Goodliff',
 		siteUrl: siteUrl,
 		githubUrl: `https://github.com/${username}/${shortTitle.toLowerCase()}`,
-		homepageUrl: `https://${homepageDomain}/projects/${shortTitle.toLowerCase()}`,
 		homepageDomain: homepageDomain,
 		lightTheme: lightTheme,
 		darkTheme: darkTheme
