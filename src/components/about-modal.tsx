@@ -28,7 +28,14 @@ export default function AboutModal(props: { id: string; author: string; authorUr
 
 				<h3 className="font-bold text-lg">Privacy Policy</h3>
 				<p>
-					This site performs does not collect any information about you.
+					This site uses Google Analytics to collect general information about page visits such as browser details, time of visit, and which links were clicked on. By using this site to agree to these terms.
+				</p>
+
+				<p>
+					This info is used to help me improve the site and does not include any personally identifiable information or any details about PDF files you add. It also does not make use of any advertising features provided by Google.
+				</p>
+
+				<p>
 					All processing is performed locally on your own device, so no PDF files are ever uploaded to our servers. This also happens to make the merging process faster!
 				</p>
 
