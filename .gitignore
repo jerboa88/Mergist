@@ -1,4 +1,16 @@
+# NPM
 node_modules/
 .cache/
-.env.*
+
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Gatsby
 public
+.env.*

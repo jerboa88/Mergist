@@ -1,5 +1,6 @@
 {
-  "name": "mergist-online-pdf-merger",
+  "name": "Mergist",
+  "packageManager": "yarn@3.2.1",
   "version": "1.0.0",
   "private": true,
   "description": "Mergist is an online tool to combine multiple PDF files into one",
@@ -16,15 +17,14 @@
     "pdf-lib"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "develop": "yarn gatsby develop",
+    "start": "yarn gatsby develop",
+    "build": "yarn gatsby build",
+    "serve": "yarn gatsby serve",
+    "clean": "yarn gatsby clean",
+    "typecheck": "yarn tsc --noEmit"
   },
   "dependencies": {
-    "@fontsource/luckiest-guy": "^4.5.7",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
@@ -43,6 +43,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
+    "svg-react-loader": "^0.4.6",
     "theme-change": "^2.0.2"
   },
   "devDependencies": {

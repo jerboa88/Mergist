@@ -1,5 +1,4 @@
-name: GitHub Pages Deploy (Gatsby)
-
+name: Gatsby Build & Deploy
 on:
   push:
     branches:
@@ -12,31 +11,25 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
+          cache: 'yarn'
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: yarn install --immutable
 
-      - run: npm ci
-      # - run: npm run format
-      # - run: npm run test
-      - run: npm run build
+      - name: Build with Gatsby
+        run: npm run build
 
-      - name: Deploy
+      - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
           personal_token: ${{ secrets.MERGIST_DEPLOY_PAT }}
           publish_dir: ./public
           cname: mergist.johng.io
