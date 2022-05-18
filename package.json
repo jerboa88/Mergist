@@ -27,12 +27,12 @@
     "daisyui"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit"
+    "develop": "yarn gatsby develop",
+    "start": "yarn gatsby develop",
+    "build": "yarn gatsby build",
+    "serve": "yarn gatsby serve",
+    "clean": "yarn gatsby clean",
+    "typecheck": "yarn tsc --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
