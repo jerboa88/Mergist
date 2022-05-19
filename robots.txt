@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://mergist.johng.io/sitemap-index.xml
+Host: https://mergist.johng.io
