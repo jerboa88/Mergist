@@ -55,6 +55,23 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 				<meta content={getPrimaryThemeColor()} name="theme-color" />
 
 				<link rel="canonical" href={props.metadata.siteUrl} />
+
+				<script type="application/ld+json">
+					{`{
+						"@context": "http://schema.org",
+						"@type": "WebApplication",
+						"name": "${props.metadata.shortTitle}",
+						"description": "${props.metadata.description}",
+						"url": "${props.metadata.siteUrl}",
+						"softwareVersion": "1.0.0",
+						"operatingSystem": "All",
+						"author": {
+							"@type": "Person",
+							"name": "${props.metadata.author}",
+							"url": "https://${props.metadata.homepageDomain}"
+						}
+					}`}
+				</script>
 			</Helmet>
 
 			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 bg-base-200 text-base-content ${props.className}`}>
