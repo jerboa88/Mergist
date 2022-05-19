@@ -65,6 +65,12 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 						"url": "${props.metadata.siteUrl}",
 						"softwareVersion": "1.0.0",
 						"operatingSystem": "All",
+						"applicationCategory": "UtilitiesApplication",
+						"applicationSubCategory": "PDF Merger",
+						"offers": {
+							"@type": "Offer",
+							"price": "0"
+						},
 						"author": {
 							"@type": "Person",
 							"name": "${props.metadata.author}",

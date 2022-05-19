@@ -29,7 +29,15 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-sitemap',
 			options: {
+				// Generate sitemaps at the root of the site
 				output: '/'
+			}
+		},
+		{
+			resolve: 'gatsby-plugin-robots-txt',
+			options: {
+				// Link to the sitemap index generated above
+				sitemap: `${siteUrl}/sitemap-index.xml`
 			}
 		},
 		{
@@ -39,6 +47,7 @@ const config: GatsbyConfig = {
 					'G-TYRQSQ9QC3'
 				],
 				gtagConfig: {
+					// Opt-out of personalized advertising features
 					anonymize_ip: true,
 					allow_google_signals: false,
 					allow_ad_personalization_signals: false
