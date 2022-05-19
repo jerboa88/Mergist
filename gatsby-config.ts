@@ -25,8 +25,13 @@ const config: GatsbyConfig = {
 	} as MetadataInterface,
 	plugins: [
 		'gatsby-plugin-react-helmet',
-		'gatsby-plugin-sitemap',
 		'gatsby-plugin-postcss',
+		{
+			resolve: 'gatsby-plugin-sitemap',
+			options: {
+				output: '/'
+			}
+		},
 		{
 			resolve: `gatsby-plugin-google-gtag`,
 			options: {
