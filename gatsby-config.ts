@@ -28,9 +28,19 @@ const config: GatsbyConfig = {
 		'gatsby-plugin-sitemap',
 		'gatsby-plugin-postcss',
 		{
-			resolve: 'gatsby-plugin-google-analytics',
+			resolve: `gatsby-plugin-google-gtag`,
 			options: {
-				'trackingId': 'TODO_REPLACE_THIS_LATER'
+				trackingIds: [
+					'G-TYRQSQ9QC3'
+				],
+				gtagConfig: {
+					anonymize_ip: true,
+					allow_google_signals: false,
+					allow_ad_personalization_signals: false
+				},
+				pluginConfig: {
+					head: true
+				}
 			}
 		},
 		{

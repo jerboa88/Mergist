@@ -38,7 +38,6 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	return (
 		<ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
 			<Helmet htmlAttributes={{ lang: 'en-US' }}>
-				<meta charSet="utf-8" />
 				<title>{props.metadata.title}</title>
 				<meta name="author" content={props.metadata.author} />
 				<meta name="description" content={props.metadata.description} />
@@ -56,23 +55,6 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 				<meta content={getPrimaryThemeColor()} name="theme-color" />
 
 				<link rel="canonical" href={props.metadata.siteUrl} />
-
-				<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYRQSQ9QC3" />
-				<script>
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag() { dataLayer.push(arguments) }
-						gtag('js', new Date());
-
-						const options = {
-							anonymize_ip: true,
-							allow_google_signals: false,
-							allow_ad_personalization_signals: false
-						}
-
-						gtag('config', 'G-TYRQSQ9QC3', options);
-					`}
-				</script>
 			</Helmet>
 
 			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 bg-base-200 text-base-content ${props.className}`}>

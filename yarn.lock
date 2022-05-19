@@ -3966,7 +3966,7 @@ __metadata:
     daisyui: ^2.15.0
     framer-motion: ^6.3.3
     gatsby: ^4.14.1
-    gatsby-plugin-google-analytics: ^4.14.0
+    gatsby-plugin-google-gtag: ^4.14.0
     gatsby-plugin-manifest: ^4.14.0
     gatsby-plugin-postcss: ^5.14.0
     gatsby-plugin-react-helmet: ^5.14.0
@@ -7869,18 +7869,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-plugin-google-analytics@npm:^4.14.0":
+"gatsby-plugin-google-gtag@npm:^4.14.0":
   version: 4.14.0
-  resolution: "gatsby-plugin-google-analytics@npm:4.14.0"
+  resolution: "gatsby-plugin-google-gtag@npm:4.14.0"
   dependencies:
     "@babel/runtime": ^7.15.4
-    minimatch: 3.0.4
-    web-vitals: ^1.1.2
+    minimatch: ^3.1.2
   peerDependencies:
     gatsby: ^4.0.0-next
     react: ^16.9.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
-  checksum: bbb73ff99d816872b870693634e2f7164e0743ed9a745283e5322a65f9ea6a8a730ca7732741b2c49e0147800d8d8f9a8a1dfec866872edc223d4b2204063c52
+  checksum: 841d2ae5ff0b9543ca678713ac019909654db41f335422226a98dfdf1bb24293e6a3aafd8285754c6036f9440d61d9ed749ea010a5c332c38420998ad48c0f64
   languageName: node
   linkType: hard
 
@@ -14824,13 +14823,6 @@ __metadata:
   version: 1.2.2
   resolution: "weak-lru-cache@npm:1.2.2"
   checksum: 0fbe16839d193ed82ddb4fe331ca8cfaee2ecbd42596aa02366c708956cf41f7258f2d5411c3bc9aa099c26058dc47afbd2593d449718a18e4ef4d870c5ace18
-  languageName: node
-  linkType: hard
-
-"web-vitals@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "web-vitals@npm:1.1.2"
-  checksum: 92071029089277166e11141b735831d9011e85737d32c1360034676db898ab0ca95f19041ee01904f2189ad6e711b9da6b17567e4831290a429a586c98bc573f
   languageName: node
   linkType: hard
 
