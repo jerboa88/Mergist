@@ -80,8 +80,8 @@ export default function FileManager(props: FileManagerPropsInterface) {
 
 	return (
 		<div tabIndex={0} className="collapse">
-			<div className="flex flex-row justify-between items-center p-6 collapse-title text-lg font-medium">
-				<h5 className="pl-4">{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})</h5>
+			<div className="flex flex-row flex-wrap justify-between items-center p-6 gap-4 collapse-title text-lg font-medium">
+				<h2 className="pl-4">{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})</h2>
 				<div className="flex flex-row gap-2">
 					<AddFilesButton onClick={props.onFileAdded} />
 					<RemoveFilesButton onClick={props.onAllFilesRemoved} />

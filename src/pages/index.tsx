@@ -11,7 +11,7 @@ import Alert from '../components/alert';
 import { ActionButton } from '../components/button-components';
 import Footer from '../components/footer';
 import Header from '../components/header';
-import SortableFileList from '../components/sortable-file-list';
+import FileManager from '../components/file-manager';
 
 
 export default function IndexPage() {
@@ -114,7 +114,7 @@ export default function IndexPage() {
           </Section>
 
           <Section visible={fileIds.length > 0}>
-            <SortableFileList fileIds={fileIds} files={files} onReorder={handleReorderFiles} onFileAdded={handleAddFiles} onFileRemoved={handleRemoveFile} onAllFilesRemoved={handleRemoveAllFiles} disabled={currentProgress > 0} />
+            <FileManager fileIds={fileIds} files={files} onReorder={handleReorderFiles} onFileAdded={handleAddFiles} onFileRemoved={handleRemoveFile} onAllFilesRemoved={handleRemoveAllFiles} disabled={currentProgress > 0} />
           </Section>
         </div>
 
