@@ -80,7 +80,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 				</script>
 			</Helmet>
 
-			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 bg-base-200 text-base-content ${props.className}`}>
+			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 bg-base-200 text-base-content selection:bg-primary ${props.className}`}>
 				{props.children}
 			</div>
 		</ThemeContext.Provider>

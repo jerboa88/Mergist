@@ -12,8 +12,8 @@ export default function ThemeToggle() {
 		<label>
 			<Helmet htmlAttributes={{ 'data-theme': isDarkTheme ? 'dark' : 'light' }} />
 
+			<span className="sr-only">Toggle theme</span>
 			<FontAwesomeIcon icon={isDarkTheme ? faMoon : faSun} className="fa-lg mr-2 !align-middle" />
-
 			<input type="checkbox" className="toggle toggle-primary align-middle" checked={isDarkTheme} onChange={toggleTheme} />
 		</label>
 	);
