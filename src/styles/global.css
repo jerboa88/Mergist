@@ -21,26 +21,34 @@
 	}
 }
 
+/* Apply btn class automatically to all button variants */
+/* We add these styles to the base layer so that component styles can override them as necessary */
+@layer base {
+	.btn-primary, .btn-secondary, .btn-accent, .btn-ghost {
+		@apply btn;
+	}
+}
+
 
 /* Override disabled button styles since DaisyUI insists on making disabled buttons gray */
-.btn[disabled] {
-	opacity: 0.4;
-}
+@layer components {
+	.btn-primary[disabled], .btn-secondary[disabled], .btn-accent[disabled] {
+		@apply opacity-40;
+		@apply cursor-default;
+	}
 
-.btn-primary[disabled] {
-	border-color: hsl(var(--p));
-	background-color: hsl(var(--p));
-	color: hsl(var(--pc));
-}
+	.btn-primary[disabled] {
+		@apply bg-primary;
+		@apply text-primary-content;
+	}
 
-.btn-secondary[disabled] {
-	border-color: hsl(var(--s));
-	background-color: hsl(var(--s));
-	color: hsl(var(--sc));
-}
+	.btn-secondary[disabled] {
+		@apply bg-secondary;
+		@apply text-secondary-content;
+	}
 
-.btn-accent[disabled] {
-	border-color: hsl(var(--a));
-	background-color: hsl(var(--a));
-	color: hsl(var(--ac));
+	.btn-accent[disabled] {
+		@apply bg-accent;
+		@apply text-accent-content;
+	}
 }

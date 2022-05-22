@@ -42,7 +42,7 @@ export function InlineLink(props: { to: string; isInternal?: boolean; rel?: stri
 export function IconButtonLink(props: { to: string; icon: IconDefinition; isInternal?: boolean; rel?: string; children: ReactNode; }) {
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel}>
-			<button className="btn btn-ghost text-secondary flex-none flex-nowrap gap-2">
+			<button className="btn-ghost text-secondary flex-none flex-nowrap gap-2">
 				<FontAwesomeIcon icon={props.icon} />
 				{props.children}
 			</button>

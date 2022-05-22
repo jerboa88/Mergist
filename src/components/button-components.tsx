@@ -28,7 +28,7 @@ function ProgressBar(props: { progress: string; }) {
 
 function FullWidthButton(props: { className: string; children: ReactNode; disabled: boolean; onClick: () => void; }) {
 	return (
-		<button className={`btn btn-block gap-2 ${props.className}`} disabled={props.disabled} onClick={props.onClick}>
+		<button className={`btn-block gap-2 ${props.className}`} disabled={props.disabled} onClick={props.onClick}>
 			{props.children}
 		</button>
 	);
@@ -96,7 +96,7 @@ export function PrimaryButton(props: { icon: IconProp; fake: boolean; children: 
 	const ElementType = props.fake && 'div' || 'button';
 
 	return (
-		<ElementType className="btn btn-primary flex-1 flex-nowrap whitespace-nowrap gap-2" type={!props.fake && 'button' || undefined} onClick={props.onClick}>
+		<ElementType className="btn-primary flex-1 flex-nowrap whitespace-nowrap gap-2" type={!props.fake && 'button' || undefined} onClick={props.onClick}>
 			<FontAwesomeIcon icon={props.icon} />
 			{props.children}
 		</ElementType>
@@ -112,7 +112,7 @@ PrimaryButton.defaultProps = {
 // A generic button component with an icon only
 export function IconButton(props: { icon: IconProp; onClick: () => void; }) {
 	return (
-		<button className="btn btn-ghost sm:btn-square" type="button" onClick={props.onClick}>
+		<button className="btn-ghost sm:btn-square" type="button" onClick={props.onClick}>
 			<FontAwesomeIcon icon={props.icon} className="fa-lg" />
 		</button>
 	);
