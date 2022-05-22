@@ -1,5 +1,7 @@
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { InlineLink } from '../components/link-components';
+import { InlineLink, LinkWrapper } from '../components/link-components';
+import { PrimaryButton } from '../components/button-components';
 
 
 export default function AboutModal(props: { id: string; author: string; authorUrl: string; }) {
@@ -40,7 +42,9 @@ export default function AboutModal(props: { id: string; author: string; authorUr
 				</p>
 
 				<div className="modal-action justify-center">
-					<a href="#" className="btn btn-primary">Cool beans</a>
+					<LinkWrapper to="#" isInternal>
+						<PrimaryButton icon={faThumbsUp}>Cool beans</PrimaryButton>
+					</LinkWrapper>
 				</div>
 			</div>
 		</div>

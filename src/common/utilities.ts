@@ -229,7 +229,7 @@ export class PDFManager {
 	private calculateProgressPercentage(i: number, numOfFiles: number): number {
 		const progress = i / numOfFiles;
 
-		console.debug(`Merging file ${i} of ${numOfFiles} (${(progress * 100).toFixed(2)}%)`);
+		console.debug(`Merging file ${i} of ${numOfFiles} (${(progress * 100).toFixed(0)}%)`);
 
 		return progress;
 	}

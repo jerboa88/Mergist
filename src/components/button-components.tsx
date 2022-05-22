@@ -5,10 +5,10 @@
 
 
 import React, { ReactNode } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileCirclePlus, faTrash, faLayerGroup, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { DropzoneWrapper } from '../components/dropzone-components';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faLayerGroup, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 
 // Base components
@@ -37,7 +37,7 @@ function FullWidthButton(props: { className: string; children: ReactNode; disabl
 FullWidthButton.defaultProps = {
 	className: '',
 	disabled: false,
-	onClick: () => { }
+	onClick: undefined
 }
 
 
@@ -88,24 +88,38 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 
 
 // Exports
-export function AddFilesButton(props: { onClick: (files: FileList) => void; }) {
+
+// A generic button component with an icon and text
+export function PrimaryButton(props: { icon: IconProp; fake: boolean; children: string; onClick: () => void; }) {
+	// If fake attribute is specified, render the element as a div instead of a button
+	// This is to prevent issue with nested input elements in the same dropzone wrapper component
+	const ElementType = props.fake && 'div' || 'button';
+
 	return (
-		// DropzoneWrapper isn't technically needed here but it lets us reuse the same event handling logic
-		<DropzoneWrapper className="btn btn-primary gap-2" onFilesAdded={props.onClick}>
-			<FontAwesomeIcon icon={faFileCirclePlus} />
-			Add File
-		</DropzoneWrapper>
+		<ElementType className="btn btn-primary flex-1 flex-nowrap whitespace-nowrap gap-2" type={!props.fake && 'button' || undefined} onClick={props.onClick}>
+			<FontAwesomeIcon icon={props.icon} />
+			{props.children}
+		</ElementType>
 	);
 }
 
+PrimaryButton.defaultProps = {
+	fake: false,
+	onClick: undefined
+}
 
-export function RemoveFilesButton(props: { onClick: () => void; }) {
+
+// A generic button component with an icon only
+export function IconButton(props: { icon: IconProp; onClick: () => void; }) {
 	return (
-		<button className="btn btn-primary gap-2" onClick={props.onClick}>
-			<FontAwesomeIcon icon={faTrash} />
-			Remove All
+		<button className="btn btn-ghost sm:btn-square" type="button" onClick={props.onClick}>
+			<FontAwesomeIcon icon={props.icon} className="fa-lg" />
 		</button>
 	);
+}
+
+IconButton.defaultProps = {
+	onClick: undefined
 }
 
 

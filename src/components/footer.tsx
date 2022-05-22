@@ -31,7 +31,7 @@ export default function Footer(props: { className: string; author: string; githu
 						</IconButtonLink>
 					</div>
 				</SingleColumnLayout >
-			</footer >
+			</footer>
 		</>
 	);
 }

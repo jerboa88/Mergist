@@ -80,7 +80,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 				</script>
 			</Helmet>
 
-			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 bg-base-200 text-base-content selection:bg-primary ${props.className}`}>
+			<div className={`min-h-screen flex flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}>
 				{props.children}
 			</div>
 		</ThemeContext.Provider>
@@ -94,16 +94,17 @@ PageLayout.defaultProps = {
 
 interface SingleColumnLayoutPropsInterface {
 	className?: string;
+	collapse?: boolean;
 	children: ReactNode;
 	[propName: string]: any; // Allow injecting props
 }
 
 // Inner layout container that limits the width of its content and accepts arbitrary props
 export function SingleColumnLayout(props: SingleColumnLayoutPropsInterface) {
-	const { className, children, ...injectedProps } = props;
+	const { className, collapse, children, ...injectedProps } = props;
 
 	return (
-		<div className={`w-5/6 max-w-4xl h-full flex flex-col mx-auto gap-8 ${className}`} {...injectedProps}>
+		<div className={`max-w-4xl h-full flex flex-col mx-auto gap-8 ${collapse && 'w-full' || 'w-5/6'} ${className}`} {...injectedProps}>
 			{children}
 		</div>
 	);
@@ -115,19 +116,15 @@ SingleColumnLayout.defaultProps = {
 
 
 // Wrapper component that applies a single column layout to the main page content
-export function Main(props: { className: string; children: ReactNode }) {
+export function Main(props: { children: ReactNode }) {
 	return (
 		<main className="w-full h-full flex flex-col flex-1">
-			<SingleColumnLayout className="flex-1">
+			<SingleColumnLayout className="flex-1 sm:w-5/6" collapse>
 				{props.children}
 			</SingleColumnLayout>
 		</main>
 	);
 }
-
-Main.defaultProps = {
-	className: ''
-};
 
 
 export function Section(props: { className: string; visible: boolean; children: ReactNode }) {

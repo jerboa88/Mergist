@@ -108,7 +108,7 @@ export default function IndexPage() {
           ))}
         </Section>
 
-        <div tabIndex={0} className="collapse collapse-open flex-1 bg-base-100 border border-base-300 rounded-box">
+        <div tabIndex={0} className="collapse collapse-open flex-1 bg-base-100 border border-base-300 rounded-none sm:rounded-box">
           <Section visible={fileIds.length === 0} className="flex-1">
             <LargeDropzone onFilesAdded={handleAddFiles} />
           </Section>
@@ -118,10 +118,8 @@ export default function IndexPage() {
           </Section>
         </div>
 
-        <Section visible={fileIds.length > 0}>
-          <div className="flex flex-row justify-center gap-8">
-            <ActionButton numOfFiles={fileIds.length} progress={currentProgress} downloadUrl={mergedPdfUrl} onClick={handleMerge} />
-          </div>
+        <Section visible={fileIds.length > 0} className="px-6 sm:px-0">
+          <ActionButton numOfFiles={fileIds.length} progress={currentProgress} downloadUrl={mergedPdfUrl} onClick={handleMerge} />
         </Section>
       </Main>
 

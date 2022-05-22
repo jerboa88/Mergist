@@ -1,15 +1,50 @@
 
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGripVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faFileCirclePlus, faGripVertical, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
 import { defaultTransition, ignoreDefault } from '../common/utilities';
 import { PDFFileMapInterface } from '../common/types';
-import { AddFilesButton, RemoveFilesButton } from '../components/button-components';
+import { IconButton, PrimaryButton } from '../components/button-components';
+import { DropzoneWrapper } from '../components/dropzone-components';
 
 
 // Base components
+
+// A reorderable list item
+function SortableItem(props: { id: string; name: string; size: number; onRemove: (fileId: string) => void; disabled: boolean }) {
+	const classNames = `bg-base-100 shadow-md flex flex-row justify-between p-2 gap-4 rounded-lg cursor-pointer overflow-hidden hover:bg-base-200 ${props.disabled && 'opacity-40' || ''}`;
+	const animationProps = {
+		initial: {
+			scale: 0
+		},
+		animate: {
+			scale: 1
+		},
+		exit: {
+			scale: 0
+		},
+		...defaultTransition
+	}
+
+	return (
+		<Reorder.Item key={props.id} value={props.id} className={classNames} {...animationProps}>
+			<div className="flex flex-row items-center overflow-hidden gap-0 sm:gap-2">
+				<IconButton icon={faGripVertical} />
+				<p className="font-bold overflow-hidden whitespace-nowrap text-ellipsis">{props.name}</p>
+			</div>
+
+			<div className="flex flex-row flex-none items-center overflow-hidden gap-0 sm:gap-2">
+				<p className="whitespace-nowrap">({prettyBytes(props.size, { maximumFractionDigits: 0 })})</p>
+				<div className="card-actions justify-end">
+					<IconButton icon={faXmark} onClick={() => props.onRemove(props.id)} />
+				</div>
+			</div>
+		</Reorder.Item>
+	);
+}
+
+
 interface SortableFileListPropsInterface {
 	fileIds: string[];
 	files: PDFFileMapInterface;
@@ -32,40 +67,6 @@ function SortableFileList(props: SortableFileListPropsInterface) {
 }
 
 
-// A reorderable list item
-function SortableItem(props: { id: string; name: string; size: number; onRemove: (fileId: string) => void; disabled: boolean }) {
-	const classNames = `bg-base-100 shadow-md flex flex-row justify-between items-center p-2 gap-4 rounded-lg cursor-pointer hover:bg-base-200 ${props.disabled && 'opacity-40' || ''}`;
-	const animationProps = {
-		initial: {
-			scale: 0
-		},
-		animate: {
-			scale: 1
-		},
-		exit: {
-			scale: 0
-		},
-		...defaultTransition
-	}
-
-	return (
-		<Reorder.Item key={props.id} value={props.id} className={classNames} {...animationProps}>
-			<button className="btn btn-square btn-ghost">
-				<FontAwesomeIcon icon={faGripVertical} className="fa-lg" />
-			</button>
-			<p className="font-bold overflow-hidden whitespace-nowrap text-ellipsis">{props.name}</p>
-			<div className="flex-1" />
-			<p className="whitespace-nowrap">({prettyBytes(props.size)})</p>
-			<div className="card-actions justify-end">
-				<button className="btn btn-square btn-ghost" onClick={() => props.onRemove(props.id)}>
-					<FontAwesomeIcon icon={faXmark} className="fa-lg" />
-				</button>
-			</div>
-		</Reorder.Item>
-	);
-}
-
-
 // Exports
 interface FileManagerPropsInterface extends SortableFileListPropsInterface {
 	onFileAdded: (inputFiles: FileList) => void;
@@ -80,11 +81,20 @@ export default function FileManager(props: FileManagerPropsInterface) {
 
 	return (
 		<div tabIndex={0} className="collapse">
-			<div className="flex flex-row flex-wrap justify-between items-center p-6 gap-4 collapse-title text-lg font-medium">
-				<h2 className="pl-4">{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})</h2>
-				<div className="flex flex-row gap-2">
-					<AddFilesButton onClick={props.onFileAdded} />
-					<RemoveFilesButton onClick={props.onAllFilesRemoved} />
+			<div className="flex flex-col sm:flex-row justify-between items-center p-6 sm:pl-10 gap-4 collapse-title text-lg font-medium">
+				<h2>
+					{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added ({getEstimatedFileSize()})
+				</h2>
+				<div className="flex flex-row gap-2 flex-1 sm:flex-none">
+					<DropzoneWrapper onFilesAdded={props.onFileAdded}>
+						<PrimaryButton icon={faFileCirclePlus} fake>
+							Add File
+						</PrimaryButton>
+					</DropzoneWrapper>
+
+					<PrimaryButton icon={faTrash} onClick={props.onAllFilesRemoved}>
+						Remove All
+					</PrimaryButton>
 				</div>
 			</div>
 

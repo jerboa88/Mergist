@@ -9,10 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 
-// Base components
+// Exports
 
 // A basic link component used to specify default attributes
-function LinkWrapper(props: { className: string; to: string; isInternal: boolean; rel: string; children: ReactNode; }) {
+export function LinkWrapper(props: { className: string; to: string; isInternal: boolean; rel: string; children: ReactNode; }) {
 	return (
 		<a className={`link link-secondary no-underline ${props.className}`}
 			href={props.to} target={props.isInternal && '_self' || '_blank'} rel={`noopener ${props.isInternal && '' || 'external'} ${props.rel}`}>
@@ -22,14 +22,14 @@ function LinkWrapper(props: { className: string; to: string; isInternal: boolean
 }
 
 LinkWrapper.defaultProps = {
-	className: ''
+	className: '',
+	rel: '',
+	isInternal: false
 }
 
 
-// Exports
-
 // A normal link
-export function InlineLink(props: { to: string; isInternal: boolean; rel: string; children: ReactNode; }) {
+export function InlineLink(props: { to: string; isInternal?: boolean; rel?: string; children: ReactNode; }) {
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel} className="border-b-[1px] border-transparent transition-colors hover:border-current">
 			{props.children}
@@ -37,14 +37,9 @@ export function InlineLink(props: { to: string; isInternal: boolean; rel: string
 	);
 }
 
-InlineLink.defaultProps = {
-	isInternal: false,
-	rel: ''
-}
-
 
 // A button link with icon
-export function IconButtonLink(props: { to: string; icon: IconDefinition; isInternal: boolean; rel: string; children: ReactNode; }) {
+export function IconButtonLink(props: { to: string; icon: IconDefinition; isInternal?: boolean; rel?: string; children: ReactNode; }) {
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel}>
 			<button className="btn btn-ghost text-secondary flex-none flex-nowrap gap-2">
@@ -53,9 +48,4 @@ export function IconButtonLink(props: { to: string; icon: IconDefinition; isInte
 			</button>
 		</LinkWrapper>
 	);
-}
-
-IconButtonLink.defaultProps = {
-	isInternal: false,
-	rel: ''
 }
