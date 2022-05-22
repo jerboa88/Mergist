@@ -19,7 +19,7 @@ export default function Footer(props: { className: string; author: string; githu
 				<SingleColumnLayout>
 					<ThemeToggle />
 
-					<div className="flex flex-row w-full justify-between">
+					<div className="flex-row w-full justify-between">
 						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub
 						</IconButtonLink>

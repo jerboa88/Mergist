@@ -58,8 +58,8 @@ function ProgressActionButton(props: { progress: number }) {
 	const percentString = `${(props.progress * 100).toFixed(0)}%`;
 
 	return (
-		<div className="flex flex-col gap-2 w-full text-center">
-			<FullWidthButton className={`btn-primary flex flex-col justify-between p-0 pt-4 border-0 overflow-hidden ${isSaving ? 'loading' : ''}`} disabled={true}>
+		<div className="flex-col gap-2 w-full text-center">
+			<FullWidthButton className={`btn-primary flex-col justify-between p-0 pt-4 border-0 overflow-hidden ${isSaving ? 'loading' : ''}`} disabled={true}>
 				{!isSaving && percentString}
 				<ProgressBar progress={percentString} />
 			</FullWidthButton>
@@ -77,7 +77,7 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 	);
 
 	return (
-		<div className="flex flex-col gap-2 w-full text-center">
+		<div className="flex-col gap-2 w-full text-center">
 			{/* Wrap merge button with a tooltip if it is disabled */}
 			{props.disabled && <div className="tooltip tooltip-warning" data-tip="Please add more files to merge">
 				{mergeButton}

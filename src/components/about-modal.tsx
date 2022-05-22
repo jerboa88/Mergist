@@ -15,7 +15,7 @@ export default function AboutModal(props: { id: string; author: string; authorUr
 
 	return (
 		<div className="modal modal-bottom sm:modal-middle" id={props.id}>
-			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex flex-col p-8 gap-4 text-center">
+			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 gap-4 text-center">
 				<h3 className="font-bold text-lg">About</h3>
 				<p>
 					Made by {authorLink} with love. Powered by {reactLink}, {gatsbyLink}, & {githubPagesLink}.

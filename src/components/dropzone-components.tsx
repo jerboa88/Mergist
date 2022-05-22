@@ -34,8 +34,8 @@ DropzoneWrapper.defaultProps = {
 // A large dropzone component. Accepts a callback function that fires when a file is dropped
 export function LargeDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
 	return (
-		<DropzoneWrapper className="flex flex-col flex-1" onFilesAdded={props.onFilesAdded}>
-			<div className="flex flex-col justify-center flex-1 m-8 p-8 gap-8 text-center z-20 bg-base-100 hover:bg-base-200 border-2 border-dashed rounded-lg transition-color duration-200">
+		<DropzoneWrapper className="flex-col flex-1" onFilesAdded={props.onFilesAdded}>
+			<div className="flex-col justify-center flex-1 m-8 p-8 gap-8 text-center z-20 bg-base-100 hover:bg-base-200 border-2 border-dashed rounded-lg transition-color duration-200">
 				<FontAwesomeIcon icon={faFileCirclePlus} className="fa-3x" />
 				<p className='flex-grow-0'>Drag and drop PDF files here, or click to select files</p>
 			</div>
@@ -113,6 +113,6 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 
 
 	return (
-		<div className={`fixed inset-0 flex flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />
+		<div className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />
 	);
 }
