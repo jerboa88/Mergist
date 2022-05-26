@@ -1,19 +1,21 @@
 import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faEarthAmericas, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faCookie } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from '../components/layout-components';
-import AboutModal from '../components/about-modal';
+import { AboutModal, PrivacyModal } from '../components/modal-components';
 import { IconButtonLink } from '../components/link-components';
 import ThemeToggle from '../components/theme-toggle';
 
 
-export default function Footer(props: { className: string; author: string; githubUrl: string; homepageDomain: string; }) {
-	const modalId = 'about-modal';
+export default function Footer(props: { author: string; githubUrl: string; homepageDomain: string; }) {
+	const privacyModalId = 'privacy-modal';
+	const aboutModalId = 'about-modal';
 	const homepageUrl = `https://${props.homepageDomain}`;
 
 	return (
 		<>
-			<AboutModal id={modalId} author={props.author} authorUrl={homepageUrl} />
+			<PrivacyModal id={privacyModalId} />
+			<AboutModal id={aboutModalId} author={props.author} authorUrl={homepageUrl} />
 
 			<footer className="footer footer-center py-8 bg-base-300">
 				<SingleColumnLayout>
@@ -23,19 +25,15 @@ export default function Footer(props: { className: string; author: string; githu
 						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub
 						</IconButtonLink>
-						<IconButtonLink to={homepageUrl} icon={faEarthAmericas}>
-							{props.homepageDomain}
+						<IconButtonLink to={`#${privacyModalId}`} icon={faCookie} isInternal>
+							Privacy
 						</IconButtonLink>
-						<IconButtonLink to={`#${modalId}`} icon={faCircleQuestion} isInternal>
+						<IconButtonLink to={`#${aboutModalId}`} icon={faCircleQuestion} isInternal>
 							About
 						</IconButtonLink>
 					</div>
-				</SingleColumnLayout >
+				</SingleColumnLayout>
 			</footer>
 		</>
 	);
 }
-
-Footer.defaultProps = {
-	className: ''
-};
