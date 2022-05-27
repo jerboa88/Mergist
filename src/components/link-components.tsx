@@ -5,8 +5,8 @@
 
 
 import React, { ReactNode } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '../components/icon-components';
 
 
 // Exports
@@ -44,7 +44,7 @@ export function IconButtonLink(props: { to: string; icon: IconDefinition; isInte
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel}>
 			<button className="btn-ghost text-secondary flex-none flex-nowrap gap-2">
-				<FontAwesomeIcon icon={props.icon} />
+				<Icon icon={props.icon} />
 				{props.children}
 			</button>
 		</LinkWrapper>

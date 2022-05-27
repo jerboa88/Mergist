@@ -12,7 +12,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 // Exports
 
 // A basic icon component
-export function Icon(props: { tw: string; icon: IconDefinition; }) {
+export function Icon(props: { tw?: string; icon: IconDefinition; }) {
 	return (
 		<FontAwesomeIcon icon={props.icon} className={props.tw} />
 	);

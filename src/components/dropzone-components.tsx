@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ReactNode, useRef, useState, MouseEvent, useCallback, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { ChangeEvent, ReactNode, useRef, useState, useCallback, useEffect, DragEvent } from 'react';
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { ignoreDefault } from '../common/utilities';
+import { Icon } from '../components/icon-components';
 
 
 // Enables dropzone functionality for a child component. Accepts a callback function that fires when a file is dropped
@@ -36,7 +36,7 @@ export function LargeDropzone(props: { onFilesAdded: (files: FileList) => void; 
 	return (
 		<DropzoneWrapper className="flex-col flex-1" onFilesAdded={props.onFilesAdded}>
 			<div className="flex-col justify-center flex-1 m-8 p-8 gap-8 text-center z-20 bg-base-100 hover:bg-base-200 border-2 border-dashed rounded-lg transition-color duration-200">
-				<FontAwesomeIcon icon={faFileCirclePlus} className="fa-3x" />
+				<Icon icon={faFileCirclePlus} tw="fa-3x" />
 				<p className='flex-grow-0'>Drag and drop PDF files here, or click to select files</p>
 			</div>
 		</DropzoneWrapper>
@@ -52,18 +52,12 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 	const dragCounter = useRef(0);
 
 
-	// Prevent propagation of default events
-	function blockDefaultEvent(event: MouseEvent<HTMLDivElement, MouseEvent>) {
-		event.preventDefault();
-		event.stopPropagation();
-	}
-
-	const handleDrag = useCallback((event) => {
-		blockDefaultEvent(event);
+	const handleDrag = useCallback((event: DragEvent<HTMLElement>) => {
+		ignoreDefault(event);
 	}, []);
 
-	const handleDragIn = useCallback((event) => {
-		blockDefaultEvent(event);
+	const handleDragIn = useCallback((event: DragEvent<HTMLElement>) => {
+		ignoreDefault(event);
 
 		dragCounter.current++;
 
@@ -72,8 +66,8 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 		}
 	}, []);
 
-	const handleDragOut = useCallback((event) => {
-		blockDefaultEvent(event);
+	const handleDragOut = useCallback((event: DragEvent<HTMLElement>) => {
+		ignoreDefault(event);
 
 		dragCounter.current--;
 
@@ -84,8 +78,8 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 		setIsDragging(false);
 	}, []);
 
-	const handleDrop = useCallback((event) => {
-		blockDefaultEvent(event);
+	const handleDrop = useCallback((event: DragEvent<HTMLElement>) => {
+		ignoreDefault(event);
 		setIsDragging(false);
 
 		if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
@@ -98,16 +92,19 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 
 
 	useEffect(() => {
-		window.addEventListener('dragenter', handleDragIn);
-		window.addEventListener('dragleave', handleDragOut);
-		window.addEventListener('dragover', handleDrag);
-		window.addEventListener('drop', handleDrop);
+		// Force cast event handler parameter to the correct type
+		type DragEventHandler = (event: unknown | globalThis.DragEvent) => void;
+
+		window.addEventListener('dragenter', handleDragIn as DragEventHandler);
+		window.addEventListener('dragleave', handleDragOut as DragEventHandler);
+		window.addEventListener('dragover', handleDrag as DragEventHandler);
+		window.addEventListener('drop', handleDrop as DragEventHandler);
 
 		return () => {
-			window.removeEventListener('dragenter', handleDragIn);
-			window.removeEventListener('dragleave', handleDragOut);
-			window.removeEventListener('dragover', handleDrag);
-			window.removeEventListener('drop', handleDrop);
+			window.removeEventListener('dragenter', handleDragIn as DragEventHandler);
+			window.removeEventListener('dragleave', handleDragOut as DragEventHandler);
+			window.removeEventListener('dragover', handleDrag as DragEventHandler);
+			window.removeEventListener('drop', handleDrop as DragEventHandler);
 		};
 	});
 

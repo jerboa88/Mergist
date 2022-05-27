@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faAngleDown, faCookieBite, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCookieBite, faThumbsUp, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink, LinkWrapper } from '../components/link-components';
 import { PrimaryButton } from '../components/button-components';
 import { ToggleIcon } from '../components/icon-components';
@@ -10,7 +9,7 @@ import { Accordion } from '../components/accordion-components';
 // Base components
 
 // A generic modal component
-function Modal(props: { id: string; title: string; buttonIcon: IconProp; buttonLabel: string; children: ReactNode; }) {
+function Modal(props: { id: string; title: string; buttonIcon: IconDefinition; buttonLabel: string; children: ReactNode; }) {
 	return (
 		<div className="modal modal-bottom sm:modal-middle overflow-hidden" id={props.id}>
 			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 text-center overflow-hidden">

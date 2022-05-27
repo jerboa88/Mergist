@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation, faCircleExclamation, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SeverityTypes } from '../common/types';
 import { StatusMsg } from '../common/utilities';
+import { Icon } from '../components/icon-components';
 
 
 const alertTypes = {
@@ -47,7 +47,7 @@ export default function Alert(props: { statusMsg: StatusMsg; }) {
 					animate={{ opacity: 1, scaleY: 1 }}
 					exit={{ opacity: 0, scaleY: 0 }}>
 					<div>
-						<FontAwesomeIcon icon={alertTypes[type].icon} className="mr-2 fa-lg" />
+						<Icon icon={alertTypes[type].icon} tw="mr-2 fa-lg" />
 						<span>{props.statusMsg.getMsg}</span>
 					</div>
 				</motion.div>

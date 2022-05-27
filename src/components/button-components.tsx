@@ -6,9 +6,8 @@
 
 import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faLayerGroup, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faFileArrowDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '../components/icon-components';
 
 
 // Base components
@@ -45,7 +44,7 @@ function DownloadActionButton(props: { downloadUrl: string }) {
 	return (
 		<a href={props.downloadUrl} target="_blank" rel="noopener noreferrer" download="merged.pdf" className="w-full">
 			<FullWidthButton className="btn-accent">
-				<FontAwesomeIcon icon={faFileArrowDown} />
+				<Icon icon={faFileArrowDown} />
 				Download
 			</FullWidthButton>
 		</a>
@@ -71,7 +70,7 @@ function ProgressActionButton(props: { progress: number }) {
 function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 	const mergeButton = (
 		<FullWidthButton className="btn-primary" disabled={props.disabled} onClick={props.onClick}>
-			<FontAwesomeIcon icon={faLayerGroup} />
+			<Icon icon={faLayerGroup} />
 			Merge Files
 		</FullWidthButton>
 	);
@@ -90,14 +89,14 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 // Exports
 
 // A generic button component with an icon and text
-export function PrimaryButton(props: { icon: IconProp; fake: boolean; children: string; onClick: () => void; }) {
+export function PrimaryButton(props: { icon: IconDefinition; fake: boolean; children: string; onClick: () => void; }) {
 	// If fake attribute is specified, render the element as a div instead of a button
 	// This is to prevent issue with nested input elements in the same dropzone wrapper component
 	const ElementType = props.fake && 'div' || 'button';
 
 	return (
 		<ElementType className="btn-primary flex-1 flex-nowrap whitespace-nowrap gap-2" type={!props.fake && 'button' || undefined} onClick={props.onClick}>
-			<FontAwesomeIcon icon={props.icon} />
+			<Icon icon={props.icon} />
 			{props.children}
 		</ElementType>
 	);
@@ -110,10 +109,10 @@ PrimaryButton.defaultProps = {
 
 
 // A generic button component with an icon only
-export function IconButton(props: { icon: IconProp; onClick: () => void; }) {
+export function IconButton(props: { icon: IconDefinition; onClick: () => void; }) {
 	return (
 		<button className="btn-ghost sm:btn-square" type="button" onClick={props.onClick}>
-			<FontAwesomeIcon icon={props.icon} className="fa-lg" />
+			<Icon icon={props.icon} tw="fa-lg" />
 		</button>
 	);
 }
