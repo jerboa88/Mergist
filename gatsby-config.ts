@@ -72,6 +72,8 @@ const config: GatsbyConfig = {
 				theme_color_in_head: false
 			}
 		},
+		// This plugin need to be listed after gatsby-plugin-manifest
+		'gatsby-plugin-offline',
 		{
 			resolve: 'gatsby-plugin-react-svg',
 			options: {
