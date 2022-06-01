@@ -44,7 +44,7 @@ export function AboutModal(props: { id: string; author: string; authorUrl: strin
 	return (
 		<Modal id={props.id} title="About" buttonIcon={faThumbsUp} buttonLabel="Cool beans">
 			<p>
-				Handcrafted with love by {authorLink}. Powered by {reactLink} + {gatsbyLink} + {tailwindLink}, & hosted by {githubPagesLink}.
+				Handcrafted with love by {authorLink}. Powered by {reactLink} + {gatsbyLink} + {tailwindLink}. Hosted by {githubPagesLink}.
 			</p>
 			<br />
 			<p>
