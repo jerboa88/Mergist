@@ -17,7 +17,7 @@ export default function Header(props: { className: string; title: string; childr
 			<SingleColumnLayout className="justify-center">
 				<a href="/" >
 					<motion.h1 className='text-5xl font-heading font-black uppercase text-secondary drop-shadow' initial={twDropShadow} whileHover={{ scale: 1.1, ...twDropShadowLg, ...defaultTransition }}>
-						<LogoIcon className="svg-inline--fa mr-2 fa-sm !align-baseline" />
+						<LogoIcon className="svg-inline--fa mr-4 fa-sm !align-baseline" />
 						{props.title}
 					</motion.h1>
 				</a>

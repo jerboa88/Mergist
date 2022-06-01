@@ -56,6 +56,9 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 				<link rel="canonical" href={props.metadata.siteUrl} />
 
+				<link rel="icon" href="/favicon-32x32.png" type="image/png" />
+				<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
 				<script type="application/ld+json">
 					{`{
 						"@context": "http://schema.org",

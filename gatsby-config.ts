@@ -10,6 +10,73 @@ const title = `${shortTitle} - Online PDF Merger`;
 const username = 'jerboa88';
 const homepageDomain = 'johng.io';
 const siteUrl = `https://${shortTitle.toLowerCase()}.${homepageDomain}`;
+const icons = {
+	maskable: [
+		{
+			path: 'icons/maskable-icon.png',
+			size: 512
+		}
+	],
+	svg: [
+		{
+			path: 'favicon.svg',
+			size: 1024
+		},
+		{
+			path: `favicon-32x32.png`,
+			size: 32
+		},
+	],
+	appleTouch: [
+		{
+			path: 'icons/icon-48x48.png',
+			size: 48
+		},
+		{
+			path: 'icons/icon-72x72.png',
+			size: 72
+		},
+		{
+			path: 'icons/icon-96x96.png',
+			size: 96
+		},
+		{
+			path: 'icons/icon-144x144.png',
+			size: 144
+		},
+		{
+			path: 'icons/icon-192x192.png',
+			size: 192
+		},
+		{
+			path: 'icons/icon-256x256.png',
+			size: 256
+		},
+		{
+			path: 'icons/icon-384x384.png',
+			size: 384
+		},
+		{
+			path: 'icons/icon-512x512.png',
+			size: 512
+		}
+	]
+}
+
+
+const manifestIconEntries = [
+	...mapIconListToManifestEntries(icons.appleTouch, 'any'),
+	...mapIconListToManifestEntries(icons.maskable, 'maskable')
+];
+
+function mapIconListToManifestEntries(iconList: Array<{ path: string; size: number }>, purpose: string) {
+	return iconList.map(({ path, size }) => ({
+		src: path,
+		sizes: `${size}x${size}`,
+		type: 'image/png',
+		purpose: purpose
+	}));
+}
 
 const config: GatsbyConfig = {
 	siteMetadata: {
@@ -41,7 +108,7 @@ const config: GatsbyConfig = {
 			}
 		},
 		{
-			resolve: `gatsby-plugin-google-gtag`,
+			resolve: 'gatsby-plugin-google-gtag',
 			options: {
 				trackingIds: [
 					'G-TYRQSQ9QC3'
@@ -58,6 +125,21 @@ const config: GatsbyConfig = {
 			}
 		},
 		{
+			resolve: 'gatsby-plugin-icon-generator',
+			options: {
+				generate: [
+					{
+						from: 'images/favicon.svg',
+						to: [...icons.svg, ...icons.appleTouch]
+					},
+					{
+						from: 'images/maskable-icon.svg',
+						to: icons.maskable
+					}
+				]
+			}
+		},
+		{
 			resolve: 'gatsby-plugin-manifest',
 			options: {
 				name: title,
@@ -66,8 +148,10 @@ const config: GatsbyConfig = {
 				background_color: darkTheme['base-100'],
 				theme_color: darkTheme.primary,
 				display: 'standalone',
-				icon: 'src/images/favicon.svg',
-				include_favicon: true,
+				icons: manifestIconEntries,
+				// Only Apple touch icons and maskable icons are added to the manifest
+				// We add traditional favicons to the document head using React Helmet
+				include_favicon: false,
 				// Theme color is set manually in the Page component according to the current theme
 				theme_color_in_head: false
 			}
