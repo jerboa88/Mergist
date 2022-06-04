@@ -1,6 +1,6 @@
 /*
 	Reusable accordion components
-	------------------------
+	-----------------------------
 */
 
 
@@ -18,8 +18,16 @@ export function Accordion(props: { children: ReactNode; isOpen: boolean; }) {
 		animate: 'open',
 		exit: 'closed',
 		variants: {
-			open: { height: 'auto' },
-			closed: { height: 0 }
+			open: {
+				height: 'auto',
+				transitionEnd: {
+					overflow: 'auto'
+				}
+			},
+			closed: {
+				height: 0,
+				overflow: 'hidden'
+			}
 		},
 		...defaultTransition
 	}
