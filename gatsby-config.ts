@@ -97,14 +97,24 @@ const config: GatsbyConfig = {
 			resolve: 'gatsby-plugin-sitemap',
 			options: {
 				// Generate sitemaps at the root of the site
-				output: '/'
+				output: '/',
+				serialize: ({ path }: { path: string }) => {
+					return {
+						url: path,
+						// Because this is a single page site, we can assume the page is modified on every build
+						// Remove this if more pages are added so Google doesn't get upset
+						lastmod: Date.now(),
+						changefreq: 'monthly',
+					}
+				},
 			}
 		},
 		{
 			resolve: 'gatsby-plugin-robots-txt',
 			options: {
 				// Link to the sitemap index generated above
-				sitemap: `${siteUrl}/sitemap-index.xml`
+				sitemap: `${siteUrl}/sitemap-index.xml`,
+				policy: [{ userAgent: '*', allow: '/' }]
 			}
 		},
 		{
