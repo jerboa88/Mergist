@@ -30,8 +30,8 @@
 }
 
 
-/* Override disabled button styles since DaisyUI insists on making disabled buttons gray */
 @layer components {
+	/* Override disabled button styles since DaisyUI insists on making disabled buttons gray */
 	.btn-primary[disabled], .btn-secondary[disabled], .btn-accent[disabled] {
 		@apply opacity-40;
 		@apply cursor-default;
@@ -50,5 +50,22 @@
 	.btn-accent[disabled] {
 		@apply bg-accent;
 		@apply text-accent-content;
+	}
+
+	/* Styles for custom scrollbar */
+	body {
+		overflow: overlay;
+	}
+
+	*::-webkit-scrollbar {
+		@apply w-4;
+	}
+
+	*::-webkit-scrollbar-thumb {
+		@apply rounded-full;
+		/* Use transparent border as margin/padding is not supported for scrollbar components */
+		border: .25em transparent solid;
+		/* Set background color using box-shadow because background doesn't work with above hack */
+		box-shadow: inset 0 -1px 1px #000000aa, inset 0 0 99px #ffffff22;
 	}
 }
