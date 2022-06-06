@@ -1,3 +1,9 @@
+/*
+	Custom Type Definitions for TypeScript imports
+	----------------------------------------------
+*/
+
+
 // Create custom type for svg files to suppress import warnings
 declare module '../images/*.svg' {
 	export default React.FunctionComponent<React.SVGAttributes<SVGElement>>();

@@ -1,3 +1,9 @@
+/*
+	Reusable layout components
+	--------------------------
+*/
+
+
 import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MetadataInterface } from '../common/types';

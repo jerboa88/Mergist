@@ -1,4 +1,9 @@
-// Common types used in the project
+/*
+	Common types used in the project
+	--------------------------------
+*/
+
+
 import { PDFFile } from './utilities';
 
 

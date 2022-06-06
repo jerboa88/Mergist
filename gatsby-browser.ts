@@ -1,6 +1,6 @@
 /*
-	Global customizations for the browser
-	-------------------------------------
+	Global customizations for browser-side code
+	-------------------------------------------
 */
 
 

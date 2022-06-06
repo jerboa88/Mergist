@@ -1,3 +1,9 @@
+/*
+	Tailwind CSS configuration file
+	-------------------------------
+*/
+
+
 const defaultThemes = require('daisyui/src/colors/themes');
 const defaultLightTheme = defaultThemes['[data-theme=light]'];
 const defaultDarkTheme = defaultThemes['[data-theme=dark]'];

@@ -1,3 +1,9 @@
+/*
+	Alert component for displaying status messages
+	----------------------------------------------
+*/
+
+
 import React, { useEffect, useState } from 'react';
 import { faTriangleExclamation, faCircleExclamation, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, motion } from 'framer-motion';

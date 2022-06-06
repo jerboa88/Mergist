@@ -1,3 +1,9 @@
+/*
+	Gatsby configuration file
+	-------------------------
+*/
+
+
 import type { GatsbyConfig } from 'gatsby';
 import { DaisyUiThemeInterface, MetadataInterface } from './src/common/types';
 

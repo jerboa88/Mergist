@@ -1,4 +1,9 @@
-// Common methods used in the project
+/*
+	Common methods used in the project
+	----------------------------------
+*/
+
+
 import { createContext, SyntheticEvent, useEffect, useRef } from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';

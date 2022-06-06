@@ -1,3 +1,9 @@
+/*
+	Component to toggle the page theme
+	----------------------------------
+*/
+
+
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';

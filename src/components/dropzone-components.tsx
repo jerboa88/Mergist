@@ -1,3 +1,9 @@
+/*
+	Reusable dropzone components
+	----------------------------
+*/
+
+
 import React, { ChangeEvent, ReactNode, useRef, useState, useCallback, useEffect, DragEvent } from 'react';
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { ignoreDefault } from '../common/utilities';

@@ -1,3 +1,9 @@
+/*
+	Footer component
+	----------------
+*/
+
+
 import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faCircleQuestion, faCookie } from '@fortawesome/free-solid-svg-icons';

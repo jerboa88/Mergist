@@ -1,3 +1,8 @@
+/*
+	Component for displaying a list of files and associated action buttons
+	----------------------------------------------------------------------
+*/
+
 
 import React from 'react';
 import { faFileCirclePlus, faGripVertical, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';

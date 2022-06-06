@@ -1,3 +1,9 @@
+/*
+	Reusable modal components
+	-------------------------
+*/
+
+
 import React, { ReactNode } from 'react';
 import { faAngleDown, faCookieBite, faThumbsUp, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink, LinkWrapper } from '../components/link-components';
