@@ -46,7 +46,8 @@ export function ignoreDefault(event: SyntheticEvent<HTMLElement>): void {
 
 // Generate unique hashes from input parameters
 // This is used to ensure that React component keys and PDF files are unique
-// https://stackoverflow.com/a/7616484/1378560
+// Adapted from a StackOverflow answer by esmiralha (https://stackoverflow.com/users/495174/esmiralha)
+// Source: https://stackoverflow.com/a/7616484/1378560
 function generateHash(...args: any[]): string {
 	const inputString = args.join('');
 	let hash = 0, chr;
@@ -171,7 +172,8 @@ export class PDFManager {
 
 
 	// Combine multiple PDF files into a single one using PDF-LIB
-	// https://stackoverflow.com/a/65555135/1378560
+	// Adapted from a StackOverflow answer by Nicholas Barrow (https://stackoverflow.com/users/14717625/nicholas-barrow)
+	// Source: https://stackoverflow.com/a/65555135/1378560
 	public async createMergedFile(existingFileMap: PDFFileMapInterface, fileIds: string[], onProgress: (progress: number) => void): Promise<[string, StatusMsg[]]> {
 		try {
 			const numOfFiles = fileIds.length;
@@ -278,7 +280,8 @@ export class StorageManager {
 
 
 // Custom React hook that returns whether the current render is the first render
-// https://stackoverflow.com/a/56267719/1378560
+// Adapted from a StackOverflow answer by Scotty Waggoner (https://stackoverflow.com/users/665224/scotty-waggoner)
+// Source: https://stackoverflow.com/a/56267719/1378560
 export const useIsMount = () => {
 	const isMountRef = useRef(true);
 
