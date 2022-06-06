@@ -1,5 +1,5 @@
 // Common methods used in the project
-import { createContext, SyntheticEvent } from 'react';
+import { createContext, SyntheticEvent, useEffect, useRef } from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
 import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from './types';
@@ -7,8 +7,8 @@ import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from './types';
 
 // Create context for updating the site theme
 export const ThemeContext = createContext({
-	isDarkTheme: false,
-	toggleTheme: (() => { })
+	isDarkTheme: true,
+	toggleTheme: (() => { console.debug('this should never be called'); })
 });
 
 
@@ -25,11 +25,17 @@ export const defaultTransition = {
 }
 
 
+export function doesWindowExist(): boolean {
+	return typeof window !== 'undefined';
+}
+
+
 // Load site metadata from gatsby-config.js
 export function loadMetadata(config: GatsbyConfig): MetadataInterface {
 	// Cast to match expected return type. siteMetadata type is enforced in gatsby-config.js
 	return config.siteMetadata as MetadataInterface;
 }
+
 
 // Stop default behavior for mouse events
 export function ignoreDefault(event: SyntheticEvent<HTMLElement>): void {
@@ -234,3 +240,51 @@ export class PDFManager {
 		return progress;
 	}
 }
+
+
+export class StorageManager {
+	private storage: Storage | null;
+
+	constructor() {
+		// Check if the window exists so that we do not run browser code on the server
+		if (doesWindowExist()) {
+			this.storage = window.localStorage;
+		} else {
+			this.storage = null;
+
+			console.warn('StorageManager was instantiated server-side');
+		}
+	}
+
+	public get(key: string, defaultValue: boolean): boolean {
+		if (!this.storage) {
+			return defaultValue;
+		}
+
+		const loadedValue = this.storage.getItem(key);
+
+		// If there is no stored value, return the default value
+		return loadedValue === null ? defaultValue : JSON.parse(loadedValue);
+	}
+
+	public set(key: string, value: boolean): void {
+		this.storage && this.storage.setItem(key, JSON.stringify(value));
+	}
+
+	public remove(key: string): void {
+		this.storage && this.storage.removeItem(key);
+	}
+}
+
+
+// Custom React hook that returns whether the current render is the first render
+// https://stackoverflow.com/a/56267719/1378560
+export const useIsMount = () => {
+	const isMountRef = useRef(true);
+
+	useEffect(() => {
+		isMountRef.current = false;
+	}, []);
+
+	return isMountRef.current;
+};

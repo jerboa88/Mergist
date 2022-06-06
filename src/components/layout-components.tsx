@@ -1,42 +1,56 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MetadataInterface } from '../common/types';
-import { ThemeContext } from '../common/utilities';
+import { doesWindowExist, StorageManager, ThemeContext, useIsMount } from '../common/utilities';
 import ogImage from '../images/og-image.png';
 
 
 // Layout component that provides basic styles and metadata tags for the whole page
 export function PageLayout(props: { className: string; metadata: MetadataInterface; children: ReactNode }) {
+	const storageManager = new StorageManager();
 	const lsKeyName = 'is-dark-theme';
 	const [isDarkTheme, setIsDarkTheme] = useState<boolean>(getIsDarkMode());
+	const isMount = useIsMount();
 
 
 	useEffect(() => {
-		doesWindowExist() && localStorage.setItem(lsKeyName, JSON.stringify(isDarkTheme));
+		// Save the user's chosen theme to storage when the isDarkTheme var changes
+		// Ignore the first update since this is caused by the component mounting rather than a user action
+		if (!isMount) {
+			storageManager.set(lsKeyName, isDarkTheme);
+		}
 	}, [isDarkTheme]);
 
-	// Check if the window exists so that we do not run browser code on the server
-	function doesWindowExist(): boolean {
-		return typeof window !== 'undefined';
+	// Get the current theme from local storage if it exists, otherwise use the dark theme
+	function getIsDarkMode(): boolean {
+		let defaultValue = true;
+
+		// Check if the prefers-color-scheme media query is supported
+		if (doesWindowExist() && window.matchMedia && window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
+			// If so, use this as the default theme
+			defaultValue = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		}
+
+		return storageManager.get(lsKeyName, defaultValue);
 	}
 
-	function getIsDarkMode() {
-		const loadedVal = doesWindowExist() && localStorage.getItem(lsKeyName);
-
-		return loadedVal ? JSON.parse(loadedVal) : false;
-	}
-
-	function toggleTheme() {
-		setIsDarkTheme(!isDarkTheme);
-	}
-
-	function getPrimaryThemeColor() {
+	function getPrimaryThemeColor(): string {
 		return props.metadata[isDarkTheme ? 'darkTheme' : 'lightTheme'].primary;
 	}
 
+	// This method is passed to the ThemeContext component to toggle the theme
+	const toggleTheme = useCallback(() => {
+		setIsDarkTheme(!isDarkTheme);
+	}, [isDarkTheme]);
+
+	// Memoize before passing to the ThemeContext component
+	const providerValues = useMemo(() => ({ isDarkTheme, toggleTheme }), [
+		isDarkTheme,
+		toggleTheme
+	]);
 
 	return (
-		<ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
+		<ThemeContext.Provider value={providerValues}>
 			<Helmet htmlAttributes={{ lang: 'en-US' }}>
 				<title>{props.metadata.title}</title>
 				<meta name="author" content={props.metadata.author} />
