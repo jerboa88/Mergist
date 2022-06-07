@@ -11,6 +11,9 @@ import { SingleColumnLayout } from '../components/layout-components';
 import LogoIcon from '../images/favicon.svg';
 
 
+// Exports
+
+// A basic header component
 export default function Header(props: { className: string; title: string; children: ReactNode; }) {
 	// Drop shadow styles extracted from Tailwind CSS
 	// We need to apply the raw styles so that we can transition between them with Framer Motion

@@ -11,6 +11,8 @@ import { doesWindowExist, StorageManager, ThemeContext, useIsMount } from '../co
 import ogImage from '../images/og-image.png';
 
 
+// Exports
+
 // Layout component that provides basic styles and metadata tags for the whole page
 export function PageLayout(props: { className: string; metadata: MetadataInterface; children: ReactNode }) {
 	const storageManager = new StorageManager();
@@ -18,9 +20,8 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	const [isDarkTheme, setIsDarkTheme] = useState<boolean>(getIsDarkMode());
 	const isMount = useIsMount();
 
-
+	// Save the user's chosen theme to storage when isDarkTheme changes
 	useEffect(() => {
-		// Save the user's chosen theme to storage when the isDarkTheme var changes
 		// Ignore the first update since this is caused by the component mounting rather than a user action
 		if (!isMount) {
 			storageManager.set(lsKeyName, isDarkTheme);
@@ -40,6 +41,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 		return storageManager.get(lsKeyName, defaultValue);
 	}
 
+	// Get the primary theme color from DaisyUI config
 	function getPrimaryThemeColor(): string {
 		return props.metadata[isDarkTheme ? 'darkTheme' : 'lightTheme'].primary;
 	}
@@ -57,12 +59,14 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 	return (
 		<ThemeContext.Provider value={providerValues}>
+			{/* Page head */}
 			<Helmet htmlAttributes={{ lang: 'en-US' }}>
 				<title>{props.metadata.title}</title>
 				<meta name="author" content={props.metadata.author} />
 				<meta name="description" content={props.metadata.description} />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+				{/* OpenGraph tags */}
 				<meta property="og:title" content={props.metadata.title} />
 				<meta property="og:description" content={props.metadata.description} />
 				<meta property="og:image" content={`${props.metadata.siteUrl}${ogImage}`} />
@@ -76,9 +80,11 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 				<link rel="canonical" href={props.metadata.siteUrl} />
 
+				{/* These icons are were not added to the head with gatsby-plugin-manifest so we need to add them manually here */}
 				<link rel="icon" href="/favicon-32x32.png" type="image/png" />
 				<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
+				{/* Structured metadata */}
 				<script type="application/ld+json">
 					{`{
 						"@context": "http://schema.org",
@@ -103,6 +109,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 				</script>
 			</Helmet>
 
+			{/* Page body */}
 			<div className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}>
 				{props.children}
 			</div>
@@ -115,11 +122,13 @@ PageLayout.defaultProps = {
 };
 
 
+// Create an interface for SingleColumnLayout props since there are a lot of types to define
 interface SingleColumnLayoutPropsInterface {
 	className?: string;
 	collapse?: boolean;
 	children: ReactNode;
-	[propName: string]: any; // Allow injecting props
+	// Allow prop injection
+	[propName: string]: any;
 }
 
 // Inner layout container that limits the width of its content and accepts arbitrary props
@@ -150,6 +159,7 @@ export function Main(props: { children: ReactNode }) {
 }
 
 
+// A wrapper component that can be hidden
 export function Section(props: { className: string; visible: boolean; children: ReactNode }) {
 	return (
 		<section className={`flex-col justify-center w-full h-full ${props.visible ? '' : 'hidden overflow-hidden '}${props.className}`}>

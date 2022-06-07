@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { faTriangleExclamation, faCircleExclamation, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SeverityTypes } from '../common/types';
-import { StatusMsg } from '../common/utilities';
+import { defaultTransition, StatusMsg } from '../common/utilities';
 import { Icon } from '../components/icon-components';
 
 
@@ -28,12 +28,30 @@ const alertTypes = {
 }
 
 
+// Exports
+
 export default function Alert(props: { statusMsg: StatusMsg; }) {
 	const delayMs = 4000;
 	const type = props.statusMsg.getSeverity;
 	const [visible, setVisible] = useState(true);
+	const animationProps = {
+		initial: 'hidden',
+		animate: 'visible',
+		exit: 'hidden',
+		variants: {
+			visible: {
+				opacity: 1,
+				scaleY: 1
+			},
+			hidden: {
+				opacity: 0,
+				scaleY: 0
+			}
+		},
+		...defaultTransition
+	};
 
-
+	// Hide the alert after a delay
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
 			setVisible(false);
@@ -47,11 +65,7 @@ export default function Alert(props: { statusMsg: StatusMsg; }) {
 	return (
 		<AnimatePresence>
 			{visible && (
-				<motion.div layout className={`alert ${alertTypes[type].class} shadow-md`}
-					key={props.statusMsg.getId}
-					initial={{ opacity: 0, scaleY: 0 }}
-					animate={{ opacity: 1, scaleY: 1 }}
-					exit={{ opacity: 0, scaleY: 0 }}>
+				<motion.div layout className={`alert shadow-md ${alertTypes[type].class}`} key={props.statusMsg.getId} {...animationProps}>
 					<div>
 						<Icon icon={alertTypes[type].icon} tw="mr-2 fa-lg" />
 						<span>{props.statusMsg.getMsg}</span>

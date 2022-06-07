@@ -11,20 +11,29 @@ import { Icon } from '../components/icon-components';
 
 
 // Base components
+
+// A simple progress bar component for the progress action button
 function ProgressBar(props: { progress: string; }) {
+	const animationProps = {
+		initial: { width: 0 },
+		animate: { width: props.progress },
+		transition: {
+			type: 'inertia',
+			power: 1,
+			timeConstant: 1000,
+			velocity: 100
+		}
+	};
+
 	return (
 		<div className="w-full h-1">
-			<motion.div role="progressbar" className="h-full bg-primary-content rounded-full" initial={{ width: 0 }} animate={{ width: props.progress }} transition={{
-				type: 'inertia',
-				power: 1,
-				timeConstant: 1000,
-				velocity: 100
-			}} />
+			<motion.div role="progressbar" className="h-full bg-primary-content rounded-full" {...animationProps} />
 		</div>
 	);
 }
 
 
+// A full width button component
 function FullWidthButton(props: { className: string; children: ReactNode; disabled: boolean; onClick: () => void; }) {
 	return (
 		<button className={`btn-block gap-2 ${props.className}`} disabled={props.disabled} onClick={props.onClick}>
@@ -40,6 +49,7 @@ FullWidthButton.defaultProps = {
 }
 
 
+// A full-width download button component
 function DownloadActionButton(props: { downloadUrl: string }) {
 	return (
 		<a href={props.downloadUrl} target="_blank" rel="noopener noreferrer" download="merged.pdf" className="w-full">
@@ -52,6 +62,7 @@ function DownloadActionButton(props: { downloadUrl: string }) {
 }
 
 
+// A disabled full-width button component that shows the current progress percentage
 function ProgressActionButton(props: { progress: number }) {
 	const isSaving = props.progress >= 1;
 	const percentString = `${(props.progress * 100).toFixed(0)}%`;
@@ -89,9 +100,9 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 // Exports
 
 // A generic button component with an icon and text
-export function PrimaryButton(props: { icon: IconDefinition; fake: boolean; children: string; onClick: () => void; }) {
+export function PrimaryButton(props: { icon: IconDefinition; fake: boolean; children: string; onClick?: () => void; }) {
 	// If fake attribute is specified, render the element as a div instead of a button
-	// This is to prevent issue with nested input elements in the same dropzone wrapper component
+	// This is to prevent issues with nested input elements in the same dropzone wrapper component
 	const ElementType = props.fake && 'div' || 'button';
 
 	return (
@@ -103,22 +114,17 @@ export function PrimaryButton(props: { icon: IconDefinition; fake: boolean; chil
 }
 
 PrimaryButton.defaultProps = {
-	fake: false,
-	onClick: undefined
+	fake: false
 }
 
 
 // A generic button component with an icon only
-export function IconButton(props: { icon: IconDefinition; onClick: () => void; }) {
+export function IconButton(props: { icon: IconDefinition; onClick?: () => void; }) {
 	return (
 		<button className="btn-ghost sm:btn-square" type="button" onClick={props.onClick}>
 			<Icon icon={props.icon} tw="fa-lg" />
 		</button>
 	);
-}
-
-IconButton.defaultProps = {
-	onClick: undefined
 }
 
 

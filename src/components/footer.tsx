@@ -13,6 +13,9 @@ import { IconButtonLink } from '../components/link-components';
 import ThemeToggle from '../components/theme-toggle';
 
 
+// Exports
+
+// A basic footer component
 export default function Footer(props: { author: string; githubUrl: string; homepageDomain: string; }) {
 	const privacyModalId = 'privacy-modal';
 	const aboutModalId = 'about-modal';

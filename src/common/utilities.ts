@@ -7,46 +7,7 @@
 import { createContext, SyntheticEvent, useEffect, useRef } from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
-import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from './types';
-
-
-// Create context for updating the site theme
-export const ThemeContext = createContext({
-	isDarkTheme: true,
-	toggleTheme: (() => { console.debug('this should never be called'); })
-});
-
-
-// Default transition settings for scaling animations
-export const defaultTransition = {
-	transition: {
-		duration: .25,
-		scale: {
-			type: 'spring',
-			duration: .25,
-			bounce: .25,
-		}
-	}
-}
-
-
-export function doesWindowExist(): boolean {
-	return typeof window !== 'undefined';
-}
-
-
-// Load site metadata from gatsby-config.js
-export function loadMetadata(config: GatsbyConfig): MetadataInterface {
-	// Cast to match expected return type. siteMetadata type is enforced in gatsby-config.js
-	return config.siteMetadata as MetadataInterface;
-}
-
-
-// Stop default behavior for mouse events
-export function ignoreDefault(event: SyntheticEvent<HTMLElement>): void {
-	event.preventDefault();
-	event.stopPropagation();
-}
+import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from '../common/types';
 
 
 // Generate unique hashes from input parameters
@@ -71,6 +32,64 @@ function generateHash(...args: any[]): string {
 }
 
 
+// Exports
+
+// Default transition settings for Framer Motion animations
+export const defaultTransition = {
+	transition: {
+		duration: .25,
+		scale: {
+			type: 'spring',
+			duration: .25,
+			bounce: .25,
+		}
+	}
+}
+
+
+// Custom React hook that returns whether the current render is the first render
+// Adapted from a StackOverflow answer by Scotty Waggoner (https://stackoverflow.com/users/665224/scotty-waggoner)
+// Source: https://stackoverflow.com/a/56267719/1378560
+export const useIsMount = () => {
+	const isMountRef = useRef(true);
+
+	useEffect(() => {
+		isMountRef.current = false;
+	}, []);
+
+	return isMountRef.current;
+};
+
+
+// Context for updating the site theme
+export const ThemeContext = createContext({
+	isDarkTheme: true,
+	toggleTheme: (() => { /* no-op */ })
+});
+
+
+// Check if the window object exists
+// This will return false if the method is called from a server-side environment
+export function doesWindowExist(): boolean {
+	return typeof window !== 'undefined';
+}
+
+
+// Load site metadata from gatsby-config.js
+export function loadMetadata(config: GatsbyConfig): MetadataInterface {
+	// Cast to match expected return type. siteMetadata type is enforced in gatsby-config.js
+	return config.siteMetadata as MetadataInterface;
+}
+
+
+// Stop default behavior for mouse events
+export function ignoreDefault(event: SyntheticEvent<HTMLElement>) {
+	event.preventDefault();
+	event.stopPropagation();
+}
+
+
+// A class to represent a status message and its severity
 export class StatusMsg {
 	public id: string;
 	private static prefixMap = {
@@ -81,14 +100,14 @@ export class StatusMsg {
 	private static logFuncMap = {
 		[SeverityTypes.SUCCESS]: (msg: string) => console.log(msg),
 		[SeverityTypes.WARNING]: (msg: string) => console.warn(msg),
-		[SeverityTypes.ERROR]: (msg: string) => console.error(msg),
+		[SeverityTypes.ERROR]: (msg: string) => console.error(msg)
 	}
 
 	constructor(public severity: SeverityTypes, public msg: string, private exception: Error | null = null) {
 		this.id = generateHash(this.severity, this.msg, Date.now());
 		this.severity = severity;
 		this.msg = `${StatusMsg.prefixMap[severity]}: ${msg}`;
-		this.exception = exception
+		this.exception = exception;
 
 		// Log message immediately upon creation
 		this.log();
@@ -116,6 +135,8 @@ export class StatusMsg {
 }
 
 
+// A class to represent a PDF file
+// This wraps a File object and adds an id to uniquely identify it
 export class PDFFile {
 	public id: string;
 
@@ -142,6 +163,7 @@ export class PDFFile {
 }
 
 
+// A class with methods for loading PDF files and processing them
 export class PDFManager {
 	private pdfCreator: string;
 
@@ -213,6 +235,7 @@ export class PDFManager {
 				onProgress(this.calculateProgressPercentage(i + 1, numOfFiles));
 			}
 
+			// Set metadata of the created file using the metadata from all input files
 			pdfDoc.setTitle('Merged PDF')
 			pdfDoc.setSubject(Array.from(subjectsSet).join(', '));
 			pdfDoc.setKeywords(Array.from(keywordsSet));
@@ -239,6 +262,7 @@ export class PDFManager {
 		window.URL.revokeObjectURL(mergedPdfUrl);
 	}
 
+	// Calculate the progress percentage of the merge process
 	private calculateProgressPercentage(i: number, numOfFiles: number): number {
 		const progress = i / numOfFiles;
 
@@ -249,6 +273,7 @@ export class PDFManager {
 }
 
 
+// A class with methods for managing data in local storage
 export class StorageManager {
 	private storage: Storage | null;
 
@@ -263,6 +288,8 @@ export class StorageManager {
 		}
 	}
 
+	// Get the value of a key from local storage
+	// Returns the default value if the key does not exist or if the window object does not exist
 	public get(key: string, defaultValue: boolean): boolean {
 		if (!this.storage) {
 			return defaultValue;
@@ -274,25 +301,13 @@ export class StorageManager {
 		return loadedValue === null ? defaultValue : JSON.parse(loadedValue);
 	}
 
-	public set(key: string, value: boolean): void {
+	// Set the value of a key in local storage
+	public set(key: string, value: boolean) {
 		this.storage && this.storage.setItem(key, JSON.stringify(value));
 	}
 
-	public remove(key: string): void {
+	// Remove a key from local storage
+	public remove(key: string) {
 		this.storage && this.storage.removeItem(key);
 	}
 }
-
-
-// Custom React hook that returns whether the current render is the first render
-// Adapted from a StackOverflow answer by Scotty Waggoner (https://stackoverflow.com/users/665224/scotty-waggoner)
-// Source: https://stackoverflow.com/a/56267719/1378560
-export const useIsMount = () => {
-	const isMountRef = useRef(true);
-
-	useEffect(() => {
-		isMountRef.current = false;
-	}, []);
-
-	return isMountRef.current;
-};

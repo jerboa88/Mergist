@@ -18,7 +18,7 @@ export function DropzoneWrapper(props: { className: string; children: ReactNode;
 		const files = event.target.files;
 
 		// The list will be empty if cancel is pressed, so we need to account for this
-		// It should never be null but we might as well check it to make the TS compiler happy
+		// It should never be null but we might as well check to make the TS compiler happy
 		if (files && files.length > 0) {
 			props.onFilesAdded(files);
 		}
@@ -51,12 +51,11 @@ export function LargeDropzone(props: { onFilesAdded: (files: FileList) => void; 
 
 
 // A full screen dropzone component. Accepts a callback function that fires when a file is dropped
-// https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
+// Adapted from a GitHub comment by jlarmstrongiv (https://github.com/jlarmstrongiv)
+// Source: https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
 export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
 	const [isDragging, setIsDragging] = useState(false);
-
 	const dragCounter = useRef(0);
-
 
 	const handleDrag = useCallback((event: DragEvent<HTMLElement>) => {
 		ignoreDefault(event);
@@ -96,9 +95,8 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 		}
 	}, [props.onFilesAdded]);
 
-
 	useEffect(() => {
-		// Force cast event handler parameter to the correct type
+		// Force cast event parameter from the placeholder globalThis type to a proper React event type
 		type DragEventHandler = (event: unknown | globalThis.DragEvent) => void;
 
 		window.addEventListener('dragenter', handleDragIn as DragEventHandler);
@@ -113,7 +111,6 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 			window.removeEventListener('drop', handleDrop as DragEventHandler);
 		};
 	});
-
 
 	return (
 		<div className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />

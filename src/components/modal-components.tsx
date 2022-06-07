@@ -65,7 +65,6 @@ export function AboutModal(props: { id: string; author: string; authorUrl: strin
 // A modal that displays the privacy policy for the site
 export function PrivacyModal(props: { id: string; }) {
 	const [isOpen, setIsOpen] = React.useState(false);
-
 	const gaLink = <InlineLink to="https://www.google.com/analytics/">Google Analytics</InlineLink>;
 
 	function toggleIsOpen() {

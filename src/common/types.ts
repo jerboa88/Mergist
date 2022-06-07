@@ -23,8 +23,9 @@ export interface DaisyUiThemeInterface {
 	'secondary-content': string;
 }
 
+
 // This needs to be a type rather than an interface due to existing TS 'functionality'
-// https://github.com/microsoft/TypeScript/issues/15300
+// See https://github.com/microsoft/TypeScript/issues/15300 for more details
 export type MetadataInterface = {
 	shortTitle: string;
 	title: string;

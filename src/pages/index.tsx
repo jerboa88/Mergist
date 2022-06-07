@@ -14,6 +14,9 @@ import Header from '../components/header';
 import FileManager from '../components/file-manager';
 
 
+// Exports
+
+// Index page component
 export default function IndexPage() {
   const [fileIds, setFileIds] = useState<string[]>([]);
   const [files, setFiles] = useState<PDFFileMapInterface>({});
@@ -39,6 +42,7 @@ export default function IndexPage() {
     setMergedPdfUrl('');
   }
 
+  // Handler for file upload events
   const handleAddFiles = useCallback((inputFiles: FileList) => {
     const [validFileList, statusMsgList] = pdfManager.filterInvalidFiles(files, Array.from(inputFiles));
 
@@ -74,7 +78,8 @@ export default function IndexPage() {
     updateState([], {});
   }
 
-  function handleReorderFiles(fileIds: string[]): void {
+  // Reorder the list of file ids
+  function handleReorderFiles(fileIds: string[]) {
     updateState(fileIds);
   }
 

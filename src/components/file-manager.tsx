@@ -50,6 +50,7 @@ function SortableItem(props: { id: string; name: string; size: number; onRemove:
 }
 
 
+// Create an interface for SortableFileList props since there are a lot of types to define
 interface SortableFileListPropsInterface {
 	fileIds: string[];
 	files: PDFFileMapInterface;
@@ -73,6 +74,8 @@ function SortableFileList(props: SortableFileListPropsInterface) {
 
 
 // Exports
+
+// Create an interface for FileManager props since there are a lot of types to define
 interface FileManagerPropsInterface extends SortableFileListPropsInterface {
 	onFileAdded: (inputFiles: FileList) => void;
 	onAllFilesRemoved: () => void;
@@ -80,6 +83,7 @@ interface FileManagerPropsInterface extends SortableFileListPropsInterface {
 
 // A component that allows the user to add and remove PDF files from a list
 export default function FileManager(props: FileManagerPropsInterface) {
+	// Calculate the combined size of all files using a reduction
 	function getEstimatedFileSize() {
 		return prettyBytes(Object.values(props.files).reduce((partialSum, pdfFile) => partialSum + pdfFile.getSize, 0));
 	}
