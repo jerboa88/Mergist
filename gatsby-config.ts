@@ -17,21 +17,21 @@ const username = 'jerboa88';
 const homepageDomain = 'johng.io';
 const siteUrl = `https://${shortTitle.toLowerCase()}.${homepageDomain}`;
 const icons = {
-	maskable: [
-		{
-			path: 'icons/maskable-icon.png',
-			size: 512
-		}
-	],
-	svg: [
+	favicon: [
 		{
 			path: 'favicon.svg',
 			size: 1024
 		},
 		{
-			path: `favicon-32x32.png`,
+			path: 'favicon-32x32.png',
 			size: 32
 		},
+	],
+	maskable: [
+		{
+			path: 'icons/maskable-icon.png',
+			size: 512
+		}
 	],
 	appleTouch: [
 		{
@@ -71,10 +71,13 @@ const icons = {
 
 
 const manifestIconEntries = [
-	...mapIconListToManifestEntries(icons.appleTouch, 'any'),
-	...mapIconListToManifestEntries(icons.maskable, 'maskable')
+	...mapIconListToManifestEntries(icons.maskable, 'maskable'),
+	...mapIconListToManifestEntries(icons.favicon, 'any'),
+	...mapIconListToManifestEntries(icons.appleTouch, 'any')
 ];
 
+// Map a list of icons to a list of manifest entries
+// We can assume size is a single number here because only square icons will be added to the manifest
 function mapIconListToManifestEntries(iconList: Array<{ path: string; size: number }>, purpose: string) {
 	return iconList.map(({ path, size }) => ({
 		src: path,
@@ -110,7 +113,7 @@ const config: GatsbyConfig = {
 						// Because this is a single page site, we can assume the page is modified on every build
 						// Remove this if more pages are added so Google doesn't get upset
 						lastmod: Date.now(),
-						changefreq: 'monthly',
+						changefreq: 'monthly'
 					}
 				},
 			}
@@ -146,11 +149,20 @@ const config: GatsbyConfig = {
 				generate: [
 					{
 						from: 'images/icon.svg',
-						to: [...icons.svg, ...icons.appleTouch]
+						to: [
+							...icons.favicon,
+							...icons.appleTouch
+						],
+						options: {
+							optimize: true
+						}
 					},
 					{
 						from: 'images/maskable-icon.svg',
-						to: icons.maskable
+						to: icons.maskable,
+						options: {
+							optimize: true
+						}
 					}
 				]
 			}

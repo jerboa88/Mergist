@@ -9,6 +9,7 @@
   "author": "John Goodliff",
   "license": "MIT",
   "peerDependencies": {
-    "sharp": "^0.30.5"
+    "sharp": "^0.30.5",
+    "svgo": "^2.8.0"
   }
 }
