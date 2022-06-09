@@ -145,7 +145,7 @@ const config: GatsbyConfig = {
 			options: {
 				generate: [
 					{
-						from: 'images/favicon.svg',
+						from: 'images/icon.svg',
 						to: [...icons.svg, ...icons.appleTouch]
 					},
 					{

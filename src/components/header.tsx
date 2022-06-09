@@ -8,7 +8,7 @@ import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { defaultTransition } from '../common/utilities';
 import { SingleColumnLayout } from '../components/layout-components';
-import LogoIcon from '../images/favicon.svg';
+import LogoIcon from '../images/icon.svg';
 
 
 // Exports
