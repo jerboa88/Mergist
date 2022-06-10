@@ -5,12 +5,13 @@
 
 
 const fs = require('fs');
-const path = require('path');
+const { extname, dirname, join } = require('path');
 const sharp = require('sharp');
 const { optimize } = require('svgo');
 const optionsSchema = require('./options-schema.js');
 
 
+const pluginName = 'gatsby-plugin-image-generator';
 const inputFolder = 'src';
 const outputFolder = 'public';
 const resizeOptions = {
@@ -64,16 +65,17 @@ const optimizeOptions = {
 
 // Check if a given image is an SVG
 function isSvg(imgPath) {
-	return path.extname(imgPath).toLowerCase() === '.svg';
+	return extname(imgPath).toLowerCase() === '.svg';
 }
 
 
 // Create required output directories if they don't exist
 async function createDir(outputImgPath) {
 	return new Promise((resolve, reject) => {
-		fs.promises.mkdir(path.dirname(outputImgPath), { recursive: true })
+		fs.promises.mkdir(dirname(outputImgPath), { recursive: true })
 			.then(resolve)
 			.catch(err => {
+				// Ignore the error if it is because the directory already exists
 				if (err.code !== 'EEXIST') {
 					reject(err);
 				}
@@ -114,9 +116,10 @@ async function generateVectorImg(inputImgPath, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const svgInputText = fs.readFileSync(inputImgPath);
-			const { data: svgOutputText } = optimize(svgInputText, optimizeOptions);
+			// Optimize with SVGO
+			const { data } = optimize(svgInputText, optimizeOptions);
 
-			fs.writeFileSync(outputImgPath, svgOutputText);
+			fs.writeFileSync(outputImgPath, data);
 			resolve();
 		} catch (err) {
 			reject(err);
@@ -125,54 +128,97 @@ async function generateVectorImg(inputImgPath, outputImgPath) {
 }
 
 
+// Validate an input image rule and spawn promises to handle generation of its associated output images
+async function processInputImgRule({ from, to: outputImgRules, options }) {
+	return new Promise(async (resolve, reject) => {
+		const inputImgPath = join(inputFolder, from);
+
+		// Check if the input image exists
+		if (!fs.existsSync(inputImgPath)) {
+			reporter.error(`Input image ${inputImgPath} does not exist`);
+			reject();
+		}
+
+		const inputImg = sharp(inputImgPath);
+		// Create a promise for each output image rule
+		const promiseArray = outputImgRules.map(async outputImgRule => {
+			return processOutputImgRule(inputImgPath, inputImg, outputImgRule, options);
+		});
+
+		// Wait for all output image generation promises to complete
+		await Promise.all(promiseArray).then(values => {
+			// Resolve with the number of output images generated
+			resolve(values.length);
+		}).catch(err => {
+			reject(err);
+		});
+	});
+}
+
+
+// Generate a set of output images from a given input image following the provided rules
+async function processOutputImgRule(inputImgPath, inputImg, { path, size }, options) {
+	return new Promise(async (resolve, reject) => {
+		const outputImgPath = join(outputFolder, path);
+		// If only one number was provided for size, assume width and height are the same
+		const [outputImgWidth, outputImgHeight] = size.length === 2 ? size : [size[0], size[0]];
+
+		// Create the output folder if it doesn't exist
+		createDir(outputImgPath).then(async () => {
+			if (isSvg(outputImgPath)) {
+				// Throw an error if we try to create an SVG file from an input file with another file type
+				if (!isSvg(inputImgPath)) {
+					throw new Error(`Cannot convert a raster input image ${inputImgPath} to an SVG`);
+				}
+
+				// Optimize the SVG file if specified. Otherwise, just copy the file over
+				if (options.optimize) {
+					await generateVectorImg(inputImgPath, outputImgPath);
+				} else {
+					await copyImg(inputImgPath, outputImgPath);
+				}
+			} else {
+				await generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outputImgPath);
+			}
+
+			resolve();
+		}).catch(err => {
+			reject(err);
+		});
+	});
+}
+
+
+// Returns the plural form of `image` if number is 0 or greater than 1
+function pluralize(number) {
+	return `image${number === 1 ? '' : 's'}`;
+}
+
+
 // Export the Joi schema for the plugin options
 exports.pluginOptionsSchema = optionsSchema.pluginOptionsSchema;
 
 
-// Run plugin on the 'onPostBootstrap' lifecycle event
-// The gatsby-plugin-manifest plugin also fires on this event
-exports.onPostBootstrap = async ({ reporter, parentSpan }, pluginOptions) => {
+// Run plugin on the `onPostBootstrap` lifecycle event
+// The `gatsby-plugin-manifest` plugin fires on the same event
+exports.onPostBootstrap = async ({ reporter, parentSpan }, { generate: inputImgRules }) => {
 	const activity = reporter.activityTimer('Generate images', { parentSpan });
 
 	activity.start();
 
-	const imgGenerationRules = pluginOptions.generate;
+	// Create a promise for each input image rule
+	const promiseArray = inputImgRules.map(async inputImgRule => {
+		return processInputImgRule(inputImgRule);
+	});
 
-	for (const { from: inputImgName, to: outputImgObjs, options } of imgGenerationRules) {
-		const inputImgPath = path.join(inputFolder, inputImgName);
+	// Wait for all input image generation promises to complete
+	await Promise.all(promiseArray).then(values => {
+		const numOfInputImgs = values.length;
+		const numOfOutputImgs = values.reduce((previousValue, currentValue) => previousValue + currentValue);
 
-		if (!fs.existsSync(inputImgPath)) {
-			reporter.error(`Input image ${inputImgPath} does not exist`);
-			continue;
-		}
-
-		const inputImg = sharp(inputImgPath);
-
-		for (const { path: outputImgName, size } of outputImgObjs) {
-			const outputImgPath = path.join(outputFolder, outputImgName);
-			const [outputImgWidth, outputImgHeight] = size.length === 2 ? size : [size[0], size[0]];
-
-			createDir(outputImgPath).then(() => {
-				// If file extension is .svg, copy the file over instead of trying to resize it
-				if (isSvg(outputImgPath)) {
-					// Throw an error if we try to create an SVG file from an input file with another file type
-					if (!isSvg(inputImgPath)) {
-						throw new Error(`Cannot convert a raster input image ${inputImgPath} to an SVG`);
-					}
-
-					if (options.optimize) {
-						generateVectorImg(inputImgPath, outputImgPath);
-					} else {
-						copyImg(inputImgPath, outputImgPath);
-					}
-				} else {
-					generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outputImgPath);
-				}
-			}).catch(err => {
-				reporter.error(err);
-			});
-		}
-	}
-
-	activity.end();
+		reporter.info(`${pluginName} generated ${numOfOutputImgs} output ${pluralize(numOfOutputImgs)} from ${numOfInputImgs} input ${pluralize(numOfInputImgs)}`);
+		activity.end();
+	}).catch(err => {
+		reporter.error('Something went wrong while generating output images:', err);
+	});
 };
