@@ -1,5 +1,5 @@
 /*
-	Node.js code to generate icons of different sizes from source images
+	Node.js code to generate images of different sizes from source images
 	--------------------------------------------------------------------
 */
 
@@ -82,8 +82,8 @@ async function createDir(outputImgPath) {
 }
 
 
-// Copy an icon to the specified location
-async function copyIcon(inputImgPath, outputImgPath) {
+// Copy an image to the specified location
+async function copyImg(inputImgPath, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
 		fs.promises.copyFile(inputImgPath, outputImgPath)
 			.then(resolve)
@@ -94,8 +94,8 @@ async function copyIcon(inputImgPath, outputImgPath) {
 }
 
 
-// Generate an icon, resize it, and save the result to the specified location
-async function generateRasterIcon(inputImg, outputImgWidth, outputImgHeight, outputImgPath) {
+// Generate an image, resize it, and save the result to the specified location
+async function generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			await inputImg.clone()
@@ -109,8 +109,8 @@ async function generateRasterIcon(inputImg, outputImgWidth, outputImgHeight, out
 }
 
 
-// Load an SVG icon, optimize it with SVGO, and save the result to the specified location
-async function generateVectorIcon(inputImgPath, outputImgPath) {
+// Load an SVG image, optimize it with SVGO, and save the result to the specified location
+async function generateVectorImg(inputImgPath, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const svgInputText = fs.readFileSync(inputImgPath);
@@ -132,7 +132,7 @@ exports.pluginOptionsSchema = optionsSchema.pluginOptionsSchema;
 // Run plugin on the 'onPostBootstrap' lifecycle event
 // The gatsby-plugin-manifest plugin also fires on this event
 exports.onPostBootstrap = async ({ reporter, parentSpan }, pluginOptions) => {
-	const activity = reporter.activityTimer('Generate icons', { parentSpan });
+	const activity = reporter.activityTimer('Generate images', { parentSpan });
 
 	activity.start();
 
@@ -161,12 +161,12 @@ exports.onPostBootstrap = async ({ reporter, parentSpan }, pluginOptions) => {
 					}
 
 					if (options.optimize) {
-						generateVectorIcon(inputImgPath, outputImgPath);
+						generateVectorImg(inputImgPath, outputImgPath);
 					} else {
-						copyIcon(inputImgPath, outputImgPath);
+						copyImg(inputImgPath, outputImgPath);
 					}
 				} else {
-					generateRasterIcon(inputImg, outputImgWidth, outputImgHeight, outputImgPath);
+					generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outputImgPath);
 				}
 			}).catch(err => {
 				reporter.error(err);

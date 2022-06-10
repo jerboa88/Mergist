@@ -3903,7 +3903,7 @@ __metadata:
     framer-motion: ^6.3.10
     gatsby: ^4.15.2
     gatsby-plugin-google-gtag: ^4.15.0
-    gatsby-plugin-icon-generator: "link:./plugins/gatsby-plugin-icon-generator"
+    gatsby-plugin-image-generator: "link:./plugins/gatsby-plugin-image-generator"
     gatsby-plugin-manifest: ^4.15.1
     gatsby-plugin-offline: ^5.15.1
     gatsby-plugin-postcss: ^5.15.0
@@ -8012,9 +8012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gatsby-plugin-icon-generator@link:./plugins/gatsby-plugin-icon-generator::locator=Mergist%40workspace%3A.":
+"gatsby-plugin-image-generator@link:./plugins/gatsby-plugin-image-generator::locator=Mergist%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "gatsby-plugin-icon-generator@link:./plugins/gatsby-plugin-icon-generator::locator=Mergist%40workspace%3A."
+  resolution: "gatsby-plugin-image-generator@link:./plugins/gatsby-plugin-image-generator::locator=Mergist%40workspace%3A."
   languageName: node
   linkType: soft
 

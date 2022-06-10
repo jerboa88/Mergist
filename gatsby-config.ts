@@ -144,7 +144,7 @@ const config: GatsbyConfig = {
 			}
 		},
 		{
-			resolve: 'gatsby-plugin-icon-generator',
+			resolve: 'gatsby-plugin-image-generator',
 			options: {
 				generate: [
 					{

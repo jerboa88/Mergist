@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-plugin-icon-generator",
+  "name": "gatsby-plugin-image-generator",
   "version": "1.0.0",
-  "description": "A Gatsby plugin for generating icons of different sizes from source images",
+  "description": "A Gatsby plugin for generating images of different sizes from source images",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
