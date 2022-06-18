@@ -21,16 +21,22 @@
 	}
 }
 
-/* Apply btn class automatically to all button variants */
+/* Apply btn class automatically to all button variants and increase the default text size */
 /* We add these styles to the base layer so that component styles can override them as necessary */
 @layer base {
 	.btn-primary, .btn-secondary, .btn-accent, .btn-ghost {
 		@apply btn;
+		@apply text-base;
 	}
 }
 
 
 @layer components {
+	/* Override the default font size for footer components */
+	.footer {
+		@apply text-base;
+	}
+
 	/* Override disabled button styles since DaisyUI insists on making disabled buttons gray */
 	.btn-primary[disabled], .btn-secondary[disabled], .btn-accent[disabled] {
 		@apply opacity-40;

@@ -4,9 +4,10 @@
 */
 
 
-const defaultThemes = require('daisyui/src/colors/themes');
-const defaultLightTheme = defaultThemes['[data-theme=light]'];
-const defaultDarkTheme = defaultThemes['[data-theme=dark]'];
+const ConfigManager = require('./node-helpers');
+
+
+const configManager = new ConfigManager();
 
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				// Default font for headings (ie. page title)
+				// Default font for the page title
 				'heading': ['Luckiest Guy', 'Impact', 'Arial Black', 'Arial', 'sans-serif'],
 			}
 		}
@@ -24,21 +25,8 @@ module.exports = {
 	plugins: [require('daisyui')],
 	daisyui: {
 		themes: [
-			{
-				light: {
-					...defaultLightTheme,
-					'primary': '#FF5722',
-					'secondary': '#E91E63'
-				},
-			},
-			{
-				dark: {
-					...defaultDarkTheme,
-					'primary': '#FFC107',
-					'secondary': '#E91E63',
-					'primary-content': defaultDarkTheme['base-100']
-				},
-			},
+			{ light: configManager.getTheme('light') },
+			{ dark: configManager.getTheme('dark') },
 		],
 		darkTheme: 'dark'
 	},

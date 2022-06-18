@@ -29,16 +29,16 @@
 			}
 		}
 
-		<!-- Set the icon colors. Use daisyUI theme variables if they exist.
+		<!-- Set the icon colors, using daisyUI theme variables if they exist.
 		Otherwise, revert back to the colors chosen by media queries or hardcoded theme colors as needed -->
 		#icon .pancake-fill {
-			fill: hsl(var(--p, var(--pancakeColor)));
+			fill: hsl(var(--pf, var(--pancakeColor)));
 		}
 		#icon .pancake-stroke {
-			stroke: hsl(var(--p, var(--pancakeColor)));
+			stroke: hsl(var(--pf, var(--pancakeColor)));
 		}
 		#icon .cherry-fill {
-			fill: hsl(var(--s, var(--cherryColor)));
+			fill: hsl(var(--sf, var(--cherryColor)));
 		}
 	</style>
 

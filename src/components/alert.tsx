@@ -31,7 +31,7 @@ const alertTypes = {
 // Exports
 
 export default function Alert(props: { statusMsg: StatusMsg; }) {
-	const delayMs = 4000;
+	const delayMs = 5000;
 	const type = props.statusMsg.getSeverity;
 	const [visible, setVisible] = useState(true);
 	const animationProps = {
@@ -65,7 +65,7 @@ export default function Alert(props: { statusMsg: StatusMsg; }) {
 	return (
 		<AnimatePresence>
 			{visible && (
-				<motion.div layout className={`alert shadow-md ${alertTypes[type].class}`} key={props.statusMsg.getId} {...animationProps}>
+				<motion.div layout className={`alert shadow ${alertTypes[type].class}`} key={props.statusMsg.getId} {...animationProps}>
 					<div>
 						<Icon icon={alertTypes[type].icon} tw="mr-2 fa-lg" />
 						<span>{props.statusMsg.getMsg}</span>
