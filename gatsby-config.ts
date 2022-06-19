@@ -5,100 +5,23 @@
 
 
 import type { GatsbyConfig } from 'gatsby';
-import { DaisyUiThemeInterface, MetadataInterface } from './src/common/types';
+import { MetadataInterface } from './src/common/types';
 
-const tailwindConfig = require('./tailwind.config.js');
-const lightTheme = tailwindConfig.daisyui.themes[0].light as DaisyUiThemeInterface;
-const darkTheme = tailwindConfig.daisyui.themes[1].dark as DaisyUiThemeInterface;
-
-const shortTitle = 'Mergist';
-const title = `${shortTitle} - Online PDF Merger`;
-const username = 'jerboa88';
-const homepageDomain = 'johng.io';
-const siteUrl = `https://${shortTitle.toLowerCase()}.${homepageDomain}`;
-const icons = {
-	favicon: [
-		{
-			path: 'favicon.svg',
-			size: 1024
-		},
-		{
-			path: 'favicon-32x32.png',
-			size: 32
-		},
-	],
-	maskable: [
-		{
-			path: 'icons/maskable-icon.png',
-			size: 512
-		}
-	],
-	appleTouch: [
-		{
-			path: 'icons/icon-48x48.png',
-			size: 48
-		},
-		{
-			path: 'icons/icon-72x72.png',
-			size: 72
-		},
-		{
-			path: 'icons/icon-96x96.png',
-			size: 96
-		},
-		{
-			path: 'icons/icon-144x144.png',
-			size: 144
-		},
-		{
-			path: 'icons/icon-192x192.png',
-			size: 192
-		},
-		{
-			path: 'icons/icon-256x256.png',
-			size: 256
-		},
-		{
-			path: 'icons/icon-384x384.png',
-			size: 384
-		},
-		{
-			path: 'icons/icon-512x512.png',
-			size: 512
-		}
-	]
-}
+const ConfigManager = require('./config-manager');
 
 
-const manifestIconEntries = [
-	...mapIconListToManifestEntries(icons.maskable, 'maskable'),
-	...mapIconListToManifestEntries(icons.favicon, 'any'),
-	...mapIconListToManifestEntries(icons.appleTouch, 'any')
-];
+const configManager = new ConfigManager();
+const metadata = configManager.getMetadata();
+const lightTheme = configManager.getTheme('light');
+const darkTheme = configManager.getTheme('dark');
 
-// Map a list of icons to a list of manifest entries
-// We can assume size is a single number here because only square icons will be added to the manifest
-function mapIconListToManifestEntries(iconList: Array<{ path: string; size: number }>, purpose: string) {
-	return iconList.map(({ path, size }) => ({
-		src: path,
-		sizes: `${size}x${size}`,
-		type: 'image/png',
-		purpose: purpose
-	}));
-}
 
 const config: GatsbyConfig = {
 	siteMetadata: {
-		shortTitle: shortTitle,
-		title: title,
-		description: `${shortTitle} is an online tool to combine multiple PDF files into one. ${shortTitle} has no ads, no file size limits, and your files never leave your device.`,
-		author: 'John Goodliff',
-		siteUrl: siteUrl,
-		githubUrl: `https://github.com/${username}/${shortTitle.toLowerCase()}`,
-		homepageDomain: homepageDomain,
-		lightTheme: lightTheme,
-		darkTheme: darkTheme
-	} as MetadataInterface,
+		...metadata as MetadataInterface,
+		lightTheme,
+		darkTheme
+	},
 	plugins: [
 		'gatsby-plugin-react-helmet',
 		'gatsby-plugin-postcss',
@@ -122,8 +45,13 @@ const config: GatsbyConfig = {
 			resolve: 'gatsby-plugin-robots-txt',
 			options: {
 				// Link to the sitemap index generated above
-				sitemap: `${siteUrl}/sitemap-index.xml`,
-				policy: [{ userAgent: '*', allow: '/' }]
+				sitemap: `${metadata.siteUrl}/sitemap-index.xml`,
+				policy: [
+					{
+						userAgent: '*',
+						allow: '/'
+					}
+				]
 			}
 		},
 		{
@@ -146,41 +74,21 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-image-generator',
 			options: {
-				generate: [
-					{
-						from: 'images/icon.svg',
-						to: [
-							...icons.favicon,
-							...icons.appleTouch
-						],
-						options: {
-							optimize: true
-						}
-					},
-					{
-						from: 'images/maskable-icon.svg',
-						to: icons.maskable,
-						options: {
-							optimize: true
-						}
-					}
-				]
+				generate: configManager.getIcons()
 			}
 		},
 		{
 			resolve: 'gatsby-plugin-manifest',
 			options: {
-				name: title,
-				short_name: shortTitle,
+				name: metadata.title,
+				short_name: metadata.shortTitle,
 				start_url: '/',
 				background_color: darkTheme['base-100'],
-				theme_color: darkTheme.primary,
+				theme_color: darkTheme['primary'],
 				display: 'standalone',
-				icons: manifestIconEntries,
-				// Only Apple touch icons and maskable icons are added to the manifest
-				// We add traditional favicons to the document head using React Helmet
+				icons: configManager.getIconManifestEntries(),
+				// Favicon declarations and theme color meta tags are added to the document head manually using React Helmet
 				include_favicon: false,
-				// Theme color is set manually in the Page component according to the current theme
 				theme_color_in_head: false
 			}
 		},

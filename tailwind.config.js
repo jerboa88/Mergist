@@ -4,7 +4,7 @@
 */
 
 
-const ConfigManager = require('./node-helpers');
+const ConfigManager = require('./config-manager');
 
 
 const configManager = new ConfigManager();
