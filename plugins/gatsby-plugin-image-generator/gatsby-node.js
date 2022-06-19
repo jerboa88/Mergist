@@ -1,6 +1,6 @@
 /*
 	Node.js code to generate images of different sizes from source images
-	--------------------------------------------------------------------
+	---------------------------------------------------------------------
 */
 
 
@@ -12,6 +12,7 @@ const optionsSchema = require('./options-schema.js');
 
 
 const pluginName = 'gatsby-plugin-image-generator';
+const isDebugMode = false;
 const inputFolder = 'src';
 const outputFolder = 'public';
 const resizeOptions = {
@@ -63,6 +64,18 @@ const optimizeOptions = {
 };
 
 
+// Print debug messages to the console
+const debug = (() => {
+	if (isDebugMode) {
+		return (msg, indent = 0) => {
+			console.debug(`${' '.repeat(indent * 2)}${msg}`);
+		};
+	} else {
+		return () => { };
+	}
+})();
+
+
 // Check if a given image is an SVG
 function isSvg(imgPath) {
 	return extname(imgPath).toLowerCase() === '.svg';
@@ -72,6 +85,8 @@ function isSvg(imgPath) {
 // Create required output directories if they don't exist
 async function createDir(outputImgPath) {
 	return new Promise((resolve, reject) => {
+		debug(`Creating directory: ${dirname(outputImgPath)}`, 3);
+
 		fs.promises.mkdir(dirname(outputImgPath), { recursive: true })
 			.then(resolve)
 			.catch(err => {
@@ -87,6 +102,8 @@ async function createDir(outputImgPath) {
 // Copy an image to the specified location
 async function copyImg(inputImgPath, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
+		debug(`Copying ${inputImgPath} to ${outputImgPath}`, 3);
+
 		fs.promises.copyFile(inputImgPath, outputImgPath)
 			.then(resolve)
 			.catch(err => {
@@ -99,6 +116,8 @@ async function copyImg(inputImgPath, outputImgPath) {
 // Generate an image, resize it, and save the result to the specified location
 async function generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
+		debug(`Generating raster image ${outputImgPath}`, 3);
+
 		try {
 			await inputImg.clone()
 				.resize(outputImgWidth, outputImgHeight, resizeOptions)
@@ -114,6 +133,8 @@ async function generateRasterImg(inputImg, outputImgWidth, outputImgHeight, outp
 // Load an SVG image, optimize it with SVGO, and save the result to the specified location
 async function generateVectorImg(inputImgPath, outputImgPath) {
 	return new Promise(async (resolve, reject) => {
+		debug(`Generating vector image ${outputImgPath}`, 3);
+
 		try {
 			const svgInputText = fs.readFileSync(inputImgPath);
 			// Optimize with SVGO
@@ -131,6 +152,8 @@ async function generateVectorImg(inputImgPath, outputImgPath) {
 // Validate an input image rule and spawn promises to handle generation of its associated output images
 async function processInputImgRule({ from, to: outputImgRules, options }) {
 	return new Promise(async (resolve, reject) => {
+		debug(`Processing input image rule: ${from} -> ${outputImgRules.length} output ${pluralize(outputImgRules.length)}`, 1);
+
 		const inputImgPath = join(inputFolder, from);
 
 		// Check if the input image exists
@@ -162,6 +185,8 @@ async function processOutputImgRule(inputImgPath, inputImg, { path, size }, opti
 		const outputImgPath = join(outputFolder, path);
 		// If only one number was provided for size, assume width and height are the same
 		const [outputImgWidth, outputImgHeight] = size.length === 2 ? size : [size[0], size[0]];
+
+		debug(`Processing output image rule: ${path} (${outputImgWidth}x${outputImgHeight})`, 2);
 
 		// Create the output folder if it doesn't exist
 		createDir(outputImgPath).then(async () => {
@@ -205,6 +230,8 @@ exports.onPostBootstrap = async ({ reporter, parentSpan }, { generate: inputImgR
 	const activity = reporter.activityTimer('Generate images', { parentSpan });
 
 	activity.start();
+
+	debug(`${pluginName} activity started`);
 
 	// Create a promise for each input image rule
 	const promiseArray = inputImgRules.map(async inputImgRule => {
