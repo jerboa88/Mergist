@@ -35,6 +35,8 @@
     "typecheck": "yarn tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource/roboto-condensed": "^4.5.8",
+    "@fontsource/roboto-flex": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",

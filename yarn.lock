@@ -1500,6 +1500,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/roboto-condensed@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "@fontsource/roboto-condensed@npm:4.5.8"
+  checksum: 7022e88fb0f3354d64b041aef29e94ea0e6a39bd2d3867bf10775e65e97c32fdc8177905625406d9209a0619dbc881da2ce3c1e53bedaf68b52de7682335c622
+  languageName: node
+  linkType: hard
+
+"@fontsource/roboto-flex@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "@fontsource/roboto-flex@npm:4.5.0"
+  checksum: 6461bb84f0f5f1d281026da87a9021276cda963a665975e2e1752993d7488ff40e2c51d765a73c2568400b45d15adacd930a62d147871ac0a38a8a4a9801b508
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-common-types@npm:6.1.1":
   version: 6.1.1
   resolution: "@fortawesome/fontawesome-common-types@npm:6.1.1"
@@ -3890,6 +3904,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "Mergist@workspace:."
   dependencies:
+    "@fontsource/roboto-condensed": ^4.5.8
+    "@fontsource/roboto-flex": ^4.5.0
     "@fortawesome/fontawesome-svg-core": ^6.1.1
     "@fortawesome/free-brands-svg-icons": ^6.1.1
     "@fortawesome/free-solid-svg-icons": ^6.1.1

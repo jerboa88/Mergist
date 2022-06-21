@@ -5,6 +5,8 @@
 
 
 /* Font and icon styles */
+@import '@fontsource/roboto-flex';
+@import '@fontsource/roboto-condensed';
 @import '@fortawesome/fontawesome-svg-core/styles';
 @import './fonts/luckiest-guy.css';
 
@@ -21,12 +23,14 @@
 	}
 }
 
-/* Apply btn class automatically to all button variants and increase the default text size */
+
+/* Apply btn class automatically to all button variants and change the default font */
 /* We add these styles to the base layer so that component styles can override them as necessary */
 @layer base {
 	.btn-primary, .btn-secondary, .btn-accent, .btn-ghost {
 		@apply btn;
 		@apply text-base;
+		@apply font-button;
 	}
 }
 

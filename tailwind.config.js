@@ -15,10 +15,13 @@ module.exports = {
 		'./src/**/*.{js,jsx,ts,tsx}',
 	],
 	theme: {
+		fontFamily: {
+			sans: ['Roboto Flex', 'Roboto', 'Tahoma', 'Arial', 'Helvetica', 'sans-serif'],
+		},
 		extend: {
 			fontFamily: {
-				// Default font for the page title
-				'heading': ['Luckiest Guy', 'Impact', 'Arial Black', 'Arial', 'sans-serif'],
+				heading: ['Luckiest Guy', 'Impact', 'Franklin Gothic Medium', 'Candara', 'Calibri', 'sans-serif'],
+				button: ['Roboto Condensed', 'Arial Narrow', 'Calibri', 'Candara', 'Impact', 'sans-serif'],
 			}
 		}
 	},
