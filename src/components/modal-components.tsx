@@ -17,8 +17,8 @@ import { Accordion } from '../components/accordion-components';
 // A generic modal component
 function Modal(props: { id: string; title: string; buttonIcon: IconDefinition; buttonLabel: string; children: ReactNode; }) {
 	return (
-		<div className="modal modal-bottom sm:modal-middle overflow-hidden" id={props.id}>
-			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 text-center overflow-hidden">
+		<div id={props.id} className="modal modal-bottom sm:modal-middle visible overflow-hidden sm:backdrop-blur-sm group">
+			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 text-center overflow-hidden transition-[opacity, transform] scale-90 group-target:scale-100">
 				<h3 className="font-bold text-lg">{props.title}</h3>
 				<br />
 				{props.children}
