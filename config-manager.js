@@ -23,7 +23,7 @@ const config = {
 			'secondary': '#1565C0',				// MD Blue 800
 			'secondary-focus': '#1976D2',	// MD Blue 700
 			'accent': '#673AB7',					// MD Purple 500
-			'neutral': '#424242',					// MD Grey 800
+			'neutral': 'hsl(220 15% 10%)',
 			'info': '#0277BD',						// MD Light Blue 800
 			'success': '#558B2F',					// MD Light Green 800
 			'warning': '#FF6F00',					// MD Amber 800
@@ -38,7 +38,7 @@ const config = {
 			'secondary': '#F06292',				// MD Pink 300
 			'secondary-focus': '#E91E63',	// MD Pink 500
 			'accent': '#26C6DA',					// MD Cyan 400
-			'neutral': '#424242',					// MD Grey 800
+			'neutral': 'hsl(220 15% 10%)',
 			'info': '#4FC3F7',						// MD Light Blue 300
 			'success': '#AED581',					// MD Light Green 300
 			'warning': '#FFD54F',					// MD Amber 300

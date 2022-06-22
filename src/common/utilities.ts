@@ -37,11 +37,11 @@ function generateHash(...args: any[]): string {
 // Default transition settings for Framer Motion animations
 export const defaultTransition = {
 	transition: {
-		duration: .25,
+		duration: .2,
 		scale: {
 			type: 'spring',
-			duration: .25,
-			bounce: .25,
+			duration: .2,
+			bounce: .2,
 		}
 	}
 }
