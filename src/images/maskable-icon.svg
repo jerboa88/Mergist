@@ -1,33 +1,24 @@
 <svg version="1.1" id="maskable-icon" width="1024" height="1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<style>
-		<!-- Specify fallback theme colors -->
 		#maskable-icon {
-			--fbLightBg: 0 0% 100%;
-			--fbDarkBg: 220 18% 20%;
-			--bgColor: var(--fbDarkBg);
-		}
+			<!-- Use dark color scheme by default -->
+			--bgColor: 220 18% 13%;
 
-		<!-- If media queries are supported, overwrite icon colors according to the user's preferred color scheme -->
-		@media (prefers-color-scheme: dark) {
-			#maskable-icon {
-				--bgColor: var(--fbDarkBg);
-			}
-		}
-		@media (prefers-color-scheme: light) {
-			#maskable-icon {
-				--bgColor: var(--fbLightBg);
+			<!-- Overwrite icon colors if media queries are supported and the user prefers light mode -->
+			@media (prefers-color-scheme: light) {
+				--bgColor: 0 0% 100%;
 			}
 		}
 
 		<!-- Set the icon colors. Use daisyUI theme variables if they exist.
 		Otherwise, revert back to the colors chosen by media queries or hardcoded theme colors as needed -->
     #maskable-icon .bg-fill {
-			fill: hsl(var(--s, var(--bgColor)));
+			fill: hsl(var(--b3, var(--bgColor)));
 		}
 	</style>
 
 	<!-- Background -->
-  <rect class="bg-fill" fill="#1f242d" width="100%" height="100%" />
+  <rect class="bg-fill" fill="#1b1f27" width="100%" height="100%" />
 	<!-- Import SVG favicon -->
 	<use x="256" y="242" width="512" height="512" xlink:href="icon.svg#icon" />
 </svg>

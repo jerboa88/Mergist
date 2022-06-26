@@ -5,45 +5,33 @@
  -->
 <svg version="1.1" id="icon" viewBox="0 0 384 292.2" xmlns="http://www.w3.org/2000/svg">
 	<style>
-		<!-- Specify fallback theme colors -->
 		#icon {
-			--fbLightPrimary: 14 100% 57%;
-			--fbLightSecondary: 340 82% 52%;
-			--fbDarkPrimary: 45 100% 51%;
-			--fbDarkSecondary: 340 82% 52%;
-			--pancakeColor: var(--fbDarkPrimary);
-			--cherryColor: var(--fbDarkSecondary);
-		}
+			<!-- Use dark color scheme by default -->
+			--pancakeColor: #FFC107;
+			--toppingColor: #E91E63;
 
-		<!-- If media queries are supported, overwrite icon colors according to the user's preferred color scheme -->
-		@media (prefers-color-scheme: dark) {
-			#icon {
-				--pancakeColor: var(--fbDarkPrimary);
-				--cherryColor: var(--fbDarkSecondary);
-			}
-		}
-		@media (prefers-color-scheme: light) {
-			#icon {
-				--pancakeColor: var(--fbLightPrimary);
-				--cherryColor: var(--fbLightSecondary);
+			<!-- Overwrite icon colors if media queries are supported and the user prefers light mode -->
+			@media (prefers-color-scheme: light) {
+				--pancakeColor: #F4511E;
+				--toppingColor: #1976D2;
 			}
 		}
 
 		<!-- Set the icon colors, using daisyUI theme variables if they exist.
 		Otherwise, revert back to the colors chosen by media queries or hardcoded theme colors as needed -->
 		#icon .pancake-fill {
-			fill: hsl(var(--pf, var(--pancakeColor)));
+			fill: var(--ph, var(--pancakeColor));
 		}
 		#icon .pancake-stroke {
-			stroke: hsl(var(--pf, var(--pancakeColor)));
+			stroke: var(--ph, var(--pancakeColor));
 		}
-		#icon .cherry-fill {
-			fill: hsl(var(--sf, var(--cherryColor)));
+		#icon .topping-fill {
+			fill: var(--sh, var(--toppingColor));
 		}
 	</style>
 
 	<!-- Specify default colors for apps that do not support CSS styles -->
-	<path class="cherry-fill" fill="#E91E63" d="M238 0c-13 0-26 6-34 16-6-7-14-12-23-13a37 37 0 0 0-38 54c5 9 14 15 25 18 25-3 24-7 39 8 14 13 37 16 55 7a48 48 0 0 0-24-90Zm-73 18h2c5 1 11 6 10 11-1 6-7 11-12 11-7-1-11-6-11-11 0-6 5-11 11-11zm65 8c7 0 13 7 11 14s-11 11-17 7c-5-3-8-11-3-16 2-3 5-5 9-5z" />
+	<path class="topping-fill" fill="#E91E63" d="M238 0c-13 0-26 6-34 16-6-7-14-12-23-13a37 37 0 0 0-38 54c5 9 14 15 25 18 25-3 24-7 39 8 14 13 37 16 55 7a48 48 0 0 0-24-90Zm-73 18h2c5 1 11 6 10 11-1 6-7 11-12 11-7-1-11-6-11-11 0-6 5-11 11-11zm65 8c7 0 13 7 11 14s-11 11-17 7c-5-3-8-11-3-16 2-3 5-5 9-5z" />
 	<path class="pancake-fill" fill="#FFC107" d="M42 145c-12-1-23 8-24 20s8 23 20 24l142 12 1-44zM278 210l45 4c12 1 22-8 23-21 1-12-8-22-20-23l-37-4v27c0 7-4 14-11 17z" />
 	<g class="pancake-stroke" fill="none" stroke="#FFC107" stroke-linecap="round" stroke-linejoin="round">
 		<path stroke-width="22" d="M60 54a21 21 0 0 0-18 34c3 5 9 8 14 9 0 0 0 0 0 0l110 19h-1c10 1 16 10 16 18l-1 93c0 10 7 18 16 19h3c4 0 8-2 12-5s6-9 6-14v-81c0-7 5-12 6-13l6-3c3-1 6-2 9-1 7 1 13 7 14 13l1 3-1 45s0 0 0 0v2h0c0 10 7 18 17 19h1-1 2c4 0 8-1 12-5 4-3 6-9 6-13v-34c0-8 5-12 6-13l6-4a18 18 0 0 1 9 0l30 5c7 1 12 0 16-4 4-3 6-8 6-14 0-12-10-24-21-26h-1L65 54h-5z" />
