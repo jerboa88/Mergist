@@ -8,9 +8,11 @@ const fs = require('fs');
 const { extname, dirname, join } = require('path');
 const sharp = require('sharp');
 const { optimize } = require('svgo');
-const optionsSchema = require('./options-schema.js');
+const { pluginOptionsSchema } = require('./options-schema.js');
+const { minifyNestedStyles } = require('./minify-nested-styles.js');
 
 
+// Constants
 const pluginName = 'gatsby-plugin-image-generator';
 const isDebugMode = false;
 const inputFolder = 'src';
@@ -34,32 +36,16 @@ const optimizeOptions = {
 			name: 'preset-default',
 			params: {
 				overrides: {
-					// Disable the inline styles plugin
-					inlineStyles: false
+					// Disable plugins
+					mergeStyles: false,
+					inlineStyles: false,
+					minifyStyles: false,
+					cleanupIDs: false,
 				}
 			}
 		},
-		// Custom plugin to remove unnecessary whitespace in styles since the built-in minifyStyles plugin doesn't work with nested styles
-		{
-			name: 'minifyNestedStyles',
-			type: 'perItem',
-			fn: ast => {
-				if ('children' in ast) {
-					for (let i = 0; i < ast.children.length; ++i) {
-						if (ast.children[i].type === 'text') {
-							const minifiedCss = ast.children[i].value
-								.replace(/\n\s{0, 64}/g, '')	// Remove whitespace at the beginning of lines
-								.replace(/\s{1,64}{/g, '{')		// Remove whitespace before opening curly braces
-								.replace(/:\s{1,64}/g, ':')		// Remove whitespace after colons
-								.replace(/,\s{1,64}/g, ',')		// Remove whitespace after commas
-								.replace(/;}/g, '}');					// Remove trailing semicolons before closing curly braces
-
-							ast.children[i].value = minifiedCss;
-						}
-					}
-				}
-			}
-		}
+		// The built-in minifyStyles plugin has trouble handling nested styles
+		minifyNestedStyles,
 	]
 };
 
@@ -220,8 +206,11 @@ function pluralize(number) {
 }
 
 
+// Exports
+
 // Export the Joi schema for the plugin options
-exports.pluginOptionsSchema = optionsSchema.pluginOptionsSchema;
+// exports.pluginOptionsSchema = optionsSchema.pluginOptionsSchema;
+exports.pluginOptionsSchema = pluginOptionsSchema;
 
 
 // Run plugin on the `onPostBootstrap` lifecycle event
