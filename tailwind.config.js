@@ -22,7 +22,11 @@ module.exports = {
 			fontFamily: {
 				heading: ['Luckiest Guy', 'Impact', 'Franklin Gothic Medium', 'Candara', 'Calibri', 'sans-serif'],
 				button: ['Roboto Condensed', 'Arial Narrow', 'Calibri', 'Candara', 'Impact', 'sans-serif'],
-			}
+			},
+			colors: {
+				'primary-header': 'var(--ph)',
+				'secondary-header': 'var(--sh)',
+			},
 		}
 	},
 	plugins: [require('daisyui')],
