@@ -15,8 +15,12 @@ import { Icon } from '../components/icon-components';
 // A simple progress bar component for the progress action button
 function ProgressBar(props: { progress: string; }) {
 	const animationProps = {
-		initial: { width: 0 },
-		animate: { width: props.progress },
+		initial: {
+			width: 0
+		},
+		animate: {
+			width: props.progress
+		},
 		transition: {
 			type: 'inertia',
 			power: 1,
@@ -69,7 +73,7 @@ function ProgressActionButton(props: { progress: number }) {
 
 	return (
 		<div className="flex-col gap-2 w-full text-center">
-			<FullWidthButton className={`btn-primary flex-col justify-between p-0 pt-4 border-0 overflow-hidden ${isSaving ? 'loading' : ''}`} disabled={true}>
+			<FullWidthButton className={`btn-primary flex-col justify-end p-0 border-0 overflow-hidden ${isSaving ? 'loading' : ''}`} disabled={true}>
 				{!isSaving && percentString}
 				<ProgressBar progress={percentString} />
 			</FullWidthButton>
