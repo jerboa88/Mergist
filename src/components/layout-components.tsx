@@ -6,6 +6,7 @@
 
 import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { MotionConfig } from 'framer-motion';
 import { MetadataInterface } from '../common/types';
 import { doesWindowExist, StorageManager, ThemeContext, useIsMount } from '../common/utilities';
 import ogImage from '../images/og-image.png';
@@ -110,9 +111,11 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 			</Helmet>
 
 			{/* Page body */}
-			<div className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}>
-				{props.children}
-			</div>
+			<MotionConfig reducedMotion="user">
+				<div className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}>
+					{props.children}
+				</div>
+			</MotionConfig>
 		</ThemeContext.Provider>
 	);
 }

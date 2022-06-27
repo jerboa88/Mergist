@@ -5,6 +5,7 @@
 
 
 import { createContext, SyntheticEvent, useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
 import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from '../common/types';
@@ -35,13 +36,23 @@ function generateHash(...args: any[]): string {
 // Exports
 
 // Default transition settings for Framer Motion animations
-export const defaultTransition = {
-	transition: {
-		duration: .2,
-		scale: {
-			type: 'spring',
-			duration: .2,
-			bounce: .2,
+export function getDefaultTransition(): any {
+	if (!useReducedMotion()) {
+		return {
+			transition: {
+				duration: .2,
+				scale: {
+					type: 'spring',
+					duration: .2,
+					bounce: .2,
+				}
+			}
+		}
+	} else {
+		return {
+			transition: {
+				duration: 0,
+			}
 		}
 	}
 }

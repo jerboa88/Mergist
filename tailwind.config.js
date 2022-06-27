@@ -18,6 +18,9 @@ module.exports = {
 		fontFamily: {
 			sans: ['Roboto Flex', 'Roboto', 'Tahoma', 'Arial', 'Helvetica', 'sans-serif'],
 		},
+		transitionDuration: {
+      DEFAULT: '200ms',
+    },
 		extend: {
 			fontFamily: {
 				heading: ['Luckiest Guy', 'Impact', 'Franklin Gothic Medium', 'Candara', 'Calibri', 'sans-serif'],

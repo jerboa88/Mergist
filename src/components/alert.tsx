@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { faTriangleExclamation, faCircleExclamation, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SeverityTypes } from '../common/types';
-import { defaultTransition, StatusMsg } from '../common/utilities';
+import { getDefaultTransition, StatusMsg } from '../common/utilities';
 import { Icon } from '../components/icon-components';
 
 
@@ -48,7 +48,7 @@ export default function Alert(props: { statusMsg: StatusMsg; }) {
 				scaleY: 0
 			}
 		},
-		...defaultTransition
+		...getDefaultTransition()
 	};
 
 	// Hide the alert after a delay
