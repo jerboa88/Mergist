@@ -4,6 +4,7 @@
 */
 
 
+import { Context } from 'react';
 import { PDFFile } from './utilities';
 
 
@@ -37,6 +38,12 @@ export type MetadataInterface = {
 	lightTheme: DaisyUiThemeInterface;
 	darkTheme: DaisyUiThemeInterface;
 }
+
+
+export type ToggleContextInterface = Context<{
+	isEnabled: boolean;
+	toggle: () => void;
+}>
 
 
 export interface PDFFileMapInterface {

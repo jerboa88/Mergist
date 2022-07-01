@@ -19,8 +19,8 @@ module.exports = {
 			sans: ['Roboto Flex', 'Roboto', 'Tahoma', 'Arial', 'Helvetica', 'sans-serif'],
 		},
 		transitionDuration: {
-      DEFAULT: '200ms',
-    },
+			DEFAULT: '200ms',
+		},
 		extend: {
 			fontFamily: {
 				heading: ['Luckiest Guy', 'Impact', 'Franklin Gothic Medium', 'Candara', 'Calibri', 'sans-serif'],
@@ -32,12 +32,14 @@ module.exports = {
 			},
 		}
 	},
-	plugins: [require('daisyui')],
+	plugins: [
+		require('daisyui'),
+	],
 	daisyui: {
 		themes: [
 			{ light: configManager.getTheme('light') },
 			{ dark: configManager.getTheme('dark') },
 		],
-		darkTheme: 'dark'
+		darkTheme: 'dark',
 	},
 };

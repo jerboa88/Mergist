@@ -4,8 +4,7 @@
 */
 
 
-import { createContext, SyntheticEvent, useEffect, useRef } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { createContext, SyntheticEvent, useContext, useEffect, useRef } from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
 import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from '../common/types';
@@ -35,9 +34,44 @@ function generateHash(...args: any[]): string {
 
 // Exports
 
+// Custom React hook that returns whether the current render is the first render
+// Adapted from a StackOverflow answer by Scotty Waggoner (https://stackoverflow.com/users/665224/scotty-waggoner)
+// Source: https://stackoverflow.com/a/56267719/1378560
+export const useIsMount = () => {
+	const isMountRef = useRef(true);
+
+	useEffect(() => {
+		isMountRef.current = false;
+	}, []);
+
+	return isMountRef.current;
+};
+
+
+// Context for updating the site theme
+export const DarkThemeContext = createContext({
+	isEnabled: true,
+	toggle: (() => { /* no-op */ })
+});
+
+
+// Context for updating whether animations with motion are allowed
+export const AllowMotionContext = createContext({
+	isEnabled: true,
+	toggle: (() => { /* no-op */ })
+});
+
+
+// Return whether animations with motion are allowed
+export const getIsMotionAllowed = () => {
+	const { isEnabled } = useContext(AllowMotionContext);
+
+	return (() => isEnabled)();
+};
+
 // Default transition settings for Framer Motion animations
 export function getDefaultTransition(): any {
-	if (!useReducedMotion()) {
+	if (getIsMotionAllowed()) {
 		return {
 			transition: {
 				duration: .2,
@@ -58,31 +92,25 @@ export function getDefaultTransition(): any {
 }
 
 
-// Custom React hook that returns whether the current render is the first render
-// Adapted from a StackOverflow answer by Scotty Waggoner (https://stackoverflow.com/users/665224/scotty-waggoner)
-// Source: https://stackoverflow.com/a/56267719/1378560
-export const useIsMount = () => {
-	const isMountRef = useRef(true);
-
-	useEffect(() => {
-		isMountRef.current = false;
-	}, []);
-
-	return isMountRef.current;
-};
-
-
-// Context for updating the site theme
-export const ThemeContext = createContext({
-	isDarkTheme: true,
-	toggleTheme: (() => { /* no-op */ })
-});
-
-
 // Check if the window object exists
 // This will return false if the method is called from a server-side environment
 export function doesWindowExist(): boolean {
 	return typeof window !== 'undefined';
+}
+
+
+// Check if the browser supports the provided media feature and whether it matches the provided value
+// Otherwise, return the provided default value
+export function mediaFeatureMatches(mediaFeature: string, expectedResult: string, defaultValue: boolean): boolean {
+	const mediaQuery = `(${mediaFeature})`;
+	const specificMediaQuery = `(${mediaFeature}: ${expectedResult})`;
+
+	// If browser supports media queries, check if the media feature matches the expected value
+	if (doesWindowExist() && window.matchMedia && window.matchMedia(mediaQuery).media !== 'not all') {
+		return window.matchMedia(specificMediaQuery).matches;
+	} else {
+		return defaultValue;
+	}
 }
 
 
