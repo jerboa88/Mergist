@@ -6,8 +6,8 @@
 
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { faMoon, faSun, faWandMagic, faWandMagicSparkles, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { AllowMotionContext, DarkThemeContext } from '../common/utilities';
+import { faHand, faHandshake, faMoon, faSun, faWandMagic, faWandMagicSparkles, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { AllowMotionContext, DarkThemeContext, SendAnalyticsContext } from '../common/utilities';
 import { ToggleContextInterface } from '../common/types';
 import { Icon } from '../components/icon-components';
 
@@ -58,5 +58,12 @@ export function ThemeToggle() {
 export function MotionToggle() {
 	return (
 		<Toggle label="enabled animations" context={AllowMotionContext} htmlAttribute="data-motion" disabled={['reduce', faWandMagic]} enabled={['allow', faWandMagicSparkles]} />
+	);
+}
+
+// A toggle component used to change the `analytics-allowed` property
+export function AnalyticsToggle() {
+	return (
+		<Toggle label="send analytics" context={SendAnalyticsContext} htmlAttribute="data-analytics" disabled={['reject', faHand]} enabled={['allow', faHandshake]} />
 	);
 }

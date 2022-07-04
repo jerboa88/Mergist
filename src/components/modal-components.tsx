@@ -10,7 +10,7 @@ import { InlineLink, LinkWrapper } from '../components/link-components';
 import { PrimaryButton } from '../components/button-components';
 import { ToggleIcon } from '../components/icon-components';
 import { Accordion } from '../components/accordion-components';
-import { MotionToggle, ThemeToggle } from '../components/toggle-components';
+import { AnalyticsToggle, MotionToggle, ThemeToggle } from '../components/toggle-components';
 
 
 // Base components
@@ -99,6 +99,10 @@ export function PrivacyModal(props: { id: string; }) {
 			<p>
 				This site uses cookies to store your settings and record info about how you use the site. This data is used to help me improve the site and does include any personally identifiable information or any details about PDF files you add. By using this site to agree to these terms.
 			</p>
+			<br />
+			<div className="flex-row w-full justify-around">
+				<AnalyticsToggle />
+			</div>
 			<br />
 			<p>
 				<label>
