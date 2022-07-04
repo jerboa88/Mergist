@@ -10,6 +10,7 @@ import { InlineLink, LinkWrapper } from '../components/link-components';
 import { PrimaryButton } from '../components/button-components';
 import { ToggleIcon } from '../components/icon-components';
 import { Accordion } from '../components/accordion-components';
+import { MotionToggle, ThemeToggle } from '../components/toggle-components';
 
 
 // Base components
@@ -38,6 +39,7 @@ function Modal(props: { id: string; title: string; buttonIcon: IconDefinition; b
 
 // A modal that displays info about the site
 export function AboutModal(props: { id: string; author: string; authorUrl: string; }) {
+	const [isOpen, setIsOpen] = React.useState(true);
 	const authorLink = <InlineLink to={props.authorUrl} rel="author">{props.author}</InlineLink>;
 	const reactLink = <InlineLink to="https://reactjs.org/">React</InlineLink>;
 	const gatsbyLink = <InlineLink to="https://www.gatsbyjs.org/">Gatsby</InlineLink>;
@@ -46,6 +48,10 @@ export function AboutModal(props: { id: string; author: string; authorUrl: strin
 	const pancakeIconLink = <InlineLink to="https://thenounproject.com/icon/pancakes-1974111/">"Pancakes" icon</InlineLink>;
 	const pancakeIconLicenseLink = <InlineLink to="https://creativecommons.org/licenses/by/3.0/">CC BY</InlineLink>;
 	const fontAwesomeLink = <InlineLink to="https://fontawesome.io/">FontAwesome</InlineLink>;
+
+	function toggleIsOpen() {
+		setIsOpen(!isOpen);
+	}
 
 	return (
 		<Modal id={props.id} title="About" buttonIcon={faThumbsUp} buttonLabel="Cool beans">
@@ -57,6 +63,23 @@ export function AboutModal(props: { id: string; author: string; authorUrl: strin
 				{pancakeIconLink} by Kokota at NounProject.com is licensed under {pancakeIconLicenseLink} (with additional optimization and recoloring by me).
 				Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
 			</p>
+			<br />
+			<p>
+				<label>
+					<input type="checkbox" checked={isOpen} onChange={toggleIsOpen} className="hidden" />
+					<InlineLink isInternal>
+						{'Options '}
+						<ToggleIcon icon={faAngleDown} isToggled={isOpen} tw="fa-sm !align-middle" />
+					</InlineLink>
+				</label>
+			</p>
+			<br />
+			<Accordion isOpen={isOpen}>
+				<div className="flex-row w-full justify-around">
+					<MotionToggle />
+					<ThemeToggle />
+				</div>
+			</Accordion>
 		</Modal>
 	);
 }
@@ -74,11 +97,7 @@ export function PrivacyModal(props: { id: string; }) {
 	return (
 		<Modal id={props.id} title="Hey there!" buttonIcon={faCookieBite} buttonLabel="Yum">
 			<p>
-				This site uses cookies to store your settings and info about how you use the site. By using this site to agree to these terms.
-			</p>
-			<br />
-			<p>
-				The collected data is used to help me improve the site and does include any personally identifiable information or any details about PDF files you add.
+				This site uses cookies to store your settings and record info about how you use the site. This data is used to help me improve the site and does include any personally identifiable information or any details about PDF files you add. By using this site to agree to these terms.
 			</p>
 			<br />
 			<p>
@@ -97,7 +116,7 @@ export function PrivacyModal(props: { id: string; }) {
 				</p>
 				<br />
 				<p>
-					We do not make use of any advertising features provided by Google, and because all processing is performed locally on your own device, no PDF files are ever uploaded to our servers. This also happens to make the merging process faster!
+					Google's advertising features are not used, and because all processing is performed locally on your own device, no PDF files are ever uploaded to our servers. This also happens to make the merging process faster!
 				</p>
 			</Accordion>
 		</Modal>
