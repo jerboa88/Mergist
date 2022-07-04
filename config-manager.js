@@ -12,9 +12,10 @@ const config = {
 		shortDescription: 'Mergist is an online tool to combine multiple PDF files into one',
 		description: 'Mergist is an online tool to combine multiple PDF files into one. Mergist has no ads, no file size limits, and your files never leave your device.',
 		author: 'John Goodliff',
-		siteUrl: 'https://mergist.johng.io',
+		siteUrl: 'https://mergist.johng.io/',
 		githubUrl: 'https://github.com/jerboa88/mergist',
 		homepageDomain: 'johng.io',
+		trackingId: 'G-TYRQSQ9QC3',
 	},
 	theme: {
 		light: {

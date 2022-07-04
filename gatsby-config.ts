@@ -58,7 +58,7 @@ const config: GatsbyConfig = {
 			resolve: 'gatsby-plugin-google-gtag',
 			options: {
 				trackingIds: [
-					'G-TYRQSQ9QC3'
+					metadata.trackingId
 				],
 				gtagConfig: {
 					// Opt-out of personalized advertising features
