@@ -61,6 +61,11 @@ export const AllowMotionContext = createContext({
 	toggle: (() => { /* no-op */ })
 });
 
+// Context for updating whether analytics are sent
+export const SendAnalyticsContext = createContext({
+	isEnabled: true,
+	toggle: (() => { /* no-op */ })
+});
 
 // Return whether animations with motion are allowed
 export const getIsMotionAllowed = () => {
@@ -338,6 +343,11 @@ export class StorageManager {
 
 		// If there is no stored value, return the default value
 		return loadedValue === null ? defaultValue : JSON.parse(loadedValue);
+	}
+
+	// Set the value of a key in local storage if an input value is true
+	public setIf(doSet: boolean, key: string, value: boolean) {
+		this.storage && doSet && this.storage.setItem(key, JSON.stringify(value));
 	}
 
 	// Set the value of a key in local storage
