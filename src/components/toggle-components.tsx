@@ -57,7 +57,7 @@ export function ThemeToggle() {
 // A toggle component used to change the `motion-allowed` property
 export function MotionToggle() {
 	return (
-		<Toggle label="enabled animations" context={AllowMotionContext} htmlAttribute="data-motion" disabled={['reduce', faWandMagic]} enabled={['allow', faWandMagicSparkles]} />
+		<Toggle label="animations" context={AllowMotionContext} htmlAttribute="data-motion" disabled={['reduce', faWandMagic]} enabled={['allow', faWandMagicSparkles]} />
 	);
 }
 

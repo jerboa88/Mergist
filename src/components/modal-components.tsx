@@ -39,7 +39,7 @@ function Modal(props: { id: string; title: string; buttonIcon: IconDefinition; b
 
 // A modal that displays info about the site
 export function AboutModal(props: { id: string; author: string; authorUrl: string; }) {
-	const [isOpen, setIsOpen] = React.useState(true);
+	const [isOpen, setIsOpen] = React.useState(false);
 	const authorLink = <InlineLink to={props.authorUrl} rel="author">{props.author}</InlineLink>;
 	const reactLink = <InlineLink to="https://reactjs.org/">React</InlineLink>;
 	const gatsbyLink = <InlineLink to="https://www.gatsbyjs.org/">Gatsby</InlineLink>;
@@ -59,26 +59,26 @@ export function AboutModal(props: { id: string; author: string; authorUrl: strin
 				Handcrafted with love by {authorLink}. Powered by {reactLink} + {gatsbyLink} + {tailwindLink}. Hosted by {githubPagesLink}.
 			</p>
 			<br />
-			<p>
-				{pancakeIconLink} by Kokota at NounProject.com is licensed under {pancakeIconLicenseLink} (with additional optimization and recoloring by me).
-				Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
-			</p>
+			<div className="flex-col w-fit m-auto">
+				<MotionToggle />
+				<ThemeToggle />
+			</div>
 			<br />
 			<p>
 				<label>
 					<input type="checkbox" checked={isOpen} onChange={toggleIsOpen} className="hidden" />
 					<InlineLink isInternal>
-						{'Options '}
+						{'More details '}
 						<ToggleIcon icon={faAngleDown} isToggled={isOpen} tw="fa-sm !align-middle" />
 					</InlineLink>
 				</label>
 			</p>
 			<br />
 			<Accordion isOpen={isOpen}>
-				<div className="flex-row w-full justify-around">
-					<MotionToggle />
-					<ThemeToggle />
-				</div>
+				<p>
+					{pancakeIconLink} by Kokota at NounProject.com is licensed under {pancakeIconLicenseLink} (with additional optimization and recoloring by me).
+					Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
+				</p>
 			</Accordion>
 		</Modal>
 	);
