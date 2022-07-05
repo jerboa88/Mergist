@@ -9,11 +9,14 @@ const config = {
 	metadata: {
 		shortTitle: 'Mergist',
 		title: 'Mergist - Online PDF Merger',
+		author: 'John Goodliff',
+		authorUsername: 'jerboa88',
 		shortDescription: 'Mergist is an online tool to combine multiple PDF files into one',
 		description: 'Mergist is an online tool to combine multiple PDF files into one. Mergist has no ads, no file size limits, and your files never leave your device.',
-		author: 'John Goodliff',
+		ogImageUrl: 'images/og-image.png',
+		ogImageAltText: 'Mergist logo',
 		siteUrl: 'https://mergist.johng.io/',
-		githubUrl: 'https://github.com/jerboa88/mergist',
+		githubUrl: 'https://github.com/jerboa88/mergist/',
 		homepageDomain: 'johng.io',
 		trackingId: 'G-TYRQSQ9QC3',
 	},
@@ -49,8 +52,17 @@ const config = {
 			'base-300': 'hsl(220 15% 10%)'
 		},
 	},
-	// Icon generation config to pass to gatsby-plugin-image-generator
-	// We can also generate the webmanifest config from this
+	// Image generation config to pass to gatsby-plugin-image-generator
+	ogImage: {
+		from: 'images/og-image.png',
+		to: [
+			{
+				path: 'images/og-image.png',
+				size: [1200, 630],
+			}
+		]
+	},
+	// We can generate the webmanifest config from this
 	icons: [
 		{
 			from: 'images/maskable-icon.svg',
@@ -148,6 +160,11 @@ class ConfigManager {
 			'warning-content': bgColor,
 			'error-content': bgColor,
 		};
+	}
+
+	// Returns the OpenGraph image generation config
+	getOgImage() {
+		return config.ogImage;
 	}
 
 	// Returns the icon generation config

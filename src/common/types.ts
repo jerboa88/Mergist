@@ -30,8 +30,12 @@ export interface DaisyUiThemeInterface {
 export type MetadataInterface = {
 	shortTitle: string;
 	title: string;
-	description: string;
 	author: string;
+	authorUsername: string;
+	shortDescription: string;
+	description: string;
+	ogImageUrl: string,
+	ogImageAltText: string,
 	siteUrl: string;
 	githubUrl: string;
 	homepageDomain: string;
