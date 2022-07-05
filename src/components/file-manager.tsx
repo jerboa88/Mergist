@@ -8,7 +8,7 @@ import React from 'react';
 import { faFileCirclePlus, faGripVertical, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
-import { defaultTransition, ignoreDefault } from '../common/utilities';
+import { getDefaultTransition, ignoreDefault } from '../common/utilities';
 import { PDFFileMapInterface } from '../common/types';
 import { IconButton, PrimaryButton } from '../components/button-components';
 import { DropzoneWrapper } from '../components/dropzone-components';
@@ -29,7 +29,7 @@ function SortableItem(props: { id: string; name: string; size: number; onRemove:
 		exit: {
 			scale: 0
 		},
-		...defaultTransition
+		...getDefaultTransition()
 	}
 
 	return (

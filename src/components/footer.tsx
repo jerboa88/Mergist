@@ -10,7 +10,6 @@ import { faCircleQuestion, faCookie } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from '../components/layout-components';
 import { AboutModal, PrivacyModal } from '../components/modal-components';
 import { IconButtonLink } from '../components/link-components';
-import ThemeToggle from '../components/theme-toggle';
 
 
 // Exports
@@ -27,9 +26,7 @@ export default function Footer(props: { author: string; githubUrl: string; homep
 			<AboutModal id={aboutModalId} author={props.author} authorUrl={homepageUrl} />
 
 			<footer className="footer footer-center py-8 bg-base-300">
-				<SingleColumnLayout>
-					<ThemeToggle />
-
+				<SingleColumnLayout className="gap-0">
 					<div className="flex-row w-full justify-between">
 						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub

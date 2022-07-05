@@ -22,6 +22,6 @@ export function Icon(props: { tw?: string; icon: IconDefinition; }) {
 // An icon component that can rotate 180 degrees based on a boolean prop
 export function ToggleIcon(props: { tw: string; icon: IconDefinition; isToggled: boolean; }) {
 	return (
-		<FontAwesomeIcon icon={props.icon} className={`transition-transform ${props.isToggled ? 'rotate-180' : 'rotate-0'} ${props.tw}`} />
+		<FontAwesomeIcon icon={props.icon} className={`transition-transform has-motion ${props.isToggled ? 'rotate-180' : 'rotate-0'} ${props.tw}`} />
 	);
 }

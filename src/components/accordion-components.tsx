@@ -6,7 +6,7 @@
 
 import React, { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { defaultTransition } from '../common/utilities';
+import { getDefaultTransition } from '../common/utilities';
 
 
 // Exports
@@ -31,7 +31,7 @@ export function Accordion(props: { children: ReactNode; isOpen: boolean; }) {
 				overflow: 'hidden'
 			}
 		},
-		...defaultTransition
+		...getDefaultTransition()
 	}
 
 	return (

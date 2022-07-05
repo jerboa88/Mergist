@@ -11,8 +11,9 @@
 @import './fonts/luckiest-guy.css';
 
 
-/* Override flex-row and flex-col to also change the display type so we don't have to specify this manually every time */
+/* These styles to the base layer so that component styles can override them as necessary */
 @layer base {
+	/* Override flex-row and flex-col to also change the display type so we don't have to specify this manually every time */
   .flex-row, .flex-col {
     @apply flex;
   }
@@ -21,12 +22,8 @@
 	.flex-row.hidden, .flex-col.hidden {
 		display: none;
 	}
-}
 
-
-/* Apply btn class automatically to all button variants and change the default font */
-/* We add these styles to the base layer so that component styles can override them as necessary */
-@layer base {
+	/* Apply btn class automatically to all button variants and change the default font */
 	.btn-primary, .btn-secondary, .btn-accent, .btn-ghost {
 		@apply btn;
 		@apply text-base;
@@ -77,5 +74,13 @@
 		border: .25em transparent solid;
 		/* Set background color using box-shadow because background doesn't work with above hack */
 		box-shadow: inset 0 -1px 1px #000000aa, inset 0 0 99px #ffffff22;
+	}
+}
+
+
+@layer utilities {
+	/* Disable transitions if an element is flagged as having motion and the the page's `data-motion` attribute is set to `reduce` */
+	html[data-motion="reduce"] .has-motion {
+		transition: none;
 	}
 }
