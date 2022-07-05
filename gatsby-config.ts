@@ -74,7 +74,10 @@ const config: GatsbyConfig = {
 		{
 			resolve: 'gatsby-plugin-image-generator',
 			options: {
-				generate: configManager.getIcons()
+				generate: [
+					configManager.getOgImage(),
+					...configManager.getIcons()
+				]
 			}
 		},
 		{
