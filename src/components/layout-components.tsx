@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
 import { MetadataInterface } from '../common/types';
 import { StorageManager, DarkThemeContext, AllowMotionContext, useIsMount, mediaFeatureMatches, SendAnalyticsContext } from '../common/utilities';
-import ogImage from '../images/og-image.png';
 
 
 // Exports
@@ -20,6 +19,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
 	const lsKeyForAnalytics = 'are-analytics-allowed';
+	const ogImageUrl = `${props.metadata.siteUrl}${props.metadata.ogImageUrl}`;
 	// Whether the component is currently being mounted or not
 	// We can use this to ignore initial state changes of the component
 	const isMount = useIsMount();
@@ -97,15 +97,25 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 						<meta name="description" content={props.metadata.description} />
 						<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-						{/* OpenGraph tags */}
+						{/* OpenGraph meta tags */}
 						<meta property="og:title" content={props.metadata.title} />
 						<meta property="og:description" content={props.metadata.description} />
-						<meta property="og:image" content={`${props.metadata.siteUrl}${ogImage}`} />
+						<meta property="og:type" content="website" />
+						<meta property="og:url" content={props.metadata.siteUrl} />
+						<meta property="og:image" content={ogImageUrl} />
 						<meta property="og:image:type" content="image/png" />
 						<meta property="og:image:width" content="1200" />
 						<meta property="og:image:height" content="630" />
-						<meta property="og:type" content="website" />
+						<meta property="og:image:alt" content={props.metadata.ogImageAltText} />
+
+						{/* Twitter meta tags */}
+						<meta name="twitter:card" content="summary_large_image" />
 						<meta name="twitter:title" content={props.metadata.title} />
+						<meta name="twitter:creator" content={props.metadata.authorUsername} />
+						<meta name="twitter:description" content={props.metadata.description} />
+						<meta name="twitter:image" content={ogImageUrl} />
+						<meta name="twitter:image:alt" content={props.metadata.ogImageAltText} />
+
 						<meta name="google" content="nositelinkssearchbox" />
 						<meta content={getPrimaryThemeColor()} name="theme-color" />
 
