@@ -104,6 +104,13 @@ export function doesWindowExist(): boolean {
 }
 
 
+// Check if the document object exists
+// This will return false if the method is called from a server-side environment
+export function doesDocumentExist(): boolean {
+	return typeof document !== 'undefined';
+}
+
+
 // Check if the browser supports the provided media feature and whether it matches the provided value
 // Otherwise, return the provided default value
 export function mediaFeatureMatches(mediaFeature: string, expectedResult: string, defaultValue: boolean): boolean {
@@ -341,13 +348,13 @@ export class StorageManager {
 
 		const loadedValue = this.storage.getItem(key);
 
-		// If there is no stored value, return the default value
-		return loadedValue === null ? defaultValue : JSON.parse(loadedValue);
+		// If there is no stored value, return the default value. Loose equality is intentional
+		return loadedValue == null ? defaultValue : JSON.parse(loadedValue);
 	}
 
-	// Set the value of a key in local storage if an input value is true
+	// Set the value of a key in local storage if an input flag is true
 	public setIf(doSet: boolean, key: string, value: boolean) {
-		this.storage && doSet && this.storage.setItem(key, JSON.stringify(value));
+		doSet && this.set(key, value);
 	}
 
 	// Set the value of a key in local storage
@@ -358,5 +365,53 @@ export class StorageManager {
 	// Remove a key from local storage
 	public remove(key: string) {
 		this.storage && this.storage.removeItem(key);
+	}
+}
+
+// A class with methods for managing data stored in cookies
+export class CookieManager {
+	private duration: number;
+
+	constructor() {
+		this.duration = 60 * 60 * 24 * 365; // 1 year
+
+		// Check if the document exists so that we do not run browser code on the server
+		if (!doesDocumentExist()) {
+			console.warn('CookieManager was instantiated server-side');
+		}
+	}
+
+	// Get the value of a key from cookies
+	// Returns the default value if the key does not exist or if the window object does not exist
+	public get(key: string, defaultValue: boolean): boolean {
+		if (!doesDocumentExist()) {
+			return defaultValue;
+		}
+
+		const matches = document.cookie.match(`${key}=(\\w+)`);
+
+		if (matches && matches.length > 1) {
+			const loadedValue = matches[1];
+
+			// If there is no stored value, return the default value. Loose equality is intentional
+			return loadedValue == null ? defaultValue : JSON.parse(loadedValue);
+		}
+
+		return defaultValue;
+	}
+
+	// Set the value of a key in cookies if an input flag is true
+	public setIf(doSet: boolean, key: string, value: boolean) {
+		doSet && this.set(key, value);
+	}
+
+	// Set the value of a key in cookies
+	public set(key: string, value: boolean) {
+		doesDocumentExist() && (document.cookie = `${key}=${value};max-age=${this.duration};path=/`);
+	}
+
+	// Remove a key from local storage
+	public remove(key: string) {
+		doesDocumentExist() && (document.cookie = `${key}=null;max-age=0;path=/`);
 	}
 }
