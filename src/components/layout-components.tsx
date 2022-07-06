@@ -8,17 +8,16 @@ import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
 import { MetadataInterface } from '../common/types';
-import { StorageManager, DarkThemeContext, AllowMotionContext, useIsMount, mediaFeatureMatches, SendAnalyticsContext } from '../common/utilities';
+import { StorageManager, DarkThemeContext, AllowMotionContext, useIsMount, mediaFeatureMatches, SendAnalyticsContext, CookieManager } from '../common/utilities';
 
 
 // Exports
 
 // Layout component that provides basic styles and metadata tags for the whole page
 export function PageLayout(props: { className: string; metadata: MetadataInterface; children: ReactNode }) {
-	const storageManager = new StorageManager();
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
-	const lsKeyForAnalytics = 'are-analytics-allowed';
+	const lsKeyForAnalytics = `ga-disable-${props.metadata.trackingId}`;
 	const ogImageUrl = `${props.metadata.siteUrl}${props.metadata.ogImageUrl}`;
 	// Whether the component is currently being mounted or not
 	// We can use this to ignore initial state changes of the component
@@ -27,36 +26,31 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	const [isMotionAllowed, setIsMotionAllowed] = useState<boolean>(getIsMotionAllowed());
 	const [areAnalyticsAllowed, setAreAnalyticsAllowed] = useState<boolean>(getAreAnalyticsAllowed());
 
-	// Save the user's preferences to local storage when its state changes
+	// Save the user's preferences to local storage or cookies when its state changes
 	useEffect(() => {
-		storageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
+		StorageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
 	}, [isDarkTheme]);
 
 	useEffect(() => {
-		storageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
+		StorageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
 	}, [isMotionAllowed]);
 
 	useEffect(() => {
-		// Store cookie for 2 years
-		const maxAge = areAnalyticsAllowed ? 0 : 63072000;
-
-		document.cookie = `ga-disable-${props.metadata.trackingId}=true;max-age=${maxAge};path=/`;
-
-		storageManager.setIf(!isMount, lsKeyForAnalytics, areAnalyticsAllowed);
+		CookieManager.setIf(!isMount, lsKeyForAnalytics, !areAnalyticsAllowed);
 	}, [areAnalyticsAllowed]);
 
 	// Get the user's preference from storage if it exists
 	// Otherwise, use the system preference if it is set or fall back to the default value
 	function getIsDarkMode(): boolean {
-		return storageManager.get(lsKeyForTheme, mediaFeatureMatches('prefers-color-scheme', 'dark', true));
+		return StorageManager.get(lsKeyForTheme, mediaFeatureMatches('prefers-color-scheme', 'dark', true));
 	}
 
 	function getIsMotionAllowed(): boolean {
-		return storageManager.get(lsKeyForMotion, !mediaFeatureMatches('prefers-reduced-motion', 'reduce', false));
+		return StorageManager.get(lsKeyForMotion, !mediaFeatureMatches('prefers-reduced-motion', 'reduce', false));
 	}
 
 	function getAreAnalyticsAllowed(): boolean {
-		return storageManager.get(lsKeyForAnalytics, true);
+		return !CookieManager.get(lsKeyForAnalytics, false);
 	}
 
 	// Get the primary theme color from DaisyUI config
