@@ -326,22 +326,11 @@ export class PDFManager {
 
 // A class with methods for managing data in local storage
 export class StorageManager {
-	private storage: Storage | null;
-
-	constructor() {
-		// Check if the window exists so that we do not run browser code on the server
-		if (doesWindowExist()) {
-			this.storage = window.localStorage;
-		} else {
-			this.storage = null;
-
-			console.warn('StorageManager was instantiated server-side');
-		}
-	}
+	static storage = doesWindowExist() ? window.localStorage : null;
 
 	// Get the value of a key from local storage
 	// Returns the default value if the key does not exist or if the window object does not exist
-	public get(key: string, defaultValue: boolean): boolean {
+	public static get(key: string, defaultValue: boolean): boolean {
 		if (!this.storage) {
 			return defaultValue;
 		}
@@ -353,37 +342,29 @@ export class StorageManager {
 	}
 
 	// Set the value of a key in local storage if an input flag is true
-	public setIf(doSet: boolean, key: string, value: boolean) {
+	public static setIf(doSet: boolean, key: string, value: boolean) {
 		doSet && this.set(key, value);
 	}
 
 	// Set the value of a key in local storage
-	public set(key: string, value: boolean) {
+	private static set(key: string, value: boolean) {
 		this.storage && this.storage.setItem(key, JSON.stringify(value));
 	}
 
 	// Remove a key from local storage
-	public remove(key: string) {
+	public static remove(key: string) {
 		this.storage && this.storage.removeItem(key);
 	}
 }
 
 // A class with methods for managing data stored in cookies
 export class CookieManager {
-	private duration: number;
-
-	constructor() {
-		this.duration = 60 * 60 * 24 * 365; // 1 year
-
-		// Check if the document exists so that we do not run browser code on the server
-		if (!doesDocumentExist()) {
-			console.warn('CookieManager was instantiated server-side');
-		}
-	}
+	// private duration: number;
+	static duration = 60 * 60 * 24 * 365; // 1 year
 
 	// Get the value of a key from cookies
 	// Returns the default value if the key does not exist or if the window object does not exist
-	public get(key: string, defaultValue: boolean): boolean {
+	public static get(key: string, defaultValue: boolean): boolean {
 		if (!doesDocumentExist()) {
 			return defaultValue;
 		}
@@ -401,17 +382,17 @@ export class CookieManager {
 	}
 
 	// Set the value of a key in cookies if an input flag is true
-	public setIf(doSet: boolean, key: string, value: boolean) {
+	public static setIf(doSet: boolean, key: string, value: boolean) {
 		doSet && this.set(key, value);
 	}
 
 	// Set the value of a key in cookies
-	public set(key: string, value: boolean) {
+	private static set(key: string, value: boolean) {
 		doesDocumentExist() && (document.cookie = `${key}=${value};max-age=${this.duration};path=/`);
 	}
 
 	// Remove a key from local storage
-	public remove(key: string) {
+	public static remove(key: string) {
 		doesDocumentExist() && (document.cookie = `${key}=null;max-age=0;path=/`);
 	}
 }

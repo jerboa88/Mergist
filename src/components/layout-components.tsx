@@ -15,8 +15,6 @@ import { StorageManager, DarkThemeContext, AllowMotionContext, useIsMount, media
 
 // Layout component that provides basic styles and metadata tags for the whole page
 export function PageLayout(props: { className: string; metadata: MetadataInterface; children: ReactNode }) {
-	const storageManager = new StorageManager();
-	const cookieManager = new CookieManager();
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
 	const lsKeyForAnalytics = `ga-disable-${props.metadata.trackingId}`;
@@ -30,29 +28,29 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 	// Save the user's preferences to local storage or cookies when its state changes
 	useEffect(() => {
-		storageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
+		StorageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
 	}, [isDarkTheme]);
 
 	useEffect(() => {
-		storageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
+		StorageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
 	}, [isMotionAllowed]);
 
 	useEffect(() => {
-		cookieManager.setIf(!isMount, lsKeyForAnalytics, !areAnalyticsAllowed);
+		CookieManager.setIf(!isMount, lsKeyForAnalytics, !areAnalyticsAllowed);
 	}, [areAnalyticsAllowed]);
 
 	// Get the user's preference from storage if it exists
 	// Otherwise, use the system preference if it is set or fall back to the default value
 	function getIsDarkMode(): boolean {
-		return storageManager.get(lsKeyForTheme, mediaFeatureMatches('prefers-color-scheme', 'dark', true));
+		return StorageManager.get(lsKeyForTheme, mediaFeatureMatches('prefers-color-scheme', 'dark', true));
 	}
 
 	function getIsMotionAllowed(): boolean {
-		return storageManager.get(lsKeyForMotion, !mediaFeatureMatches('prefers-reduced-motion', 'reduce', false));
+		return StorageManager.get(lsKeyForMotion, !mediaFeatureMatches('prefers-reduced-motion', 'reduce', false));
 	}
 
 	function getAreAnalyticsAllowed(): boolean {
-		return !cookieManager.get(lsKeyForAnalytics, false);
+		return !CookieManager.get(lsKeyForAnalytics, false);
 	}
 
 	// Get the primary theme color from DaisyUI config
