@@ -1,7 +1,7 @@
 <!-- Project Header -->
 <div align="center">
-	<h1 class="projectName">
-    <a href="https://johng.io" title="Mergist - Online PDF Merger">
+  <h1 class="projectName">
+    <a href="https://mergist.johng.io" title="Mergist - Online PDF Merger">
       <img class="projectLogo" src="src/images/text-logo.png" alt="Project logo" title="Project logo" width="256">
     </a>
   </h1>
@@ -13,6 +13,9 @@
     <a href="LICENSE">
       <img src="https://img.shields.io/github/license/jerboa88/Mergist.svg" alt="Project license" title="Project license"/>
     </a>
+		<a href="https://mergist.johng.io" title="Mergist - Online PDF Merger">
+			<img src="https://img.shields.io/website?url=https%3A%2F%2Fmergist.johng.io&up_message=mergist.johng.io%20%E2%86%97" alt="Project URL" title="Project URL">
+		</a>
   </p>
 
   <p class="projectDesc">
