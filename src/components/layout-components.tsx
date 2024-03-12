@@ -119,7 +119,7 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 						<link rel="icon" href="/favicon-32x32.png" type="image/png" />
 						<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-						{/* Structured metadata */}
+						{/* Structured data */}
 						<script type="application/ld+json">
 							{`{
 							"@context": "http://schema.org",
