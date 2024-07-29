@@ -18,7 +18,7 @@
 		</a>
   </p>
 
-  <p class="projectDesc" data-exposition="An online tool to combine multiple PDF files into one. Created as a better alternative to existing PDF merging services, Mergist has no ads, no file size limits, and better privacy since users' files are processed locally. This project had a major focus on asynchronous processing, and it marked the first time I used a number of technologies like TypeScript, React, and Tailwind CSS.">
+  <p class="projectDesc" data-exposition="An online tool to combine multiple PDF files into one. Intended to be a better alternative to existing PDF merging services, Mergist has no ads, no file size limits, and better privacy since users' files are processed locally. This project had a major focus on asynchronous processing, and it marked the first time I used a number of technologies like TypeScript, React, and Tailwind CSS.">
     Mergist is an online tool to combine multiple PDF files into one. Mergist has no ads, no file size limits, and your files never leave your device.
   </p>
 
