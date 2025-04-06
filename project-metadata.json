@@ -1,0 +1,20 @@
+{
+  "$schema": "https://johng.io/schema/project-metadata.json",
+  "name": "Mergist",
+  "background": "An online tool to combine multiple PDF files into one. Designed to be a better alternative to existing PDF merging services, Mergist has no ads, no file size limits, and better privacy since users' files are processed locally. This project had a major focus on asynchronous processing and was built using TypeScript, React, and Tailwind CSS.",
+	"logoPath": "src/images/text-logo.png",
+	"category": "App",
+	"subcategory": "Web",
+  "technologies": [
+    "Gatsby",
+    "React",
+    "Tailwind CSS",
+    "daisyUI",
+    "Motion"
+  ],
+  "schema": {
+    "type": "Web",
+    "applicationCategory": "Utilities",
+    "operatingSystem": "Any"
+  }
+}
