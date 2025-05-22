@@ -3,15 +3,25 @@
 	----------------------------
 */
 
-
-import React, { ChangeEvent, ReactNode, useRef, useState, useCallback, useEffect, DragEvent } from 'react';
+import React, {
+	ChangeEvent,
+	ReactNode,
+	useRef,
+	useState,
+	useCallback,
+	useEffect,
+	DragEvent,
+} from 'react';
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { ignoreDefault } from '../common/utilities';
 import { Icon } from '../components/icon-components';
 
-
 // Enables dropzone functionality for a child component. Accepts a callback function that fires when a file is dropped
-export function DropzoneWrapper(props: { className: string; children: ReactNode; onFilesAdded: (files: FileList) => void; }) {
+export function DropzoneWrapper(props: {
+	className: string;
+	children: ReactNode;
+	onFilesAdded: (files: FileList) => void;
+}) {
 	function handleAddFiles(event: ChangeEvent<HTMLInputElement>) {
 		ignoreDefault(event);
 
@@ -26,34 +36,47 @@ export function DropzoneWrapper(props: { className: string; children: ReactNode;
 
 	return (
 		<label className={`cursor-pointer ${props.className}`}>
-			<input className="hidden" type="file" accept="application/pdf" onChange={handleAddFiles} multiple />
+			<input
+				className="hidden"
+				type="file"
+				accept="application/pdf"
+				onChange={handleAddFiles}
+				multiple
+			/>
 			{props.children}
 		</label>
 	);
 }
 
 DropzoneWrapper.defaultProps = {
-	className: ''
+	className: '',
 };
 
-
 // A large dropzone component. Accepts a callback function that fires when a file is dropped
-export function LargeDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
+export function LargeDropzone(props: {
+	onFilesAdded: (files: FileList) => void;
+}) {
 	return (
-		<DropzoneWrapper className="flex-col flex-1" onFilesAdded={props.onFilesAdded}>
+		<DropzoneWrapper
+			className="flex-col flex-1"
+			onFilesAdded={props.onFilesAdded}
+		>
 			<div className="flex-col justify-center flex-1 m-8 p-8 gap-8 text-center z-20 bg-base-100 border-2 border-dashed rounded-lg hover:bg-base-200">
 				<Icon icon={faFileCirclePlus} tw="fa-3x" />
-				<p className='flex-grow-0'>Drag and drop PDF files here, or click to select files</p>
+				<p className="flex-grow-0">
+					Drag and drop PDF files here, or click to select files
+				</p>
 			</div>
 		</DropzoneWrapper>
 	);
 }
 
-
 // A full screen dropzone component. Accepts a callback function that fires when a file is dropped
 // Adapted from a GitHub comment by jlarmstrongiv (https://github.com/jlarmstrongiv)
 // Source: https://github.com/react-dropzone/react-dropzone/issues/753#issuecomment-774782919
-export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => void; }) {
+export function FullPageDropzone(props: {
+	onFilesAdded: (files: FileList) => void;
+}) {
 	const [isDragging, setIsDragging] = useState(false);
 	const dragCounter = useRef(0);
 
@@ -83,17 +106,20 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 		setIsDragging(false);
 	}, []);
 
-	const handleDrop = useCallback((event: DragEvent<HTMLElement>) => {
-		ignoreDefault(event);
-		setIsDragging(false);
+	const handleDrop = useCallback(
+		(event: DragEvent<HTMLElement>) => {
+			ignoreDefault(event);
+			setIsDragging(false);
 
-		if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-			dragCounter.current = 0;
+			if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+				dragCounter.current = 0;
 
-			props.onFilesAdded(event.dataTransfer.files);
-			event.dataTransfer.clearData();
-		}
-	}, [props.onFilesAdded]);
+				props.onFilesAdded(event.dataTransfer.files);
+				event.dataTransfer.clearData();
+			}
+		},
+		[props.onFilesAdded],
+	);
 
 	useEffect(() => {
 		// Force cast event parameter from the placeholder globalThis type to a proper React event type
@@ -106,13 +132,18 @@ export function FullPageDropzone(props: { onFilesAdded: (files: FileList) => voi
 
 		return () => {
 			window.removeEventListener('dragenter', handleDragIn as DragEventHandler);
-			window.removeEventListener('dragleave', handleDragOut as DragEventHandler);
+			window.removeEventListener(
+				'dragleave',
+				handleDragOut as DragEventHandler,
+			);
 			window.removeEventListener('dragover', handleDrag as DragEventHandler);
 			window.removeEventListener('drop', handleDrop as DragEventHandler);
 		};
 	});
 
 	return (
-		<div className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`} />
+		<div
+			className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`}
+		/>
 	);
 }

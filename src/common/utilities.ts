@@ -3,12 +3,20 @@
 	----------------------------------
 */
 
-
-import { createContext, SyntheticEvent, useContext, useEffect, useRef } from 'react';
+import {
+	createContext,
+	SyntheticEvent,
+	useContext,
+	useEffect,
+	useRef,
+} from 'react';
 import { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
-import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from '../common/types';
-
+import {
+	MetadataInterface,
+	PDFFileMapInterface,
+	SeverityTypes,
+} from '../common/types';
 
 // Generate unique hashes from input parameters
 // This is used to ensure that React component keys and PDF files are unique
@@ -16,7 +24,8 @@ import { MetadataInterface, PDFFileMapInterface, SeverityTypes } from '../common
 // Source: https://stackoverflow.com/a/7616484/1378560
 function generateHash(...args: any[]): string {
 	const inputString = args.join('');
-	let hash = 0, chr;
+	let hash = 0,
+		chr;
 
 	if (inputString.length === 0) {
 		return hash.toString();
@@ -24,13 +33,12 @@ function generateHash(...args: any[]): string {
 
 	for (let i = 0; i < inputString.length; ++i) {
 		chr = inputString.charCodeAt(i);
-		hash = ((hash << 5) - hash) + chr;
+		hash = (hash << 5) - hash + chr;
 		hash |= 0; // Convert to 32bit integer
 	}
 
 	return hash.toString();
 }
-
 
 // Exports
 
@@ -47,24 +55,28 @@ export const useIsMount = () => {
 	return isMountRef.current;
 };
 
-
 // Context for updating the site theme
 export const DarkThemeContext = createContext({
 	isEnabled: true,
-	toggle: (() => { /* no-op */ })
+	toggle: () => {
+		/* no-op */
+	},
 });
-
 
 // Context for updating whether animations with motion are allowed
 export const AllowMotionContext = createContext({
 	isEnabled: true,
-	toggle: (() => { /* no-op */ })
+	toggle: () => {
+		/* no-op */
+	},
 });
 
 // Context for updating whether analytics are sent
 export const SendAnalyticsContext = createContext({
 	isEnabled: true,
-	toggle: (() => { /* no-op */ })
+	toggle: () => {
+		/* no-op */
+	},
 });
 
 // Return whether animations with motion are allowed
@@ -79,23 +91,22 @@ export function getDefaultTransition(): any {
 	if (getIsMotionAllowed()) {
 		return {
 			transition: {
-				duration: .2,
+				duration: 0.2,
 				scale: {
 					type: 'spring',
-					duration: .2,
-					bounce: .2,
-				}
-			}
-		}
+					duration: 0.2,
+					bounce: 0.2,
+				},
+			},
+		};
 	} else {
 		return {
 			transition: {
 				duration: 0,
-			}
-		}
+			},
+		};
 	}
 }
-
 
 // Check if the window object exists
 // This will return false if the method is called from a server-side environment
@@ -103,28 +114,33 @@ export function doesWindowExist(): boolean {
 	return typeof window !== 'undefined';
 }
 
-
 // Check if the document object exists
 // This will return false if the method is called from a server-side environment
 export function doesDocumentExist(): boolean {
 	return typeof document !== 'undefined';
 }
 
-
 // Check if the browser supports the provided media feature and whether it matches the provided value
 // Otherwise, return the provided default value
-export function mediaFeatureMatches(mediaFeature: string, expectedResult: string, defaultValue: boolean): boolean {
+export function mediaFeatureMatches(
+	mediaFeature: string,
+	expectedResult: string,
+	defaultValue: boolean,
+): boolean {
 	const mediaQuery = `(${mediaFeature})`;
 	const specificMediaQuery = `(${mediaFeature}: ${expectedResult})`;
 
 	// If browser supports media queries, check if the media feature matches the expected value
-	if (doesWindowExist() && window.matchMedia && window.matchMedia(mediaQuery).media !== 'not all') {
+	if (
+		doesWindowExist() &&
+		window.matchMedia &&
+		window.matchMedia(mediaQuery).media !== 'not all'
+	) {
 		return window.matchMedia(specificMediaQuery).matches;
 	} else {
 		return defaultValue;
 	}
 }
-
 
 // Load site metadata from gatsby-config.js
 export function loadMetadata(config: GatsbyConfig): MetadataInterface {
@@ -132,13 +148,11 @@ export function loadMetadata(config: GatsbyConfig): MetadataInterface {
 	return config.siteMetadata as MetadataInterface;
 }
 
-
 // Stop default behavior for mouse events
 export function ignoreDefault(event: SyntheticEvent<HTMLElement>) {
 	event.preventDefault();
 	event.stopPropagation();
 }
-
 
 // A class to represent a status message and its severity
 export class StatusMsg {
@@ -146,15 +160,19 @@ export class StatusMsg {
 	private static prefixMap = {
 		[SeverityTypes.SUCCESS]: 'Success',
 		[SeverityTypes.WARNING]: 'Warning',
-		[SeverityTypes.ERROR]: 'Error'
-	}
+		[SeverityTypes.ERROR]: 'Error',
+	};
 	private static logFuncMap = {
 		[SeverityTypes.SUCCESS]: (msg: string) => console.log(msg),
 		[SeverityTypes.WARNING]: (msg: string) => console.warn(msg),
-		[SeverityTypes.ERROR]: (msg: string) => console.error(msg)
-	}
+		[SeverityTypes.ERROR]: (msg: string) => console.error(msg),
+	};
 
-	constructor(public severity: SeverityTypes, public msg: string, private exception: Error | null = null) {
+	constructor(
+		public severity: SeverityTypes,
+		public msg: string,
+		private exception: Error | null = null,
+	) {
 		this.id = generateHash(this.severity, this.msg, Date.now());
 		this.severity = severity;
 		this.msg = `${StatusMsg.prefixMap[severity]}: ${msg}`;
@@ -185,7 +203,6 @@ export class StatusMsg {
 	}
 }
 
-
 // A class to represent a PDF file
 // This wraps a File object and adds an id to uniquely identify it
 export class PDFFile {
@@ -213,24 +230,34 @@ export class PDFFile {
 	}
 }
 
-
 // A class with methods for loading PDF files and processing them
 export class PDFManager {
 	private pdfCreator: string;
 
-	constructor(private pageTitle: string, private pageUrl: string) {
+	constructor(
+		private pageTitle: string,
+		private pageUrl: string,
+	) {
 		this.pdfCreator = `${this.pageTitle} (${this.pageUrl})`;
 	}
 
 	// Filter out invalid input files. Returns a list of valid files and a list of warning messages
-	public filterInvalidFiles(existingFileMap: PDFFileMapInterface, inputFiles: File[]): [PDFFile[], StatusMsg[]] {
+	public filterInvalidFiles(
+		existingFileMap: PDFFileMapInterface,
+		inputFiles: File[],
+	): [PDFFile[], StatusMsg[]] {
 		const fileList = [];
 		const statusMsgList = [];
 
 		for (const inputFile of inputFiles) {
 			// Skip and show a warning if the file is not a pdf
 			if (inputFile.type !== 'application/pdf') {
-				statusMsgList.push(new StatusMsg(SeverityTypes.WARNING, `${inputFile.name} is not a PDF file`));
+				statusMsgList.push(
+					new StatusMsg(
+						SeverityTypes.WARNING,
+						`${inputFile.name} is not a PDF file`,
+					),
+				);
 				continue;
 			}
 
@@ -238,7 +265,12 @@ export class PDFManager {
 
 			// Skip and show a warning if the file has already been added
 			if (pdfFile.getId in existingFileMap) {
-				statusMsgList.push(new StatusMsg(SeverityTypes.WARNING, `${pdfFile.getName} is already in the list`));
+				statusMsgList.push(
+					new StatusMsg(
+						SeverityTypes.WARNING,
+						`${pdfFile.getName} is already in the list`,
+					),
+				);
 				continue;
 			}
 
@@ -248,11 +280,14 @@ export class PDFManager {
 		return [fileList, statusMsgList];
 	}
 
-
 	// Combine multiple PDF files into a single one using PDF-LIB
 	// Adapted from a StackOverflow answer by Nicholas Barrow (https://stackoverflow.com/users/14717625/nicholas-barrow)
 	// Source: https://stackoverflow.com/a/65555135/1378560
-	public async createMergedFile(existingFileMap: PDFFileMapInterface, fileIds: string[], onProgress: (progress: number) => void): Promise<[string, StatusMsg[]]> {
+	public async createMergedFile(
+		existingFileMap: PDFFileMapInterface,
+		fileIds: string[],
+		onProgress: (progress: number) => void,
+	): Promise<[string, StatusMsg[]]> {
 		try {
 			const numOfFiles = fileIds.length;
 			const authorsSet = new Set();
@@ -272,7 +307,9 @@ export class PDFManager {
 				const keywords = donorPdfDoc.getKeywords();
 
 				if (keywords) {
-					keywords.split(/(?:, ?)/).forEach(keyword => keywordsSet.add(keyword));
+					keywords
+						.split(/(?:, ?)/)
+						.forEach((keyword) => keywordsSet.add(keyword));
 				}
 
 				subjectsSet.add(donorPdfDoc.getSubject());
@@ -287,7 +324,7 @@ export class PDFManager {
 			}
 
 			// Set metadata of the created file using the metadata from all input files
-			pdfDoc.setTitle('Merged PDF')
+			pdfDoc.setTitle('Merged PDF');
 			pdfDoc.setSubject(Array.from(subjectsSet).join(', '));
 			pdfDoc.setKeywords(Array.from(keywordsSet));
 			pdfDoc.setAuthor(Array.from(authorsSet).join(', '));
@@ -302,7 +339,11 @@ export class PDFManager {
 
 			return [pdfDataUri, []];
 		} catch (error) {
-			const errorMsg = new StatusMsg(SeverityTypes.ERROR, 'Something went wrong while while merging your files. See the console for more details.', error as Error);
+			const errorMsg = new StatusMsg(
+				SeverityTypes.ERROR,
+				'Something went wrong while while merging your files. See the console for more details.',
+				error as Error,
+			);
 
 			return ['', [errorMsg]];
 		}
@@ -317,12 +358,13 @@ export class PDFManager {
 	private calculateProgressPercentage(i: number, numOfFiles: number): number {
 		const progress = i / numOfFiles;
 
-		console.debug(`Merging file ${i} of ${numOfFiles} (${(progress * 100).toFixed(0)}%)`);
+		console.debug(
+			`Merging file ${i} of ${numOfFiles} (${(progress * 100).toFixed(0)}%)`,
+		);
 
 		return progress;
 	}
 }
-
 
 // A class with methods for managing data in local storage
 export class StorageManager {
@@ -388,7 +430,8 @@ export class CookieManager {
 
 	// Set the value of a key in cookies
 	private static set(key: string, value: boolean) {
-		doesDocumentExist() && (document.cookie = `${key}=${value};max-age=${this.duration};path=/`);
+		doesDocumentExist() &&
+			(document.cookie = `${key}=${value};max-age=${this.duration};path=/`);
 	}
 
 	// Remove a key from local storage

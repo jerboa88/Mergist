@@ -1,15 +1,15 @@
 {
-  "name": "gatsby-plugin-image-generator",
-  "version": "1.0.0",
-  "description": "A Gatsby plugin for generating images of different sizes from source images",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "John Goodliff",
-  "license": "MIT",
-  "peerDependencies": {
-    "sharp": "^0.30.5",
-    "svgo": "^2.8.0"
-  }
+	"name": "gatsby-plugin-image-generator",
+	"version": "1.0.0",
+	"description": "A Gatsby plugin for generating images of different sizes from source images",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "John Goodliff",
+	"license": "MIT",
+	"peerDependencies": {
+		"sharp": "^0.30.5",
+		"svgo": "^2.8.0"
+	}
 }

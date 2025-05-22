@@ -3,17 +3,16 @@
 	--------------------------------------------
 */
 
-
 exports.minifyNestedStyles = {
 	name: 'minifyNestedStyles',
 	type: 'perItem',
-	fn: rootAst => {
+	fn: (rootAst) => {
 		function minifyCss(cssText) {
 			return cssText
-				.replace(/\s{2,}/g, '')			// Remove consecutive whitespace
-				.replace(/\s(\(|{)/g, '$1')	// Remove whitespace before tokens
-				.replace(/(:|,)\s/g, '$1')	// Remove whitespace after tokens
-				.replace(/;}/g, '}');				// Remove semicolons before closing curly braces
+				.replace(/\s{2,}/g, '') // Remove consecutive whitespace
+				.replace(/\s(\(|{)/g, '$1') // Remove whitespace before tokens
+				.replace(/(:|,)\s/g, '$1') // Remove whitespace after tokens
+				.replace(/;}/g, '}'); // Remove semicolons before closing curly braces
 		}
 
 		function exploreChildren(ast) {
@@ -29,5 +28,5 @@ exports.minifyNestedStyles = {
 		}
 
 		exploreChildren(rootAst);
-	}
+	},
 };

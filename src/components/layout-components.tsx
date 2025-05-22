@@ -3,18 +3,28 @@
 	--------------------------
 */
 
-
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
 import { MetadataInterface } from '../common/types';
-import { StorageManager, DarkThemeContext, AllowMotionContext, useIsMount, mediaFeatureMatches, SendAnalyticsContext, CookieManager } from '../common/utilities';
-
+import {
+	StorageManager,
+	DarkThemeContext,
+	AllowMotionContext,
+	useIsMount,
+	mediaFeatureMatches,
+	SendAnalyticsContext,
+	CookieManager,
+} from '../common/utilities';
 
 // Exports
 
 // Layout component that provides basic styles and metadata tags for the whole page
-export function PageLayout(props: { className: string; metadata: MetadataInterface; children: ReactNode }) {
+export function PageLayout(props: {
+	className: string;
+	metadata: MetadataInterface;
+	children: ReactNode;
+}) {
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
 	const lsKeyForAnalytics = `ga-disable-${props.metadata.trackingId}`;
@@ -23,8 +33,12 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	// We can use this to ignore initial state changes of the component
 	const isMount = useIsMount();
 	const [isDarkTheme, setIsDarkTheme] = useState<boolean>(getIsDarkMode());
-	const [isMotionAllowed, setIsMotionAllowed] = useState<boolean>(getIsMotionAllowed());
-	const [areAnalyticsAllowed, setAreAnalyticsAllowed] = useState<boolean>(getAreAnalyticsAllowed());
+	const [isMotionAllowed, setIsMotionAllowed] = useState<boolean>(
+		getIsMotionAllowed(),
+	);
+	const [areAnalyticsAllowed, setAreAnalyticsAllowed] = useState<boolean>(
+		getAreAnalyticsAllowed(),
+	);
 
 	// Save the user's preferences to local storage or cookies when its state changes
 	useEffect(() => {
@@ -42,11 +56,17 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	// Get the user's preference from storage if it exists
 	// Otherwise, use the system preference if it is set or fall back to the default value
 	function getIsDarkMode(): boolean {
-		return StorageManager.get(lsKeyForTheme, mediaFeatureMatches('prefers-color-scheme', 'dark', true));
+		return StorageManager.get(
+			lsKeyForTheme,
+			mediaFeatureMatches('prefers-color-scheme', 'dark', true),
+		);
 	}
 
 	function getIsMotionAllowed(): boolean {
-		return StorageManager.get(lsKeyForMotion, !mediaFeatureMatches('prefers-reduced-motion', 'reduce', false));
+		return StorageManager.get(
+			lsKeyForMotion,
+			!mediaFeatureMatches('prefers-reduced-motion', 'reduce', false),
+		);
 	}
 
 	function getAreAnalyticsAllowed(): boolean {
@@ -59,26 +79,35 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 	}
 
 	// Define toggle functions and memoize before passing to the relevant context provider
-	const providerValuesForTheme = useMemo(() => ({
-		isEnabled: isDarkTheme,
-		toggle: () => {
-			setIsDarkTheme(!isDarkTheme);
-		}
-	}), [isDarkTheme]);
+	const providerValuesForTheme = useMemo(
+		() => ({
+			isEnabled: isDarkTheme,
+			toggle: () => {
+				setIsDarkTheme(!isDarkTheme);
+			},
+		}),
+		[isDarkTheme],
+	);
 
-	const providerValuesForMotion = useMemo(() => ({
-		isEnabled: isMotionAllowed,
-		toggle: () => {
-			setIsMotionAllowed(!isMotionAllowed);
-		}
-	}), [isMotionAllowed]);
+	const providerValuesForMotion = useMemo(
+		() => ({
+			isEnabled: isMotionAllowed,
+			toggle: () => {
+				setIsMotionAllowed(!isMotionAllowed);
+			},
+		}),
+		[isMotionAllowed],
+	);
 
-	const providerValuesForAnalytics = useMemo(() => ({
-		isEnabled: areAnalyticsAllowed,
-		toggle: () => {
-			setAreAnalyticsAllowed(!areAnalyticsAllowed);
-		}
-	}), [areAnalyticsAllowed]);
+	const providerValuesForAnalytics = useMemo(
+		() => ({
+			isEnabled: areAnalyticsAllowed,
+			toggle: () => {
+				setAreAnalyticsAllowed(!areAnalyticsAllowed);
+			},
+		}),
+		[areAnalyticsAllowed],
+	);
 
 	return (
 		<DarkThemeContext.Provider value={providerValuesForTheme}>
@@ -89,26 +118,44 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 						<title>{props.metadata.title}</title>
 						<meta name="author" content={props.metadata.author} />
 						<meta name="description" content={props.metadata.description} />
-						<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+						<meta
+							name="viewport"
+							content="width=device-width, initial-scale=1.0"
+						/>
 
 						{/* OpenGraph meta tags */}
 						<meta property="og:title" content={props.metadata.title} />
-						<meta property="og:description" content={props.metadata.description} />
+						<meta
+							property="og:description"
+							content={props.metadata.description}
+						/>
 						<meta property="og:type" content="website" />
 						<meta property="og:url" content={props.metadata.siteUrl} />
 						<meta property="og:image" content={ogImageUrl} />
 						<meta property="og:image:type" content="image/png" />
 						<meta property="og:image:width" content="1200" />
 						<meta property="og:image:height" content="630" />
-						<meta property="og:image:alt" content={props.metadata.ogImageAltText} />
+						<meta
+							property="og:image:alt"
+							content={props.metadata.ogImageAltText}
+						/>
 
 						{/* Twitter meta tags */}
 						<meta name="twitter:card" content="summary_large_image" />
 						<meta name="twitter:title" content={props.metadata.title} />
-						<meta name="twitter:creator" content={props.metadata.authorUsername} />
-						<meta name="twitter:description" content={props.metadata.description} />
+						<meta
+							name="twitter:creator"
+							content={props.metadata.authorUsername}
+						/>
+						<meta
+							name="twitter:description"
+							content={props.metadata.description}
+						/>
 						<meta name="twitter:image" content={ogImageUrl} />
-						<meta name="twitter:image:alt" content={props.metadata.ogImageAltText} />
+						<meta
+							name="twitter:image:alt"
+							content={props.metadata.ogImageAltText}
+						/>
 
 						<meta name="google" content="nositelinkssearchbox" />
 						<meta content={getPrimaryThemeColor()} name="theme-color" />
@@ -146,7 +193,9 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 
 					{/* Page body */}
 					<MotionConfig reducedMotion="user">
-						<div className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}>
+						<div
+							className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}
+						>
 							{props.children}
 						</div>
 					</MotionConfig>
@@ -157,9 +206,8 @@ export function PageLayout(props: { className: string; metadata: MetadataInterfa
 }
 
 PageLayout.defaultProps = {
-	className: ''
+	className: '',
 };
-
 
 // Create an interface for SingleColumnLayout props since there are a lot of types to define
 interface SingleColumnLayoutPropsInterface {
@@ -175,16 +223,18 @@ export function SingleColumnLayout(props: SingleColumnLayoutPropsInterface) {
 	const { className, collapse, children, ...injectedProps } = props;
 
 	return (
-		<div className={`max-w-4xl h-full flex-col mx-auto gap-8 ${collapse && 'w-full' || 'w-5/6'} ${className}`} {...injectedProps}>
+		<div
+			className={`max-w-4xl h-full flex-col mx-auto gap-8 ${(collapse && 'w-full') || 'w-5/6'} ${className}`}
+			{...injectedProps}
+		>
 			{children}
 		</div>
 	);
 }
 
 SingleColumnLayout.defaultProps = {
-	className: ''
+	className: '',
 };
-
 
 // Wrapper component that applies a single column layout to the main page content
 export function Main(props: { children: ReactNode }) {
@@ -197,11 +247,16 @@ export function Main(props: { children: ReactNode }) {
 	);
 }
 
-
 // A wrapper component that can be hidden
-export function Section(props: { className: string; visible: boolean; children: ReactNode }) {
+export function Section(props: {
+	className: string;
+	visible: boolean;
+	children: ReactNode;
+}) {
 	return (
-		<section className={`flex-col justify-center w-full h-full ${props.visible ? '' : 'hidden overflow-hidden '}${props.className}`}>
+		<section
+			className={`flex-col justify-center w-full h-full ${props.visible ? '' : 'hidden overflow-hidden '}${props.className}`}
+		>
 			{props.children}
 		</section>
 	);
@@ -209,5 +264,5 @@ export function Section(props: { className: string; visible: boolean; children: 
 
 Section.defaultProps = {
 	className: '',
-	visible: true
+	visible: true,
 };
