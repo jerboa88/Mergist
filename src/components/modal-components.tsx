@@ -15,7 +15,6 @@ import { PrimaryButton } from '../components/button-components';
 import { ToggleIcon } from '../components/icon-components';
 import { Accordion } from '../components/accordion-components';
 import {
-	AnalyticsToggle,
 	MotionToggle,
 	ThemeToggle,
 } from '../components/toggle-components';
@@ -33,14 +32,14 @@ function Modal(props: {
 	return (
 		<div
 			id={props.id}
-			className="modal modal-bottom sm:modal-middle visible overflow-hidden sm:backdrop-blur-sm group has-motion"
+			className="overflow-hidden visible modal modal-bottom sm:modal-middle sm:backdrop-blur-sm group has-motion"
 		>
 			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 text-center overflow-hidden transition-[opacity, transform] has-motion scale-90 group-target:scale-100 ">
-				<h3 className="font-bold text-lg">{props.title}</h3>
+				<h3 className="text-lg font-bold">{props.title}</h3>
 				<br />
 				{props.children}
 
-				<div className="modal-action justify-center">
+				<div className="justify-center modal-action">
 					<LinkWrapper to="#" isInternal>
 						<PrimaryButton icon={props.buttonIcon}>
 							{props.buttonLabel}
@@ -106,7 +105,7 @@ export function AboutModal(props: {
 				{gatsbyLink} + {tailwindLink}. Hosted by {githubPagesLink}.
 			</p>
 			<br />
-			<div className="flex-col w-fit m-auto">
+			<div className="flex-col m-auto w-fit">
 				<MotionToggle />
 				<ThemeToggle />
 			</div>
@@ -143,67 +142,34 @@ export function AboutModal(props: {
 
 // A modal that displays the privacy policy for the site
 export function PrivacyModal(props: { id: string }) {
-	const [isOpen, setIsOpen] = React.useState(false);
-	const gaLink = (
-		<InlineLink to="https://www.google.com/analytics/">
-			Google Analytics
+	const fullPrivacyPolicyLink = (
+		<InlineLink to="https://johng.io/privacy-policy" rel="external privacy-policy">
+			full privacy policy
 		</InlineLink>
 	);
-
-	function toggleIsOpen() {
-		setIsOpen(!isOpen);
-	}
 
 	return (
 		<Modal
 			id={props.id}
-			title="Hey there!"
+			title="Privacy Policy"
 			buttonIcon={faCookieBite}
 			buttonLabel="Yum"
 		>
 			<p>
-				This site uses cookies to store your settings and record info about how
-				you use the site. This data is used to help me improve the site and does
-				include any personally identifiable information or any details about PDF
-				files you add. By using this site to agree to these terms.
+				All processing is performed locally on your own device — no PDF files are ever uploaded to our servers. This also happens to make the merging process faster!
 			</p>
-			<br />
-			<div className="flex-row w-full justify-around">
-				<AnalyticsToggle />
-			</div>
 			<br />
 			<p>
-				<label>
-					<input
-						type="checkbox"
-						checked={isOpen}
-						onChange={toggleIsOpen}
-						className="hidden"
-					/>{' '}
-					<InlineLink isInternal>
-						{'More details '}
-						<ToggleIcon
-							icon={faAngleDown}
-							isToggled={isOpen}
-							tw="fa-sm !align-middle"
-						/>
-					</InlineLink>
-				</label>
+			If you change any options, local storage will be used to store your settings between page visits. You can wipe the saved data for this site in your browser's settings.
 			</p>
 			<br />
-			<Accordion isOpen={isOpen}>
-				<p>
-					{gaLink} is used to collect general information about page visits such
-					as browser details, time of visit, and which links were clicked on.
-				</p>
-				<br />
-				<p>
-					Google's advertising features are not used, and because all processing
-					is performed locally on your own device, no PDF files are ever
-					uploaded to our servers. This also happens to make the merging process
-					faster!
-				</p>
-			</Accordion>
+			<p>
+				This site may collect anonymized usage analytics. This data is used to help me improve the site and does include any personally identifiable information or any details about PDF files you add. This data is not used for tracking or marketing.
+			</p>
+			<br />
+			<p>
+				This is a summary of the privacy policy for this site. See the {fullPrivacyPolicyLink} for more details. By using this site to agree to these terms.
+			</p>
 		</Modal>
 	);
 }
