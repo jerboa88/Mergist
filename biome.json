@@ -1,0 +1,19 @@
+{
+	"files": {
+		"ignore": [
+			"public",
+			".cache/"
+		]
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"css": {
+		"formatter": {
+			"enabled": true,
+			"quoteStyle": "single"
+		}
+	}
+}
