@@ -4,14 +4,15 @@ import React from 'react';
 // Local deps
 import config from '../../gatsby-config';
 import { loadMetadata } from '../common/utilities';
-import { PageLayout } from '../components/layout-components';
 import Footer from '../components/footer';
 import Header from '../components/header';
+import { PageLayout } from '../components/layout-components';
 
 
 export default function IndexPage() {
   const metadata = loadMetadata(config);
 
+	console.debug('metadata', metadata);
 
   return (
     <PageLayout metadata={{ ...metadata, siteUrl: `${metadata.siteUrl}/404` }} className="gap-0">
