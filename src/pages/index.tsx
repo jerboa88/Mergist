@@ -16,6 +16,10 @@ import Footer from '../components/footer';
 import Header from '../components/header';
 import FileManager from '../components/file-manager';
 
+// Constants
+
+const METADATA = loadMetadata(config);
+
 // Exports
 
 // Index page component
@@ -26,8 +30,7 @@ export default function IndexPage() {
 	const [mergedPdfUrl, setMergedPdfUrl] = useState<string>('');
 	const [currentProgress, setCurrentProgress] = useState<number>(0);
 
-	const metadata = loadMetadata(config);
-	const pdfManager = new PDFManager(metadata.shortTitle, metadata.siteUrl);
+	const pdfManager = new PDFManager(METADATA.shortTitle, METADATA.siteUrl);
 
 	// Update the list of files and fileIds, resetting progress and the download URL
 	function updateState(
@@ -112,8 +115,8 @@ export default function IndexPage() {
 	}
 
 	return (
-		<PageLayout metadata={metadata}>
-			<Header title={metadata.shortTitle}>{metadata.description}</Header>
+		<PageLayout metadata={METADATA}>
+			<Header title={METADATA.shortTitle}>{METADATA.description}</Header>
 
 			<Main>
 				<FullPageDropzone onFilesAdded={handleAddFiles} />
@@ -124,26 +127,29 @@ export default function IndexPage() {
 					))}
 				</Section>
 
-				<div
+				<Section
+					visible={fileIds.length === 0}
 					tabIndex={0}
-					className="collapse collapse-open flex-1 bg-base-100 border border-base-300 rounded-none sm:rounded-box"
+					className="flex-1 rounded-none border bg-base-100 border-base-300 sm:rounded-box"
 				>
-					<Section visible={fileIds.length === 0} className="flex-1">
-						<LargeDropzone onFilesAdded={handleAddFiles} />
-					</Section>
+					<LargeDropzone onFilesAdded={handleAddFiles} />
+				</Section>
 
-					<Section visible={fileIds.length > 0}>
-						<FileManager
-							fileIds={fileIds}
-							files={files}
-							onReorder={handleReorderFiles}
-							onFileAdded={handleAddFiles}
-							onFileRemoved={handleRemoveFile}
-							onAllFilesRemoved={handleRemoveAllFiles}
-							disabled={currentProgress > 0}
-						/>
-					</Section>
-				</div>
+				<Section
+					visible={fileIds.length > 0}
+					tabIndex={0}
+					className="rounded-none border bg-base-100 border-base-300 sm:rounded-box"
+				>
+					<FileManager
+						fileIds={fileIds}
+						files={files}
+						onReorder={handleReorderFiles}
+						onFileAdded={handleAddFiles}
+						onFileRemoved={handleRemoveFile}
+						onAllFilesRemoved={handleRemoveAllFiles}
+						disabled={currentProgress > 0}
+					/>
+				</Section>
 
 				<Section visible={fileIds.length > 0} className="px-6 sm:px-0">
 					<ActionButton
@@ -156,9 +162,9 @@ export default function IndexPage() {
 			</Main>
 
 			<Footer
-				author={metadata.author}
-				githubUrl={metadata.githubUrl}
-				homepageDomain={metadata.homepageDomain}
+				author={METADATA.author}
+				githubUrl={METADATA.githubUrl}
+				homepageDomain={METADATA.homepageDomain}
 			/>
 		</PageLayout>
 	);
