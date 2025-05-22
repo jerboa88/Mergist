@@ -5,15 +5,12 @@
 
 import React, { ReactNode } from 'react';
 import {
-	faAngleDown,
 	faCookieBite,
-	faThumbsUp,
-	IconDefinition,
+	faEye, faThumbsUp,
+	IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink, LinkWrapper } from '../components/link-components';
 import { PrimaryButton } from '../components/button-components';
-import { ToggleIcon } from '../components/icon-components';
-import { Accordion } from '../components/accordion-components';
 import {
 	MotionToggle,
 	ThemeToggle,
@@ -34,8 +31,8 @@ function Modal(props: {
 			id={props.id}
 			className="overflow-hidden visible modal modal-bottom sm:modal-middle sm:backdrop-blur-sm group has-motion"
 		>
-			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 text-center overflow-hidden transition-[opacity, transform] has-motion scale-90 group-target:scale-100 ">
-				<h3 className="text-lg font-bold">{props.title}</h3>
+			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 sm:px-16 overflow-hidden transition-[opacity, transform] has-motion scale-90 group-target:scale-100 ">
+				<h3 className="text-lg font-bold text-center">{props.title}</h3>
 				<br />
 				{props.children}
 
@@ -59,7 +56,6 @@ export function AboutModal(props: {
 	author: string;
 	authorUrl: string;
 }) {
-	const [isOpen, setIsOpen] = React.useState(false);
 	const authorLink = (
 		<InlineLink to={props.authorUrl} rel="author">
 			{props.author}
@@ -89,10 +85,6 @@ export function AboutModal(props: {
 		<InlineLink to="https://fontawesome.io/">FontAwesome</InlineLink>
 	);
 
-	function toggleIsOpen() {
-		setIsOpen(!isOpen);
-	}
-
 	return (
 		<Modal
 			id={props.id}
@@ -101,41 +93,34 @@ export function AboutModal(props: {
 			buttonLabel="Cool beans"
 		>
 			<p>
-				Handcrafted with love by {authorLink}. Powered by {reactLink} +{' '}
+				Handcrafted with ❤️ by {authorLink}. Powered by {reactLink} + {' '}
 				{gatsbyLink} + {tailwindLink}. Hosted by {githubPagesLink}.
 			</p>
 			<br />
+			<p>
+				{pancakeIconLink} by Kokota at NounProject.com is licensed under{' '}
+				{pancakeIconLicenseLink} (with additional optimization and recoloring
+				by me). Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
+			</p>
+		</Modal>
+	);
+}
+
+// A modal that displays info about the site
+export function OptionsModal(props: {
+	id: string;
+}) {
+	return (
+		<Modal
+			id={props.id}
+			title="Options"
+			buttonIcon={faEye}
+			buttonLabel="Looks good"
+		>
 			<div className="flex-col m-auto w-fit">
 				<MotionToggle />
 				<ThemeToggle />
 			</div>
-			<br />
-			<p>
-				<label>
-					<input
-						type="checkbox"
-						checked={isOpen}
-						onChange={toggleIsOpen}
-						className="hidden"
-					/>
-					<InlineLink isInternal>
-						{'More details '}
-						<ToggleIcon
-							icon={faAngleDown}
-							isToggled={isOpen}
-							tw="fa-sm !align-middle"
-						/>
-					</InlineLink>
-				</label>
-			</p>
-			<br />
-			<Accordion isOpen={isOpen}>
-				<p>
-					{pancakeIconLink} by Kokota at NounProject.com is licensed under{' '}
-					{pancakeIconLicenseLink} (with additional optimization and recoloring
-					by me). Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
-				</p>
-			</Accordion>
 		</Modal>
 	);
 }

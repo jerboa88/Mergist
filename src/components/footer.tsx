@@ -5,9 +5,9 @@
 
 import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faCircleQuestion, faCookie } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faCookie, faGear } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from '../components/layout-components';
-import { AboutModal, PrivacyModal } from '../components/modal-components';
+import { AboutModal, OptionsModal, PrivacyModal } from '../components/modal-components';
 import { IconButtonLink } from '../components/link-components';
 
 // Exports
@@ -20,6 +20,7 @@ export default function Footer(props: {
 }) {
 	const privacyModalId = 'privacy-modal';
 	const aboutModalId = 'about-modal';
+	const optionsModalId = 'options-modal';
 	const homepageUrl = `https://${props.homepageDomain}`;
 
 	return (
@@ -30,12 +31,22 @@ export default function Footer(props: {
 				author={props.author}
 				authorUrl={homepageUrl}
 			/>
+			<OptionsModal
+				id={optionsModalId}
+			/>
 
-			<footer className="footer footer-center py-8 bg-base-300">
+			<footer className="py-8 footer footer-center bg-base-300">
 				<SingleColumnLayout className="gap-0">
-					<div className="flex-row w-full justify-between">
+					<div className="grid grid-cols-2 w-full sm:grid-cols-4">
 						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub
+						</IconButtonLink>
+						<IconButtonLink
+							to={`#${optionsModalId}`}
+							icon={faGear}
+							isInternal
+						>
+							Options
 						</IconButtonLink>
 						<IconButtonLink
 							to={`#${privacyModalId}`}
