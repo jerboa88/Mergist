@@ -71,14 +71,6 @@ export const AllowMotionContext = createContext({
 	},
 });
 
-// Context for updating whether analytics are sent
-export const SendAnalyticsContext = createContext({
-	isEnabled: true,
-	toggle: () => {
-		/* no-op */
-	},
-});
-
 // Return whether animations with motion are allowed
 export const getIsMotionAllowed = () => {
 	const { isEnabled } = useContext(AllowMotionContext);
@@ -396,46 +388,5 @@ export class StorageManager {
 	// Remove a key from local storage
 	public static remove(key: string) {
 		this.storage && this.storage.removeItem(key);
-	}
-}
-
-// A class with methods for managing data stored in cookies
-export class CookieManager {
-	// private duration: number;
-	static duration = 60 * 60 * 24 * 365; // 1 year
-
-	// Get the value of a key from cookies
-	// Returns the default value if the key does not exist or if the window object does not exist
-	public static get(key: string, defaultValue: boolean): boolean {
-		if (!doesDocumentExist()) {
-			return defaultValue;
-		}
-
-		const matches = document.cookie.match(`${key}=(\\w+)`);
-
-		if (matches && matches.length > 1) {
-			const loadedValue = matches[1];
-
-			// If there is no stored value, return the default value. Loose equality is intentional
-			return loadedValue == null ? defaultValue : JSON.parse(loadedValue);
-		}
-
-		return defaultValue;
-	}
-
-	// Set the value of a key in cookies if an input flag is true
-	public static setIf(doSet: boolean, key: string, value: boolean) {
-		doSet && this.set(key, value);
-	}
-
-	// Set the value of a key in cookies
-	private static set(key: string, value: boolean) {
-		doesDocumentExist() &&
-			(document.cookie = `${key}=${value};max-age=${this.duration};path=/`);
-	}
-
-	// Remove a key from local storage
-	public static remove(key: string) {
-		doesDocumentExist() && (document.cookie = `${key}=null;max-age=0;path=/`);
 	}
 }

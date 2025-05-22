@@ -19,7 +19,6 @@ const config = {
 		siteUrl: 'https://mergist.johng.io/',
 		githubUrl: 'https://github.com/jerboa88/mergist/',
 		homepageDomain: 'johng.io',
-		trackingId: 'G-TYRQSQ9QC3',
 	},
 	theme: {
 		light: {

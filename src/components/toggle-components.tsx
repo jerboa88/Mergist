@@ -17,7 +17,6 @@ import {
 import {
 	AllowMotionContext,
 	DarkThemeContext,
-	SendAnalyticsContext,
 } from '../common/utilities';
 import { ToggleContextInterface } from '../common/types';
 import { Icon } from '../components/icon-components';
@@ -39,7 +38,7 @@ function Toggle(props: TogglePropsInterface) {
 	return (
 		<div className="tooltip tooltip-primary" data-tip={`Toggle ${props.label}`}>
 			<div className="form-control">
-				<label className="label p-4 cursor-pointer">
+				<label className="p-4 cursor-pointer label">
 					{/* Modify the html data attribute */}
 					<Helmet
 						htmlAttributes={{
@@ -53,14 +52,14 @@ function Toggle(props: TogglePropsInterface) {
 						icon={isEnabled ? props.enabled[1] : props.disabled[1]}
 						tw="mr-2 !align-middle"
 					/>
-					<span className="label-text mr-4 text-base font-button font-bold uppercase">
+					<span className="mr-4 text-base font-bold uppercase label-text font-button">
 						{props.label}
 					</span>
 					{/* For whatever reason the onChange event is not fired on the first toggle of the input element, so we have to use an onInput listener instead */}
 					{/* The readOnly attribute is specified on the input element to suppress warnings about the onChange event listener not being specified */}
 					<input
 						type="checkbox"
-						className="toggle toggle-primary align-middle has-motion"
+						className="align-middle toggle toggle-primary has-motion"
 						checked={isEnabled}
 						onInput={toggle}
 						readOnly
@@ -95,19 +94,6 @@ export function MotionToggle() {
 			htmlAttribute="data-motion"
 			disabled={['reduce', faWandMagic]}
 			enabled={['allow', faWandMagicSparkles]}
-		/>
-	);
-}
-
-// A toggle component used to change the `analytics-allowed` property
-export function AnalyticsToggle() {
-	return (
-		<Toggle
-			label="send analytics"
-			context={SendAnalyticsContext}
-			htmlAttribute="data-analytics"
-			disabled={['reject', faHand]}
-			enabled={['allow', faHandshake]}
 		/>
 	);
 }

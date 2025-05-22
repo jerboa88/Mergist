@@ -13,8 +13,6 @@ import {
 	AllowMotionContext,
 	useIsMount,
 	mediaFeatureMatches,
-	SendAnalyticsContext,
-	CookieManager,
 } from '../common/utilities';
 
 // Exports
@@ -27,8 +25,8 @@ export function PageLayout(props: {
 }) {
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
-	const lsKeyForAnalytics = `ga-disable-${props.metadata.trackingId}`;
 	const ogImageUrl = `${props.metadata.siteUrl}${props.metadata.ogImageUrl}`;
+
 	// Whether the component is currently being mounted or not
 	// We can use this to ignore initial state changes of the component
 	const isMount = useIsMount();
@@ -36,11 +34,8 @@ export function PageLayout(props: {
 	const [isMotionAllowed, setIsMotionAllowed] = useState<boolean>(
 		getIsMotionAllowed(),
 	);
-	const [areAnalyticsAllowed, setAreAnalyticsAllowed] = useState<boolean>(
-		getAreAnalyticsAllowed(),
-	);
 
-	// Save the user's preferences to local storage or cookies when its state changes
+	// Save the user's preferences to local storage when its state changes
 	useEffect(() => {
 		StorageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
 	}, [isDarkTheme]);
@@ -48,10 +43,6 @@ export function PageLayout(props: {
 	useEffect(() => {
 		StorageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
 	}, [isMotionAllowed]);
-
-	useEffect(() => {
-		CookieManager.setIf(!isMount, lsKeyForAnalytics, !areAnalyticsAllowed);
-	}, [areAnalyticsAllowed]);
 
 	// Get the user's preference from storage if it exists
 	// Otherwise, use the system preference if it is set or fall back to the default value
@@ -67,10 +58,6 @@ export function PageLayout(props: {
 			lsKeyForMotion,
 			!mediaFeatureMatches('prefers-reduced-motion', 'reduce', false),
 		);
-	}
-
-	function getAreAnalyticsAllowed(): boolean {
-		return !CookieManager.get(lsKeyForAnalytics, false);
 	}
 
 	// Get the primary theme color from DaisyUI config
@@ -99,20 +86,9 @@ export function PageLayout(props: {
 		[isMotionAllowed],
 	);
 
-	const providerValuesForAnalytics = useMemo(
-		() => ({
-			isEnabled: areAnalyticsAllowed,
-			toggle: () => {
-				setAreAnalyticsAllowed(!areAnalyticsAllowed);
-			},
-		}),
-		[areAnalyticsAllowed],
-	);
-
 	return (
 		<DarkThemeContext.Provider value={providerValuesForTheme}>
 			<AllowMotionContext.Provider value={providerValuesForMotion}>
-				<SendAnalyticsContext.Provider value={providerValuesForAnalytics}>
 					{/* Page head */}
 					<Helmet htmlAttributes={{ lang: 'en-US' }}>
 						<title>{props.metadata.title}</title>
@@ -199,7 +175,6 @@ export function PageLayout(props: {
 							{props.children}
 						</div>
 					</MotionConfig>
-				</SendAnalyticsContext.Provider>
 			</AllowMotionContext.Provider>
 		</DarkThemeContext.Provider>
 	);
@@ -239,7 +214,7 @@ SingleColumnLayout.defaultProps = {
 // Wrapper component that applies a single column layout to the main page content
 export function Main(props: { children: ReactNode }) {
 	return (
-		<main className="w-full h-full flex-col flex-1">
+		<main className="flex-col flex-1 w-full h-full">
 			<SingleColumnLayout className="flex-1 sm:w-5/6" collapse>
 				{props.children}
 			</SingleColumnLayout>

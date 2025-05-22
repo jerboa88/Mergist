@@ -52,21 +52,6 @@ const config: GatsbyConfig = {
 			},
 		},
 		{
-			resolve: 'gatsby-plugin-google-gtag',
-			options: {
-				trackingIds: [metadata.trackingId],
-				gtagConfig: {
-					// Opt-out of personalized advertising features
-					anonymize_ip: true,
-					allow_google_signals: false,
-					allow_ad_personalization_signals: false,
-				},
-				pluginConfig: {
-					head: true,
-				},
-			},
-		},
-		{
 			resolve: 'gatsby-plugin-image-generator',
 			options: {
 				generate: [configManager.getOgImage(), ...configManager.getIcons()],
