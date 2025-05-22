@@ -1,10 +1,9 @@
 {
-	"name": "Mergist",
-	"packageManager": "yarn@4.1.1",
+	"name": "mergist",
 	"version": "1.0.0",
 	"private": true,
 	"description": "Mergist is an online tool to combine multiple PDF files into one",
-	"author": "John Goodliff",
+	"author": "John Goodliff (https://johng.io)",
 	"license": "MIT",
 	"keywords": [
 		"mergist",
@@ -27,13 +26,18 @@
 		"pdf-combiner",
 		"daisyui"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jerboa88/Mergist.git"
+	},
 	"scripts": {
-		"develop": "yarn gatsby develop",
-		"start": "yarn gatsby develop",
-		"build": "yarn gatsby build",
-		"serve": "yarn gatsby serve",
-		"clean": "yarn gatsby clean",
-		"typecheck": "yarn tsc --noEmit"
+		"develop": "gatsby develop -H 0.0.0.0",
+		"start": "gatsby develop -H 0.0.0.0",
+		"build": "gatsby build",
+		"serve": "gatsby serve -H 0.0.0.0",
+		"clean": "gatsby clean",
+		"typecheck": "tsc --noEmit --skipLibCheck",
+		"upgrade-interactive": "bunx npm-check-updates -i --format group -p bun"
 	},
 	"dependencies": {
 		"@fontsource/roboto-condensed": "^4.5.9",
@@ -46,7 +50,7 @@
 		"framer-motion": "^10.18.0",
 		"gatsby": "^5.13.3",
 		"gatsby-plugin-google-gtag": "^5.13.1",
-		"gatsby-plugin-image-generator": "link:./plugins/gatsby-plugin-image-generator",
+		"gatsby-plugin-image-generator": "link:gatsby-plugin-image-generator",
 		"gatsby-plugin-manifest": "^5.13.1",
 		"gatsby-plugin-offline": "^6.13.1",
 		"gatsby-plugin-postcss": "^6.13.1",
