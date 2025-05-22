@@ -4,6 +4,7 @@
     "": {
       "name": "Mergist",
       "dependencies": {
+        "gatsby-plugin-image-generator": "./plugins/gatsby-plugin-image-generator",
         "@fontsource/roboto-condensed": "^4.5.9",
         "@fontsource/roboto-flex": "^4.5.5",
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -14,7 +15,6 @@
         "framer-motion": "^10.18.0",
         "gatsby": "^5.13.3",
         "gatsby-plugin-google-gtag": "^5.13.1",
-        "gatsby-plugin-image-generator": "link:gatsby-plugin-image-generator",
         "gatsby-plugin-manifest": "^5.13.1",
         "gatsby-plugin-offline": "^6.13.1",
         "gatsby-plugin-postcss": "^6.13.1",
@@ -1351,7 +1351,7 @@
 
     "gatsby-plugin-google-gtag": ["gatsby-plugin-google-gtag@5.14.0", "", { "dependencies": { "@babel/runtime": "^7.20.13", "minimatch": "^3.1.2" }, "peerDependencies": { "gatsby": "^5.0.0-next", "react": "^18.0.0 || ^0.0.0", "react-dom": "^18.0.0 || ^0.0.0" } }, "sha512-iXBQR4xjU20vR1b0zSE1McDxJZdm3pNxm8FMSvFIa9IswZskRgnjSYUBjGLMeGf8+t8y8rSTie94Ni0pJqf6dA=="],
 
-    "gatsby-plugin-image-generator": ["gatsby-plugin-image-generator@link:gatsby-plugin-image-generator", {}],
+    "gatsby-plugin-image-generator": ["gatsby-plugin-image-generator@file:plugins/gatsby-plugin-image-generator", { "peerDependencies": { "sharp": "^0.30.5", "svgo": "^2.8.0" } }],
 
     "gatsby-plugin-manifest": ["gatsby-plugin-manifest@5.14.0", "", { "dependencies": { "@babel/runtime": "^7.20.13", "gatsby-core-utils": "^4.14.0", "gatsby-plugin-utils": "^4.14.0", "semver": "^7.5.3", "sharp": "^0.32.6" }, "peerDependencies": { "gatsby": "^5.0.0-next" } }, "sha512-ZJS+sCg8KIlXTEilInBt+kkPbGPOXX3wuRlOJiHwcou+uCmU/VZ4gif1DVazCseAbWtAdQxb3GkMlKTsGqtYiQ=="],
 
