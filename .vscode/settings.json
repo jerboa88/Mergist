@@ -1,4 +1,10 @@
 {
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/.cache": true,
+		"**/bun.lock": true,
+		"**package-lock.json": true,
+	},
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": "explicit"
 	},
