@@ -12,8 +12,6 @@ import { PageLayout } from '../components/layout-components';
 export default function IndexPage() {
   const metadata = loadMetadata(config);
 
-	console.debug('metadata', metadata);
-
   return (
     <PageLayout metadata={{ ...metadata, siteUrl: `${metadata.siteUrl}/404` }} className="gap-0">
       <Header title="Oof" className="flex-1">
