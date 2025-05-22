@@ -3,16 +3,16 @@
 	----------------------------------------------
 */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	faTriangleExclamation,
 	faCircleExclamation,
 	faSquareCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SeverityTypes } from '../common/types';
-import { getDefaultTransition, StatusMsg } from '../common/utilities';
-import { Icon } from '../components/icon-components';
+import { SeverityTypes } from '../common/types.ts';
+import { getDefaultTransition, type StatusMsg } from '../common/utilities.ts';
+import { Icon } from '../components/icon-components.tsx';
 
 const alertTypes = {
 	[SeverityTypes.SUCCESS]: {

@@ -3,7 +3,6 @@
 	----------------------------------------------------------------------
 */
 
-import React from 'react';
 import {
 	faFileCirclePlus,
 	faGripVertical,
@@ -13,7 +12,7 @@ import {
 import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
 import { getDefaultTransition, ignoreDefault } from '../common/utilities';
-import { PDFFileMapInterface } from '../common/types';
+import type { PDFFileMapInterface } from '../common/types';
 import { IconButton, PrimaryButton } from '../components/button-components';
 import { DropzoneWrapper } from '../components/dropzone-components';
 
@@ -48,18 +47,18 @@ function SortableItem(props: {
 			className={classNames}
 			{...animationProps}
 		>
-			<div className="flex-row items-center overflow-hidden gap-0 sm:gap-2">
+			<div className="overflow-hidden flex-row gap-0 items-center sm:gap-2">
 				<IconButton icon={faGripVertical} />
-				<p className="font-bold overflow-hidden whitespace-nowrap text-ellipsis">
+				<p className="overflow-hidden font-bold whitespace-nowrap text-ellipsis">
 					{props.name}
 				</p>
 			</div>
 
-			<div className="flex-row flex-none items-center overflow-hidden gap-0 sm:gap-2">
+			<div className="overflow-hidden flex-row flex-none gap-0 items-center sm:gap-2">
 				<p className="whitespace-nowrap">
 					({prettyBytes(props.size, { maximumFractionDigits: 0 })})
 				</p>
-				<div className="card-actions justify-end">
+				<div className="justify-end card-actions">
 					<IconButton icon={faXmark} onClick={() => props.onRemove(props.id)} />
 				</div>
 			</div>
@@ -83,7 +82,7 @@ function SortableFileList(props: SortableFileListPropsInterface) {
 			axis="y"
 			values={props.fileIds}
 			onReorder={props.onReorder}
-			className="flex-col px-6 py-7 gap-5 bg-base-300 shadow-inner overflow-hidden"
+			className="overflow-hidden flex-col gap-5 px-6 py-7 shadow-inner bg-base-300"
 		>
 			<AnimatePresence>
 				{props.fileIds.map((fileId) => (
@@ -123,12 +122,12 @@ export default function FileManager(props: FileManagerPropsInterface) {
 
 	return (
 		<div tabIndex={0} className="collapse">
-			<div className="flex-col sm:flex-row justify-between items-center p-6 sm:pl-10 gap-4 collapse-title text-lg font-medium">
+			<div className="flex-col gap-4 justify-between items-center p-6 text-lg font-medium sm:flex-row sm:pl-10 collapse-title">
 				<h2>
 					{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added (
 					{getEstimatedFileSize()})
 				</h2>
-				<div className="flex-row gap-2 flex-1 sm:flex-none">
+				<div className="flex-row flex-1 gap-2 sm:flex-none">
 					<DropzoneWrapper onFilesAdded={props.onFileAdded}>
 						<PrimaryButton icon={faFileCirclePlus} fake>
 							Add File

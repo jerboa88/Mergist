@@ -38,9 +38,15 @@
 		"formatter": {
 			"quoteStyle": "single"
 		},
-		"globals": [
-			"Queries",
-			"React"
-		]
+		"globals": ["Queries", "React"]
+	},
+	"css": {
+		"formatter": {
+			"enabled": true,
+			"quoteStyle": "single"
+		},
+		"linter": {
+			"enabled": true
+		}
 	}
 }

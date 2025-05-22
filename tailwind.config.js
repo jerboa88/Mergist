@@ -3,7 +3,7 @@
 	-------------------------------
 */
 
-const ConfigManager = require('./config-manager');
+const ConfigManager = require('./config-manager.js');
 
 const configManager = new ConfigManager();
 

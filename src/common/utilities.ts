@@ -5,16 +5,16 @@
 
 import {
 	createContext,
-	SyntheticEvent,
+	type SyntheticEvent,
 	useContext,
 	useEffect,
 	useRef,
 } from 'react';
-import { GatsbyConfig } from 'gatsby';
+import type { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
 import {
-	MetadataInterface,
-	PDFFileMapInterface,
+	type MetadataInterface,
+	type PDFFileMapInterface,
 	SeverityTypes,
 } from '../common/types';
 

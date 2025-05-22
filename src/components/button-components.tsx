@@ -3,12 +3,12 @@
 	--------------------------
 */
 
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import {
 	faLayerGroup,
 	faFileArrowDown,
-	IconDefinition,
+	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from '../components/icon-components';
 
@@ -35,7 +35,7 @@ function ProgressBar(props: { progress: string }) {
 		<div className="w-full h-1">
 			<motion.div
 				role="progressbar"
-				className="h-full bg-primary-content rounded-full"
+				className="h-full rounded-full bg-primary-content"
 				{...animationProps}
 			/>
 		</div>
@@ -145,7 +145,7 @@ export function PrimaryButton(props: {
 
 	return (
 		<ElementType
-			className="btn-primary flex-1 flex-nowrap whitespace-nowrap gap-2"
+			className="flex-nowrap flex-1 gap-2 whitespace-nowrap btn-primary"
 			type={(!props.fake && 'button') || undefined}
 			onClick={props.onClick}
 		>

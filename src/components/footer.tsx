@@ -3,12 +3,19 @@
 	----------------
 */
 
-import React from 'react';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faCircleQuestion, faCookie, faGear } from '@fortawesome/free-solid-svg-icons';
-import { SingleColumnLayout } from '../components/layout-components';
-import { AboutModal, OptionsModal, PrivacyModal } from '../components/modal-components';
-import { IconButtonLink } from '../components/link-components';
+import {
+	faCircleQuestion,
+	faCookie,
+	faGear,
+} from '@fortawesome/free-solid-svg-icons';
+import { SingleColumnLayout } from '../components/layout-components.tsx';
+import {
+	AboutModal,
+	OptionsModal,
+	PrivacyModal,
+} from '../components/modal-components.tsx';
+import { IconButtonLink } from '../components/link-components.tsx';
 
 // Exports
 
@@ -31,9 +38,7 @@ export default function Footer(props: {
 				author={props.author}
 				authorUrl={homepageUrl}
 			/>
-			<OptionsModal
-				id={optionsModalId}
-			/>
+			<OptionsModal id={optionsModalId} />
 
 			<footer className="py-8 footer footer-center bg-base-300">
 				<SingleColumnLayout className="gap-0">
@@ -41,11 +46,7 @@ export default function Footer(props: {
 						<IconButtonLink to={props.githubUrl} icon={faGithub}>
 							GitHub
 						</IconButtonLink>
-						<IconButtonLink
-							to={`#${optionsModalId}`}
-							icon={faGear}
-							isInternal
-						>
+						<IconButtonLink to={`#${optionsModalId}`} icon={faGear} isInternal>
 							Options
 						</IconButtonLink>
 						<IconButtonLink

@@ -1,20 +1,24 @@
 // External deps
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 // Local deps
-import config from '../../gatsby-config';
-import { PDFFileMapInterface } from '../common/types';
-import { loadMetadata, PDFManager, StatusMsg } from '../common/utilities';
-import { Main, PageLayout, Section } from '../components/layout-components';
+import config from '../../gatsby-config.ts';
+import type { PDFFileMapInterface } from '../common/types.ts';
+import {
+	loadMetadata,
+	PDFManager,
+	type StatusMsg,
+} from '../common/utilities.ts';
+import { Main, PageLayout, Section } from '../components/layout-components.tsx';
 import {
 	FullPageDropzone,
 	LargeDropzone,
-} from '../components/dropzone-components';
-import Alert from '../components/alert';
-import { ActionButton } from '../components/button-components';
-import Footer from '../components/footer';
-import Header from '../components/header';
-import FileManager from '../components/file-manager';
+} from '../components/dropzone-components.tsx';
+import Alert from '../components/alert.tsx';
+import { ActionButton } from '../components/button-components.tsx';
+import Footer from '../components/footer.tsx';
+import Header from '../components/header.tsx';
+import FileManager from '../components/file-manager.tsx';
 
 // Constants
 

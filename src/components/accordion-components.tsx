@@ -3,9 +3,9 @@
 	-----------------------------
 */
 
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getDefaultTransition } from '../common/utilities';
+import { getDefaultTransition } from '../common/utilities.ts';
 
 // Exports
 
@@ -36,11 +36,11 @@ export function Accordion(props: { children: ReactNode; isOpen: boolean }) {
 		<AnimatePresence initial={false}>
 			{props.isOpen && (
 				<motion.div
-					className="bg-base-300 shadow-inner overflow-y-auto rounded-lg"
+					className="overflow-y-auto rounded-lg shadow-inner bg-base-300"
 					key="content"
 					{...animationProps}
 				>
-					<div className="flex-col m-2 p-6">{props.children}</div>
+					<div className="flex-col p-6 m-2">{props.children}</div>
 				</motion.div>
 			)}
 		</AnimatePresence>

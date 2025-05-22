@@ -3,10 +3,10 @@
 	--------------------------
 */
 
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
-import { MetadataInterface } from '../common/types';
+import type { MetadataInterface } from '../common/types';
 import {
 	StorageManager,
 	DarkThemeContext,
@@ -89,62 +89,62 @@ export function PageLayout(props: {
 	return (
 		<DarkThemeContext.Provider value={providerValuesForTheme}>
 			<AllowMotionContext.Provider value={providerValuesForMotion}>
-					{/* Page head */}
-					<Helmet htmlAttributes={{ lang: 'en-US' }}>
-						<title>{props.metadata.title}</title>
-						<meta name="author" content={props.metadata.author} />
-						<meta name="description" content={props.metadata.description} />
-						<meta
-							name="viewport"
-							content="width=device-width, initial-scale=1.0"
-						/>
+				{/* Page head */}
+				<Helmet htmlAttributes={{ lang: 'en-US' }}>
+					<title>{props.metadata.title}</title>
+					<meta name="author" content={props.metadata.author} />
+					<meta name="description" content={props.metadata.description} />
+					<meta
+						name="viewport"
+						content="width=device-width, initial-scale=1.0"
+					/>
 
-						{/* OpenGraph meta tags */}
-						<meta property="og:title" content={props.metadata.title} />
-						<meta
-							property="og:description"
-							content={props.metadata.description}
-						/>
-						<meta property="og:type" content="website" />
-						<meta property="og:url" content={props.metadata.siteUrl} />
-						<meta property="og:image" content={ogImageUrl} />
-						<meta property="og:image:type" content="image/png" />
-						<meta property="og:image:width" content="1200" />
-						<meta property="og:image:height" content="630" />
-						<meta
-							property="og:image:alt"
-							content={props.metadata.ogImageAltText}
-						/>
+					{/* OpenGraph meta tags */}
+					<meta property="og:title" content={props.metadata.title} />
+					<meta
+						property="og:description"
+						content={props.metadata.description}
+					/>
+					<meta property="og:type" content="website" />
+					<meta property="og:url" content={props.metadata.siteUrl} />
+					<meta property="og:image" content={ogImageUrl} />
+					<meta property="og:image:type" content="image/png" />
+					<meta property="og:image:width" content="1200" />
+					<meta property="og:image:height" content="630" />
+					<meta
+						property="og:image:alt"
+						content={props.metadata.ogImageAltText}
+					/>
 
-						{/* Twitter meta tags */}
-						<meta name="twitter:card" content="summary_large_image" />
-						<meta name="twitter:title" content={props.metadata.title} />
-						<meta
-							name="twitter:creator"
-							content={props.metadata.authorUsername}
-						/>
-						<meta
-							name="twitter:description"
-							content={props.metadata.description}
-						/>
-						<meta name="twitter:image" content={ogImageUrl} />
-						<meta
-							name="twitter:image:alt"
-							content={props.metadata.ogImageAltText}
-						/>
+					{/* Twitter meta tags */}
+					<meta name="twitter:card" content="summary_large_image" />
+					<meta name="twitter:title" content={props.metadata.title} />
+					<meta
+						name="twitter:creator"
+						content={props.metadata.authorUsername}
+					/>
+					<meta
+						name="twitter:description"
+						content={props.metadata.description}
+					/>
+					<meta name="twitter:image" content={ogImageUrl} />
+					<meta
+						name="twitter:image:alt"
+						content={props.metadata.ogImageAltText}
+					/>
 
-						<meta name="google" content="nositelinkssearchbox" />
-						<meta content={getPrimaryThemeColor()} name="theme-color" />
+					<meta name="google" content="nositelinkssearchbox" />
+					<meta content={getPrimaryThemeColor()} name="theme-color" />
 
-						<link rel="canonical" href={props.metadata.siteUrl} />
+					<link rel="canonical" href={props.metadata.siteUrl} />
 
-						{/* These icons are were not added to the head with gatsby-plugin-manifest so we need to add them manually here */}
-						<link rel="icon" href="/favicon-32x32.png" type="image/png" />
-						<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+					{/* These icons are were not added to the head with gatsby-plugin-manifest so we need to add them manually here */}
+					<link rel="icon" href="/favicon-32x32.png" type="image/png" />
+					<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-						{/* Structured data */}
-						<script type="application/ld+json">
-							{`{
+					{/* Structured data */}
+					<script type="application/ld+json">
+						{`{
 							"@context": "http://schema.org",
 							"@type": "WebApplication",
 							"name": "${props.metadata.shortTitle}",
@@ -164,17 +164,17 @@ export function PageLayout(props: {
 								"url": "https://${props.metadata.homepageDomain}"
 							}
 						}`}
-						</script>
-					</Helmet>
+					</script>
+				</Helmet>
 
-					{/* Page body */}
-					<MotionConfig reducedMotion="user">
-						<div
-							className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}
-						>
-							{props.children}
-						</div>
-					</MotionConfig>
+				{/* Page body */}
+				<MotionConfig reducedMotion="user">
+					<div
+						className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}
+					>
+						{props.children}
+					</div>
+				</MotionConfig>
 			</AllowMotionContext.Provider>
 		</DarkThemeContext.Provider>
 	);

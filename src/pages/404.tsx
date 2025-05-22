@@ -1,12 +1,9 @@
-// External deps
-import React from 'react';
-
 // Local deps
-import config from '../../gatsby-config';
-import { loadMetadata } from '../common/utilities';
-import Footer from '../components/footer';
-import Header from '../components/header';
-import { PageLayout } from '../components/layout-components';
+import config from '../../gatsby-config.ts';
+import { loadMetadata } from '../common/utilities.ts';
+import Footer from '../components/footer.tsx';
+import Header from '../components/header.tsx';
+import { PageLayout } from '../components/layout-components.tsx';
 
 export default function IndexPage() {
 	const metadata = loadMetadata(config);

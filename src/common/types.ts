@@ -3,8 +3,8 @@
 	--------------------------------
 */
 
-import { Context } from 'react';
-import { PDFFile } from './utilities';
+import type { Context } from 'react';
+import type { PDFFile } from './utilities.ts';
 
 export interface DaisyUiThemeInterface {
 	accent: string;
@@ -50,7 +50,7 @@ export interface PDFFileMapInterface {
 }
 
 export enum SeverityTypes {
-	SUCCESS,
-	WARNING,
-	ERROR,
+	SUCCESS = 0,
+	WARNING = 1,
+	ERROR = 2,
 }

@@ -3,10 +3,13 @@
 	----------------
 */
 
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { getIsMotionAllowed, getDefaultTransition } from '../common/utilities';
-import { SingleColumnLayout } from '../components/layout-components';
+import {
+	getIsMotionAllowed,
+	getDefaultTransition,
+} from '../common/utilities.ts';
+import { SingleColumnLayout } from '../components/layout-components.tsx';
 import LogoIcon from '../images/icon.svg';
 
 // Exports
@@ -19,7 +22,7 @@ export default function Header(props: {
 }) {
 	// Drop shadow styles based on those from from Tailwind CSS
 	// We need to apply the raw styles so that we can transition between them with Framer Motion
-	let animationProps = {
+	const animationProps = {
 		initial: {
 			filter:
 				'drop-shadow(0 1px 1px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))',
@@ -43,7 +46,7 @@ export default function Header(props: {
 			<SingleColumnLayout className="justify-center">
 				<a href="/">
 					<motion.h1
-						className="text-5xl font-heading font-black uppercase text-secondary-header"
+						className="text-5xl font-black uppercase font-heading text-secondary-header"
 						{...animationProps}
 					>
 						<LogoIcon className="svg-inline--fa mr-4 fa-sm !align-baseline" />

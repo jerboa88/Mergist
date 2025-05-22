@@ -3,8 +3,8 @@
 	------------------------
 */
 
-import React, { ReactNode } from 'react';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import type { ReactNode } from 'react';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from '../components/icon-components';
 
 // Exports
@@ -65,7 +65,7 @@ export function IconButtonLink(props: {
 }) {
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel}>
-			<button className="btn-ghost text-secondary flex-none flex-nowrap p-0 sm:p-4 gap-2">
+			<button className="flex-nowrap flex-none gap-2 p-0 btn-ghost text-secondary sm:p-4">
 				<Icon icon={props.icon} />
 				{props.children}
 			</button>

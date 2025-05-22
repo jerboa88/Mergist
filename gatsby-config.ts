@@ -4,9 +4,9 @@
 */
 
 import type { GatsbyConfig } from 'gatsby';
-import { MetadataInterface } from './src/common/types';
+import type { MetadataInterface } from './src/common/types.ts';
 
-const ConfigManager = require('./config-manager');
+const ConfigManager = require('./config-manager.js');
 
 const configManager = new ConfigManager();
 const metadata = configManager.getMetadata();
@@ -19,6 +19,9 @@ const config: GatsbyConfig = {
 		lightTheme,
 		darkTheme,
 	},
+	// Enable the new JSX transform so that we can use JSX without importing React
+	jsxRuntime: 'automatic',
+	trailingSlash: 'never',
 	plugins: [
 		'gatsby-plugin-react-helmet',
 		'gatsby-plugin-postcss',

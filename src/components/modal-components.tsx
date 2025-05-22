@@ -3,18 +3,16 @@
 	-------------------------
 */
 
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
 	faCookieBite,
-	faEye, faThumbsUp,
-	IconDefinition
+	faEye,
+	faThumbsUp,
+	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink, LinkWrapper } from '../components/link-components';
 import { PrimaryButton } from '../components/button-components';
-import {
-	MotionToggle,
-	ThemeToggle,
-} from '../components/toggle-components';
+import { MotionToggle, ThemeToggle } from '../components/toggle-components';
 
 // Base components
 
@@ -93,14 +91,14 @@ export function AboutModal(props: {
 			buttonLabel="Cool beans"
 		>
 			<p>
-				Handcrafted with ❤️ by {authorLink}. Powered by {reactLink} + {' '}
+				Handcrafted with ❤️ by {authorLink}. Powered by {reactLink} +{' '}
 				{gatsbyLink} + {tailwindLink}. Hosted by {githubPagesLink}.
 			</p>
 			<br />
 			<p>
 				{pancakeIconLink} by Kokota at NounProject.com is licensed under{' '}
-				{pancakeIconLicenseLink} (with additional optimization and recoloring
-				by me). Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
+				{pancakeIconLicenseLink} (with additional optimization and recoloring by
+				me). Other assorted icons are from {fontAwesomeLink} by Dave Gandy.
 			</p>
 		</Modal>
 	);
@@ -128,7 +126,10 @@ export function OptionsModal(props: {
 // A modal that displays the privacy policy for the site
 export function PrivacyModal(props: { id: string }) {
 	const fullPrivacyPolicyLink = (
-		<InlineLink to="https://johng.io/privacy-policy" rel="external privacy-policy">
+		<InlineLink
+			to="https://johng.io/privacy-policy"
+			rel="external privacy-policy"
+		>
 			full privacy policy
 		</InlineLink>
 	);
@@ -141,19 +142,28 @@ export function PrivacyModal(props: { id: string }) {
 			buttonLabel="Yum"
 		>
 			<p>
-				All processing is performed locally on your own device — no PDF files are ever uploaded to our servers. This also happens to make the merging process faster!
+				All processing is performed locally on your own device — no PDF files
+				are ever uploaded to our servers. This also happens to make the merging
+				process faster!
 			</p>
 			<br />
 			<p>
-			If you change any options, local storage will be used to store your settings between page visits. You can wipe the saved data for this site in your browser's settings.
+				If you change any options, local storage will be used to store your
+				settings between page visits. You can wipe the saved data for this site
+				in your browser's settings.
 			</p>
 			<br />
 			<p>
-				This site may collect anonymized usage analytics. This data is used to help me improve the site and does include any personally identifiable information or any details about PDF files you add. This data is not used for tracking or marketing.
+				This site may collect anonymized usage analytics. This data is used to
+				help me improve the site and does include any personally identifiable
+				information or any details about PDF files you add. This data is not
+				used for tracking or marketing.
 			</p>
 			<br />
 			<p>
-				This is a summary of the privacy policy for this site. See the {fullPrivacyPolicyLink} for more details. By using this site to agree to these terms.
+				This is a summary of the privacy policy for this site. See the{' '}
+				{fullPrivacyPolicyLink} for more details. By using this site to agree to
+				these terms.
 			</p>
 		</Modal>
 	);

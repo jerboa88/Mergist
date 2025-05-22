@@ -3,22 +3,17 @@
 	----------------------------------
 */
 
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import {
-	faHand,
-	faHandshake,
 	faMoon,
 	faSun,
 	faWandMagic,
 	faWandMagicSparkles,
-	IconDefinition,
+	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-	AllowMotionContext,
-	DarkThemeContext,
-} from '../common/utilities';
-import { ToggleContextInterface } from '../common/types';
+import { AllowMotionContext, DarkThemeContext } from '../common/utilities';
+import type { ToggleContextInterface } from '../common/types';
 import { Icon } from '../components/icon-components';
 
 // Base components
