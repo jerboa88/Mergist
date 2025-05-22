@@ -40,7 +40,6 @@ const optimizeOptions = {
 					mergeStyles: false,
 					inlineStyles: false,
 					minifyStyles: false,
-					cleanupIDs: false,
 				}
 			}
 		},
