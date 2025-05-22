@@ -37,6 +37,8 @@
 		"serve": "gatsby serve -H 0.0.0.0",
 		"clean": "gatsby clean",
 		"typecheck": "tsc --noEmit --skipLibCheck",
+		"lint": "biome lint --write",
+		"format": "biome format --write",
 		"upgrade-interactive": "bunx npm-check-updates -i --format group -p bun"
 	},
 	"dependencies": {
@@ -68,6 +70,7 @@
 		"svgo": "^3.2.0"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
 		"@types/node": "^18.19.23",
 		"@types/react": "^18.2.65",
 		"@types/react-dom": "^18.2.21",
