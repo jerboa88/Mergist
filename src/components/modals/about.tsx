@@ -2,6 +2,9 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink } from '../links/inline.tsx';
 import { Modal } from './base.tsx';
 
+const FUNDING_LINK = (
+	<InlineLink to="https://johng.io/funding">supporting me</InlineLink>
+);
 const REACT_LINK = <InlineLink to="https://reactjs.org/">React</InlineLink>;
 const GATSBY_LINK = (
 	<InlineLink to="https://www.gatsbyjs.org/">Gatsby</InlineLink>
@@ -48,8 +51,13 @@ export function AboutModal(props: {
 			buttonLabel="Cool beans"
 		>
 			<p>
-				Handcrafted with ❤️ by {authorLink}. Powered by {REACT_LINK} +{' '}
-				{GATSBY_LINK} + {TAILWIND_CSS_LINK}. Hosted by {GITHUB_PAGES_LINK}.
+				Handcrafted with ❤️ by {authorLink}. If you find this tool useful, please
+				consider {FUNDING_LINK}.
+			</p>
+			<br />
+			<p>
+				Powered by {REACT_LINK} + {GATSBY_LINK} + {TAILWIND_CSS_LINK}. Hosted by{' '}
+				{GITHUB_PAGES_LINK}.
 			</p>
 			<br />
 			<p>
