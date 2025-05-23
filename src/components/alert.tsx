@@ -10,15 +10,15 @@ import { getDefaultTransition, type StatusMsg } from '../common/utilities.ts';
 import { Icon } from './icon.tsx';
 
 const alertTypes = {
-	[SeverityTypes.SUCCESS]: {
+	[SeverityTypes.Success]: {
 		class: 'alert-success',
 		icon: faSquareCheck,
 	},
-	[SeverityTypes.WARNING]: {
+	[SeverityTypes.Warning]: {
 		class: 'alert-warning',
 		icon: faTriangleExclamation,
 	},
-	[SeverityTypes.ERROR]: {
+	[SeverityTypes.Error]: {
 		class: 'alert-error',
 		icon: faCircleExclamation,
 	},
@@ -57,7 +57,7 @@ export function Alert(props: { statusMsg: StatusMsg }) {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [delayMs]);
+	}, []);
 
 	return (
 		<AnimatePresence>

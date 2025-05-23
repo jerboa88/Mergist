@@ -6,11 +6,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
-import { getDefaultTransition, ignoreDefault } from '../common/utilities';
-import type { PDFFileMapInterface } from '../common/types';
-import { PrimaryButton } from './buttons/primary';
-import { IconButton } from './buttons/icon';
-import { DropzoneWrapper } from './dropzones/wrapper';
+import { getDefaultTransition, ignoreDefault } from '../common/utilities.ts';
+import type { PdfFileMapInterface } from '../common/types.ts';
+import { PrimaryButton } from './buttons/primary.tsx';
+import { IconButton } from './buttons/icon.tsx';
+import { DropzoneWrapper } from './dropzones/wrapper.tsx';
 
 // A reorderable list item
 function SortableItem(props: {
@@ -63,7 +63,7 @@ function SortableItem(props: {
 // Create an interface for SortableFileList props since there are a lot of types to define
 interface SortableFileListPropsInterface {
 	fileIds: string[];
-	files: PDFFileMapInterface;
+	files: PdfFileMapInterface;
 	onReorder: (newFileIds: string[]) => void;
 	onFileRemoved: (id: string) => void;
 	disabled: boolean;
@@ -115,7 +115,7 @@ export function FileManager(props: FileManagerPropsInterface) {
 	}
 
 	return (
-		<div tabIndex={0} className="collapse">
+		<div className="collapse">
 			<div className="flex-col gap-4 justify-between items-center p-6 text-lg font-medium sm:flex-row sm:pl-10 collapse-title">
 				<h2>
 					{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added (
@@ -137,7 +137,8 @@ export function FileManager(props: FileManagerPropsInterface) {
 			{/* Wrap the SortableFileList component with a div so that we can selectively prevent propagation of click events to it */}
 			<div
 				style={{ pointerEvents: (props.disabled && 'none') || 'initial' }}
-				onClick={(props.disabled && ignoreDefault) || undefined}
+				onClick={props.disabled ? ignoreDefault : undefined}
+				onKeyUp={props.disabled ? ignoreDefault : undefined}
 				className="overflow-hidden"
 			>
 				<SortableFileList

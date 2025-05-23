@@ -64,14 +64,20 @@ const config: GatsbyConfig = {
 			resolve: 'gatsby-plugin-manifest',
 			options: {
 				name: metadata.title,
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
 				short_name: metadata.shortTitle,
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
 				start_url: '/',
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
 				background_color: darkTheme['base-100'],
-				theme_color: darkTheme['primary'],
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
+				theme_color: darkTheme.primary,
 				display: 'standalone',
 				icons: configManager.getIconManifestEntries(),
 				// Favicon declarations and theme color meta tags are added to the document head manually using React Helmet
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
 				include_favicon: false,
+				// biome-ignore lint/style/useNamingConvention: Naming convention is enforced by the plugin
 				theme_color_in_head: false,
 			},
 		},
@@ -88,4 +94,5 @@ const config: GatsbyConfig = {
 	],
 };
 
+// biome-ignore lint/style/noDefaultExport: Gatsby config must use default exports
 export default config;

@@ -3,10 +3,10 @@ import { useState, useCallback } from 'react';
 
 // Local deps
 import config from '../../gatsby-config.ts';
-import type { PDFFileMapInterface } from '../common/types.ts';
+import type { PdfFileMapInterface } from '../common/types.ts';
 import {
 	loadMetadata,
-	PDFManager,
+	PdfManager,
 	type StatusMsg,
 } from '../common/utilities.ts';
 import { LargeDropzone } from '../components/dropzones/large.tsx';
@@ -26,20 +26,23 @@ const METADATA = loadMetadata(config);
 
 // Exports
 
-// Index page component
+/**
+ * Index page
+ */
+// biome-ignore lint/style/noDefaultExport: Pages must use default exports
 export default function IndexPage() {
 	const [fileIds, setFileIds] = useState<string[]>([]);
-	const [files, setFiles] = useState<PDFFileMapInterface>({});
+	const [files, setFiles] = useState<PdfFileMapInterface>({});
 	const [statusMsgs, setStatusMsgs] = useState<StatusMsg[]>([]);
 	const [mergedPdfUrl, setMergedPdfUrl] = useState<string>('');
 	const [currentProgress, setCurrentProgress] = useState<number>(0);
 
-	const pdfManager = new PDFManager(METADATA.shortTitle, METADATA.siteUrl);
+	const pdfManager = new PdfManager(METADATA.shortTitle, METADATA.siteUrl);
 
 	// Update the list of files and fileIds, resetting progress and the download URL
 	function updateState(
 		newFileIds: string[],
-		newFiles: PDFFileMapInterface | null = null,
+		newFiles: PdfFileMapInterface | null = null,
 	) {
 		pdfManager.removeMergedFile(mergedPdfUrl);
 

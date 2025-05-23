@@ -3,6 +3,9 @@
 	----------------------------------------------
 */
 
+const REGEX_MASKABLE = /maskable/;
+const REGEX_IMAGE = /\.(jpg|jpeg|png|webp|gif|avif|tif|tiff)$/i;
+
 // Constants
 const config = {
 	metadata: {
@@ -174,32 +177,30 @@ class ConfigManager {
 	// Generate icon entries for the site's webmanifest using the provided icon generation config
 	getIconManifestEntries() {
 		// Flatten after mapping as we do not need to keep any info about how the icons are generated
-		return config.icons.flatMap((inputRule) => {
-			return inputRule.to.map((outputRule) => {
-				return {
-					src: outputRule.path,
-					sizes: `${outputRule.size}x${outputRule.size}`,
-					type: this.getMimeTypeFromPath(outputRule.path),
-					// If the icon name contains `maskable`, set the purpose property to `maskable`
-					purpose: outputRule.path.match(/maskable/) ? 'maskable' : 'any',
-				};
-			});
-		});
+		return config.icons.flatMap((inputRule) =>
+			inputRule.to.map((outputRule) => ({
+				src: outputRule.path,
+				sizes: `${outputRule.size}x${outputRule.size}`,
+				type: this.getMimeTypeFromPath(outputRule.path),
+				// If the icon name contains `maskable`, set the purpose property to `maskable`
+				purpose: outputRule.path.match(REGEX_MASKABLE) ? 'maskable' : 'any',
+			})),
+		);
 	}
 
 	// Returns the mime type for the provided image path
 	getMimeTypeFromPath(path) {
 		if (path.endsWith('.svg')) {
 			return 'image/svg+xml';
-		} else {
-			const match = path.match(/\.(jpg|jpeg|png|webp|gif|avif|tif|tiff)$/i);
-
-			if (!match || match.length < 2) {
-				throw new Error(`Could not determine mime type for image path ${path}`);
-			}
-
-			return `image/${match[1]}`;
 		}
+
+		const match = path.match(REGEX_IMAGE);
+
+		if (!match || match.length < 2) {
+			throw new Error(`Could not determine mime type for image path ${path}`);
+		}
+
+		return `image/${match[1]}`;
 	}
 }
 

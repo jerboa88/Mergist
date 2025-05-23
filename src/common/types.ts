@@ -4,7 +4,7 @@
 */
 
 import type { Context } from 'react';
-import type { PDFFile } from './utilities.ts';
+import type { PdfFile } from './utilities.ts';
 
 export interface DaisyUiThemeInterface {
 	accent: string;
@@ -45,12 +45,12 @@ export type ToggleContextInterface = Context<{
 	toggle: () => void;
 }>;
 
-export interface PDFFileMapInterface {
-	[key: string]: PDFFile;
+export interface PdfFileMapInterface {
+	[key: string]: PdfFile;
 }
 
 export enum SeverityTypes {
-	SUCCESS = 0,
-	WARNING = 1,
-	ERROR = 2,
+	Success = 0,
+	Warning = 1,
+	Error = 2,
 }

@@ -3,12 +3,12 @@ import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
 import type { MetadataInterface } from '../../common/types.ts';
 import {
-	StorageManager,
 	DarkThemeContext,
 	AllowMotionContext,
 	useIsMount,
 	mediaFeatureMatches,
 } from '../../common/utilities.ts';
+import { storageGet, storageSetIf } from '../../common/storage-manager.ts';
 
 type Props = {
 	className?: string;
@@ -34,24 +34,24 @@ export function PageLayout({ className = '', metadata, children }: Props) {
 
 	// Save the user's preferences to local storage when its state changes
 	useEffect(() => {
-		StorageManager.setIf(!isMount, lsKeyForTheme, isDarkTheme);
-	}, [isDarkTheme]);
+		storageSetIf(!isMount, lsKeyForTheme, isDarkTheme);
+	}, [isMount, isDarkTheme]);
 
 	useEffect(() => {
-		StorageManager.setIf(!isMount, lsKeyForMotion, isMotionAllowed);
-	}, [isMotionAllowed]);
+		storageSetIf(!isMount, lsKeyForMotion, isMotionAllowed);
+	}, [isMount, isMotionAllowed]);
 
 	// Get the user's preference from storage if it exists
 	// Otherwise, use the system preference if it is set or fall back to the default value
 	function getIsDarkMode(): boolean {
-		return StorageManager.get(
+		return storageGet(
 			lsKeyForTheme,
 			mediaFeatureMatches('prefers-color-scheme', 'dark', true),
 		);
 	}
 
 	function getIsMotionAllowed(): boolean {
-		return StorageManager.get(
+		return storageGet(
 			lsKeyForMotion,
 			!mediaFeatureMatches('prefers-reduced-motion', 'reduce', false),
 		);

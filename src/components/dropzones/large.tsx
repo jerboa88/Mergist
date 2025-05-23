@@ -1,6 +1,6 @@
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { Icon } from '../icon';
-import { DropzoneWrapper } from './wrapper';
+import { Icon } from '../icon.tsx';
+import { DropzoneWrapper } from './wrapper.tsx';
 
 /**
  * A large dropzone component.

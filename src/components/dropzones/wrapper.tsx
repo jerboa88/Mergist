@@ -1,5 +1,5 @@
 import type { ChangeEvent, ReactNode } from 'react';
-import { ignoreDefault } from '../../common/utilities';
+import { ignoreDefault } from '../../common/utilities.ts';
 
 type Props = {
 	className?: string;

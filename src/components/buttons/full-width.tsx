@@ -18,6 +18,7 @@ export function FullWidthButton({
 }: Props) {
 	return (
 		<button
+			type="button"
 			className={`gap-2 btn-block ${className}`}
 			disabled={disabled}
 			onClick={onClick}

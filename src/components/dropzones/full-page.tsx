@@ -5,7 +5,7 @@ import {
 	type DragEvent,
 	useEffect,
 } from 'react';
-import { ignoreDefault } from '../../common/utilities';
+import { ignoreDefault } from '../../common/utilities.ts';
 
 /**
  * A full screen dropzone component. Accepts a callback function that fires when a file is dropped

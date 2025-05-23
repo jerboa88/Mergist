@@ -4,8 +4,6 @@ type Props = {
 	className?: string;
 	collapse?: boolean;
 	children: ReactNode;
-	// Allow prop injection
-	[propName: string]: any;
 };
 
 /**

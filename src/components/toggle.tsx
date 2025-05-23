@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import type { ToggleContextInterface } from '../common/types';
-import { Icon } from './icon';
+import type { ToggleContextInterface } from '../common/types.ts';
+import { Icon } from './icon.tsx';
 
 type Props = {
 	className?: string;

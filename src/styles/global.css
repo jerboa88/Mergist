@@ -1,13 +1,13 @@
-/* Tailwind base styles */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Font and icon styles */
 @import '@fontsource/roboto-flex';
 @import '@fontsource/roboto-condensed';
 @import '@fortawesome/fontawesome-svg-core/styles';
 @import './fonts/luckiest-guy.css';
+
+/* Tailwind base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* These styles to the base layer so that component styles can override them as necessary */
 @layer base {

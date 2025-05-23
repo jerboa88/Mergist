@@ -14,21 +14,25 @@ import type { GatsbyConfig } from 'gatsby';
 import { PDFDocument } from 'pdf-lib';
 import {
 	type MetadataInterface,
-	type PDFFileMapInterface,
+	type PdfFileMapInterface,
 	SeverityTypes,
-} from '../common/types';
+} from '../common/types.ts';
+
+// Constants
+
+const regexKeywordSeparator = /, ?/;
 
 // Generate unique hashes from input parameters
 // This is used to ensure that React component keys and PDF files are unique
 // Adapted from a StackOverflow answer by esmiralha (https://stackoverflow.com/users/495174/esmiralha)
 // Source: https://stackoverflow.com/a/7616484/1378560
-function generateHash(...args: any[]): string {
+function generateHash(...args: unknown[]): string {
 	const inputString = args.join('');
-	let hash = 0,
-		chr;
+	let hash = 0;
+	let chr = 0;
 
 	if (inputString.length === 0) {
-		return hash.toString();
+		return String(hash);
 	}
 
 	for (let i = 0; i < inputString.length; ++i) {
@@ -37,7 +41,7 @@ function generateHash(...args: any[]): string {
 		hash |= 0; // Convert to 32bit integer
 	}
 
-	return hash.toString();
+	return String(hash);
 }
 
 // Exports
@@ -79,7 +83,7 @@ export const getIsMotionAllowed = () => {
 };
 
 // Default transition settings for Framer Motion animations
-export function getDefaultTransition(): any {
+export function getDefaultTransition() {
 	if (getIsMotionAllowed()) {
 		return {
 			transition: {
@@ -91,13 +95,13 @@ export function getDefaultTransition(): any {
 				},
 			},
 		};
-	} else {
-		return {
-			transition: {
-				duration: 0,
-			},
-		};
 	}
+
+	return {
+		transition: {
+			duration: 0,
+		},
+	};
 }
 
 // Check if the window object exists
@@ -129,9 +133,9 @@ export function mediaFeatureMatches(
 		window.matchMedia(mediaQuery).media !== 'not all'
 	) {
 		return window.matchMedia(specificMediaQuery).matches;
-	} else {
-		return defaultValue;
 	}
+
+	return defaultValue;
 }
 
 // Load site metadata from gatsby-config.js
@@ -150,22 +154,25 @@ export function ignoreDefault(event: SyntheticEvent<HTMLElement>) {
 export class StatusMsg {
 	public id: string;
 	private static prefixMap = {
-		[SeverityTypes.SUCCESS]: 'Success',
-		[SeverityTypes.WARNING]: 'Warning',
-		[SeverityTypes.ERROR]: 'Error',
+		[SeverityTypes.Success]: 'Success',
+		[SeverityTypes.Warning]: 'Warning',
+		[SeverityTypes.Error]: 'Error',
 	};
 	private static logFuncMap = {
-		[SeverityTypes.SUCCESS]: (msg: string) => console.log(msg),
-		[SeverityTypes.WARNING]: (msg: string) => console.warn(msg),
-		[SeverityTypes.ERROR]: (msg: string) => console.error(msg),
+		[SeverityTypes.Success]: (msg: string) => console.log(msg),
+		[SeverityTypes.Warning]: (msg: string) => console.warn(msg),
+		[SeverityTypes.Error]: (msg: string) => console.error(msg),
 	};
+	public severity: SeverityTypes;
+	public msg: string;
+	private exception: Error | null;
 
 	constructor(
-		public severity: SeverityTypes,
-		public msg: string,
-		private exception: Error | null = null,
+		severity: SeverityTypes,
+		msg: string,
+		exception: Error | null = null,
 	) {
-		this.id = generateHash(this.severity, this.msg, Date.now());
+		this.id = generateHash(severity, msg, Date.now());
 		this.severity = severity;
 		this.msg = `${StatusMsg.prefixMap[severity]}: ${msg}`;
 		this.exception = exception;
@@ -197,10 +204,11 @@ export class StatusMsg {
 
 // A class to represent a PDF file
 // This wraps a File object and adds an id to uniquely identify it
-export class PDFFile {
+export class PdfFile {
 	public id: string;
+	private fileObj: File;
 
-	constructor(private fileObj: File) {
+	constructor(fileObj: File) {
 		this.id = generateHash(fileObj.name, fileObj.size, fileObj.lastModified);
 		this.fileObj = fileObj;
 	}
@@ -223,43 +231,40 @@ export class PDFFile {
 }
 
 // A class with methods for loading PDF files and processing them
-export class PDFManager {
+export class PdfManager {
 	private pdfCreator: string;
 
-	constructor(
-		private pageTitle: string,
-		private pageUrl: string,
-	) {
-		this.pdfCreator = `${this.pageTitle} (${this.pageUrl})`;
+	constructor(pageTitle: string, pageUrl: string) {
+		this.pdfCreator = `${pageTitle} (${pageUrl})`;
 	}
 
 	// Filter out invalid input files. Returns a list of valid files and a list of warning messages
 	public filterInvalidFiles(
-		existingFileMap: PDFFileMapInterface,
+		existingFileMap: PdfFileMapInterface,
 		inputFiles: File[],
-	): [PDFFile[], StatusMsg[]] {
-		const fileList = [];
-		const statusMsgList = [];
+	): [PdfFile[], StatusMsg[]] {
+		const fileList: PdfFile[] = [];
+		const statusMsgList: StatusMsg[] = [];
 
 		for (const inputFile of inputFiles) {
 			// Skip and show a warning if the file is not a pdf
 			if (inputFile.type !== 'application/pdf') {
 				statusMsgList.push(
 					new StatusMsg(
-						SeverityTypes.WARNING,
+						SeverityTypes.Warning,
 						`${inputFile.name} is not a PDF file`,
 					),
 				);
 				continue;
 			}
 
-			const pdfFile = new PDFFile(inputFile);
+			const pdfFile = new PdfFile(inputFile);
 
 			// Skip and show a warning if the file has already been added
 			if (pdfFile.getId in existingFileMap) {
 				statusMsgList.push(
 					new StatusMsg(
-						SeverityTypes.WARNING,
+						SeverityTypes.Warning,
 						`${pdfFile.getName} is already in the list`,
 					),
 				);
@@ -276,7 +281,7 @@ export class PDFManager {
 	// Adapted from a StackOverflow answer by Nicholas Barrow (https://stackoverflow.com/users/14717625/nicholas-barrow)
 	// Source: https://stackoverflow.com/a/65555135/1378560
 	public async createMergedFile(
-		existingFileMap: PDFFileMapInterface,
+		existingFileMap: PdfFileMapInterface,
 		fileIds: string[],
 		onProgress: (progress: number) => void,
 	): Promise<[string, StatusMsg[]]> {
@@ -296,12 +301,12 @@ export class PDFManager {
 				authorsSet.add(donorPdfDoc.getAuthor());
 				creatorsSet.add(donorPdfDoc.getCreator());
 
-				const keywords = donorPdfDoc.getKeywords();
+				const keywordsString = donorPdfDoc.getKeywords();
 
-				if (keywords) {
-					keywords
-						.split(/(?:, ?)/)
-						.forEach((keyword) => keywordsSet.add(keyword));
+				if (keywordsString) {
+					const keywords = new Set(keywordsString.split(regexKeywordSeparator));
+
+					keywordsSet.union(keywords);
 				}
 
 				subjectsSet.add(donorPdfDoc.getSubject());
@@ -332,7 +337,7 @@ export class PDFManager {
 			return [pdfDataUri, []];
 		} catch (error) {
 			const errorMsg = new StatusMsg(
-				SeverityTypes.ERROR,
+				SeverityTypes.Error,
 				'Something went wrong while while merging your files. See the console for more details.',
 				error as Error,
 			);
@@ -342,7 +347,7 @@ export class PDFManager {
 	}
 
 	// Explicitly release the object URL when we no longer need it
-	public async removeMergedFile(mergedPdfUrl: string) {
+	public removeMergedFile(mergedPdfUrl: string) {
 		window.URL.revokeObjectURL(mergedPdfUrl);
 	}
 
@@ -355,38 +360,5 @@ export class PDFManager {
 		);
 
 		return progress;
-	}
-}
-
-// A class with methods for managing data in local storage
-export class StorageManager {
-	static storage = doesWindowExist() ? window.localStorage : null;
-
-	// Get the value of a key from local storage
-	// Returns the default value if the key does not exist or if the window object does not exist
-	public static get(key: string, defaultValue: boolean): boolean {
-		if (!this.storage) {
-			return defaultValue;
-		}
-
-		const loadedValue = this.storage.getItem(key);
-
-		// If there is no stored value, return the default value. Loose equality is intentional
-		return loadedValue == null ? defaultValue : JSON.parse(loadedValue);
-	}
-
-	// Set the value of a key in local storage if an input flag is true
-	public static setIf(doSet: boolean, key: string, value: boolean) {
-		doSet && this.set(key, value);
-	}
-
-	// Set the value of a key in local storage
-	private static set(key: string, value: boolean) {
-		this.storage && this.storage.setItem(key, JSON.stringify(value));
-	}
-
-	// Remove a key from local storage
-	public static remove(key: string) {
-		this.storage && this.storage.removeItem(key);
 	}
 }

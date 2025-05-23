@@ -3,14 +3,12 @@
 	----------------------------------------------
 */
 
-// Create custom type for svg files to suppress import warnings
-declare module '../images/*.svg' {
-	export default React.FunctionComponent<React.SVGAttributes<SVGElement>>();
-}
+// Create custom type for SVG files to suppress import warnings
+declare module '*.svg' {
+	import type { FunctionComponent, SVGProps } from 'react';
 
-// Create custom type for png images to suppress import warnings
-declare module '../images/*.png' {
-	export default React.FunctionComponent<
-		React.PNGAttributes<HTMLImageElement>
-	>();
+	const ReactComponent: FunctionComponent<SVGProps<SVGSVGElement>>;
+
+	// biome-ignore lint/style/noDefaultExport: This needs to be a default export
+	export default ReactComponent;
 }

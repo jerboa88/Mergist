@@ -10,8 +10,8 @@ export function IconButton(props: {
 }) {
 	return (
 		<button
-			className="btn-ghost sm:btn-square"
 			type="button"
+			className="btn-ghost sm:btn-square"
 			onClick={props.onClick}
 		>
 			<Icon icon={props.icon} className="fa-lg" />
