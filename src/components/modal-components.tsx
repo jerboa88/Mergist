@@ -11,7 +11,7 @@ import {
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { InlineLink, LinkWrapper } from '../components/link-components';
-import { PrimaryButton } from '../components/button-components';
+import { PrimaryButton } from './buttons/primary';
 import { MotionToggle, ThemeToggle } from '../components/toggle-components';
 
 // Base components

@@ -13,7 +13,8 @@ import { AnimatePresence, Reorder } from 'framer-motion';
 import prettyBytes from 'pretty-bytes';
 import { getDefaultTransition, ignoreDefault } from '../common/utilities';
 import type { PDFFileMapInterface } from '../common/types';
-import { IconButton, PrimaryButton } from '../components/button-components';
+import { PrimaryButton } from './buttons/primary';
+import { IconButton } from './buttons/icon';
 import { DropzoneWrapper } from '../components/dropzone-components';
 
 // Base components

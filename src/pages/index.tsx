@@ -15,7 +15,7 @@ import {
 	LargeDropzone,
 } from '../components/dropzone-components.tsx';
 import Alert from '../components/alert.tsx';
-import { ActionButton } from '../components/button-components.tsx';
+import { ActionButton } from '../components/buttons/action.tsx';
 import Footer from '../components/footer.tsx';
 import Header from '../components/header.tsx';
 import FileManager from '../components/file-manager.tsx';
