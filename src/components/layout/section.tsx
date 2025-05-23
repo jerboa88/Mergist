@@ -1,22 +1,20 @@
 import type { ReactNode } from 'react';
 
-/**
- * A section that can be hidden
- */
-export function Section(props: {
+type Props = {
 	className: string;
 	visible: boolean;
 	children: ReactNode;
-}) {
+};
+
+/**
+ * A section that can be hidden
+ */
+export function Section({ className = '', visible = true, children }: Props) {
 	return (
 		<section
-			className={`flex-col justify-center w-full h-full ${props.visible ? '' : 'hidden overflow-hidden '}${props.className}`}
+			className={`flex-col justify-center w-full h-full ${visible ? '' : 'hidden overflow-hidden '}${className}`}
 		>
-			{props.children}
+			{children}
 		</section>
 	);
 }
-Section.defaultProps = {
-	className: '',
-	visible: true,
-};

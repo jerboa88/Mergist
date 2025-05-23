@@ -3,10 +3,7 @@ import { InlineLink } from '../links/inline.tsx';
 import { Modal } from './base.tsx';
 
 const PRIVACY_POLICY_LINK = (
-	<InlineLink
-		to="https://johng.io/privacy-policy"
-		rel="external privacy-policy"
-	>
+	<InlineLink to="https://johng.io/privacy-policy" rel="privacy-policy">
 		full privacy policy
 	</InlineLink>
 );

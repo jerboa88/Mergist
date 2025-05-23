@@ -1,30 +1,34 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Icon } from '../icon.tsx';
 
+type Props = {
+	icon: IconDefinition;
+	fake: boolean;
+	onClick?: () => void;
+	children: string;
+};
+
 /**
  * A generic button with an icon and text
  */
-export function PrimaryButton(props: {
-	icon: IconDefinition;
-	fake: boolean;
-	children: string;
-	onClick?: () => void;
-}) {
+export function PrimaryButton({
+	icon,
+	fake = false,
+	onClick,
+	children,
+}: Props) {
 	// If fake attribute is specified, render the element as a div instead of a button
 	// This is to prevent issues with nested input elements in the same dropzone wrapper component
-	const ElementType = (props.fake && 'div') || 'button';
+	const ElementType = (fake && 'div') || 'button';
 
 	return (
 		<ElementType
 			className="flex-nowrap flex-1 gap-2 whitespace-nowrap btn-primary"
-			type={(!props.fake && 'button') || undefined}
-			onClick={props.onClick}
+			type={(!fake && 'button') || undefined}
+			onClick={onClick}
 		>
-			<Icon icon={props.icon} />
-			{props.children}
+			<Icon icon={icon} />
+			{children}
 		</ElementType>
 	);
 }
-PrimaryButton.defaultProps = {
-	fake: false,
-};

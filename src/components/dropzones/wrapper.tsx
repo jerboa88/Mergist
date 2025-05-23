@@ -1,16 +1,22 @@
 import type { ChangeEvent, ReactNode } from 'react';
 import { ignoreDefault } from '../../common/utilities';
 
+type Props = {
+	className: string;
+	children: ReactNode;
+	onFilesAdded: (files: FileList) => void;
+};
+
 /**
  * Enables dropzone functionality for a child component.
  *
  * Accepts a callback function that fires when a file is dropped.
  */
-export function DropzoneWrapper(props: {
-	className: string;
-	children: ReactNode;
-	onFilesAdded: (files: FileList) => void;
-}) {
+export function DropzoneWrapper({
+	className = '',
+	children,
+	onFilesAdded,
+}: Props) {
 	function handleAddFiles(event: ChangeEvent<HTMLInputElement>) {
 		ignoreDefault(event);
 
@@ -19,12 +25,12 @@ export function DropzoneWrapper(props: {
 		// The list will be empty if cancel is pressed, so we need to account for this
 		// It should never be null but we might as well check to make the TS compiler happy
 		if (files && files.length > 0) {
-			props.onFilesAdded(files);
+			onFilesAdded(files);
 		}
 	}
 
 	return (
-		<label className={`cursor-pointer ${props.className}`}>
+		<label className={`cursor-pointer ${className}`}>
 			<input
 				className="hidden"
 				type="file"
@@ -32,11 +38,7 @@ export function DropzoneWrapper(props: {
 				onChange={handleAddFiles}
 				multiple
 			/>
-			{props.children}
+			{children}
 		</label>
 	);
 }
-
-DropzoneWrapper.defaultProps = {
-	className: '',
-};

@@ -1,26 +1,28 @@
 import type { ReactNode } from 'react';
 
+type Props = {
+	className?: string;
+	disabled?: boolean;
+	onClick?: () => void;
+	children: ReactNode;
+};
+
 /**
  * A full width button
  */
-export function FullWidthButton(props: {
-	className: string;
-	children: ReactNode;
-	disabled: boolean;
-	onClick: () => void;
-}) {
+export function FullWidthButton({
+	className = '',
+	disabled = false,
+	onClick,
+	children,
+}: Props) {
 	return (
 		<button
-			className={`btn-block gap-2 ${props.className}`}
-			disabled={props.disabled}
-			onClick={props.onClick}
+			className={`gap-2 btn-block ${className}`}
+			disabled={disabled}
+			onClick={onClick}
 		>
-			{props.children}
+			{children}
 		</button>
 	);
 }
-FullWidthButton.defaultProps = {
-	className: '',
-	disabled: false,
-	onClick: undefined,
-};

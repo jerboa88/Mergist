@@ -1,30 +1,31 @@
 import type { ReactNode } from 'react';
 
-/**
- * A link wrapper used to specify default attributes
- */
-export function LinkWrapper(props: {
+type Props = {
 	className: string;
 	to: string;
 	isInternal: boolean;
 	rel: string;
 	children: ReactNode;
-}) {
+};
+
+/**
+ * A link wrapper used to specify default attributes
+ */
+export function LinkWrapper({
+	className = '',
+	to,
+	isInternal = false,
+	rel = '',
+	children,
+}: Props) {
 	return (
 		<a
-			className={`link link-secondary no-underline whitespace-nowrap ${props.className}`}
-			href={props.to}
-			target={(props.isInternal && '_self') || '_blank'}
-			rel={`noopener ${(props.isInternal && '') || 'external'} ${props.rel}`}
+			className={`no-underline whitespace-nowrap link link-secondary ${className}`}
+			href={to}
+			target={(isInternal && '_self') || '_blank'}
+			rel={`noopener ${isInternal ? '' : 'external'} ${rel}`}
 		>
-			{props.children}
+			{children}
 		</a>
 	);
 }
-
-LinkWrapper.defaultProps = {
-	className: '',
-	to: undefined,
-	rel: '',
-	isInternal: false,
-};

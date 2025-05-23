@@ -10,17 +10,19 @@ import {
 	mediaFeatureMatches,
 } from '../../common/utilities.ts';
 
-/**
- * Layout that provides basic styles and metadata tags for the whole page
- */
-export function PageLayout(props: {
+type Props = {
 	className: string;
 	metadata: MetadataInterface;
 	children: ReactNode;
-}) {
+};
+
+/**
+ * Layout that provides basic styles and metadata tags for the whole page
+ */
+export function PageLayout({ className = '', metadata, children }: Props) {
 	const lsKeyForTheme = 'is-dark-theme';
 	const lsKeyForMotion = 'is-motion-allowed';
-	const ogImageUrl = `${props.metadata.siteUrl}${props.metadata.ogImageUrl}`;
+	const ogImageUrl = `${metadata.siteUrl}${metadata.ogImageUrl}`;
 
 	// Whether the component is currently being mounted or not
 	// We can use this to ignore initial state changes of the component
@@ -57,7 +59,7 @@ export function PageLayout(props: {
 
 	// Get the primary theme color from DaisyUI config
 	function getPrimaryThemeColor(): string {
-		return props.metadata[isDarkTheme ? 'darkTheme' : 'lightTheme'].primary;
+		return metadata[isDarkTheme ? 'darkTheme' : 'lightTheme'].primary;
 	}
 
 	// Define toggle functions and memoize before passing to the relevant context provider
@@ -86,52 +88,37 @@ export function PageLayout(props: {
 			<AllowMotionContext.Provider value={providerValuesForMotion}>
 				{/* Page head */}
 				<Helmet htmlAttributes={{ lang: 'en-US' }}>
-					<title>{props.metadata.title}</title>
-					<meta name="author" content={props.metadata.author} />
-					<meta name="description" content={props.metadata.description} />
+					<title>{metadata.title}</title>
+					<meta name="author" content={metadata.author} />
+					<meta name="description" content={metadata.description} />
 					<meta
 						name="viewport"
 						content="width=device-width, initial-scale=1.0"
 					/>
 
 					{/* OpenGraph meta tags */}
-					<meta property="og:title" content={props.metadata.title} />
-					<meta
-						property="og:description"
-						content={props.metadata.description}
-					/>
+					<meta property="og:title" content={metadata.title} />
+					<meta property="og:description" content={metadata.description} />
 					<meta property="og:type" content="website" />
-					<meta property="og:url" content={props.metadata.siteUrl} />
+					<meta property="og:url" content={metadata.siteUrl} />
 					<meta property="og:image" content={ogImageUrl} />
 					<meta property="og:image:type" content="image/png" />
 					<meta property="og:image:width" content="1200" />
 					<meta property="og:image:height" content="630" />
-					<meta
-						property="og:image:alt"
-						content={props.metadata.ogImageAltText}
-					/>
+					<meta property="og:image:alt" content={metadata.ogImageAltText} />
 
 					{/* Twitter meta tags */}
 					<meta name="twitter:card" content="summary_large_image" />
-					<meta name="twitter:title" content={props.metadata.title} />
-					<meta
-						name="twitter:creator"
-						content={props.metadata.authorUsername}
-					/>
-					<meta
-						name="twitter:description"
-						content={props.metadata.description}
-					/>
+					<meta name="twitter:title" content={metadata.title} />
+					<meta name="twitter:creator" content={metadata.authorUsername} />
+					<meta name="twitter:description" content={metadata.description} />
 					<meta name="twitter:image" content={ogImageUrl} />
-					<meta
-						name="twitter:image:alt"
-						content={props.metadata.ogImageAltText}
-					/>
+					<meta name="twitter:image:alt" content={metadata.ogImageAltText} />
 
 					<meta name="google" content="nositelinkssearchbox" />
 					<meta content={getPrimaryThemeColor()} name="theme-color" />
 
-					<link rel="canonical" href={props.metadata.siteUrl} />
+					<link rel="canonical" href={metadata.siteUrl} />
 
 					{/* These icons are were not added to the head with gatsby-plugin-manifest so we need to add them manually here */}
 					<link rel="icon" href="/favicon-32x32.png" type="image/png" />
@@ -142,9 +129,9 @@ export function PageLayout(props: {
 						{`{
 							"@context": "http://schema.org",
 							"@type": "WebApplication",
-							"name": "${props.metadata.shortTitle}",
-							"description": "${props.metadata.description}",
-							"url": "${props.metadata.siteUrl}",
+							"name": "${metadata.shortTitle}",
+							"description": "${metadata.description}",
+							"url": "${metadata.siteUrl}",
 							"softwareVersion": "1.0.0",
 							"operatingSystem": "All",
 							"applicationCategory": "UtilitiesApplication",
@@ -155,8 +142,8 @@ export function PageLayout(props: {
 							},
 							"author": {
 								"@type": "Person",
-								"name": "${props.metadata.author}",
-								"url": "https://${props.metadata.homepageDomain}"
+								"name": "${metadata.author}",
+								"url": "https://${metadata.homepageDomain}"
 							}
 						}`}
 					</script>
@@ -165,16 +152,12 @@ export function PageLayout(props: {
 				{/* Page body */}
 				<MotionConfig reducedMotion="user">
 					<div
-						className={`min-h-screen flex-col justify-between items-center mx-auto gap-8 text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${props.className}`}
+						className={`flex-col gap-8 justify-between items-center mx-auto min-h-screen text-base bg-base-200 text-base-content selection:bg-primary selection:text-primary-content ${className}`}
 					>
-						{props.children}
+						{children}
 					</div>
 				</MotionConfig>
 			</AllowMotionContext.Provider>
 		</DarkThemeContext.Provider>
 	);
 }
-
-PageLayout.defaultProps = {
-	className: '',
-};

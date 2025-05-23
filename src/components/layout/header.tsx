@@ -7,14 +7,16 @@ import {
 	getIsMotionAllowed,
 } from '../../common/utilities.ts';
 
-/**
- * Page header
- */
-export function Header(props: {
+type Props = {
 	className: string;
 	title: string;
 	children: ReactNode;
-}) {
+};
+
+/**
+ * Page header
+ */
+export function Header({ className = '', title, children }: Props) {
 	// Drop shadow styles based on those from from Tailwind CSS
 	// We need to apply the raw styles so that we can transition between them with Framer Motion
 	const animationProps = {
@@ -36,7 +38,7 @@ export function Header(props: {
 
 	return (
 		<header
-			className={`w-full footer footer-center p-8 bg-base-300 ${props.className}`}
+			className={`p-8 w-full footer footer-center bg-base-300 ${className}`}
 		>
 			<SingleColumnLayout className="justify-center">
 				<a href="/">
@@ -44,16 +46,16 @@ export function Header(props: {
 						className="text-5xl font-black uppercase font-heading text-secondary-header"
 						{...animationProps}
 					>
-						<LogoIcon className="svg-inline--fa mr-4 fa-sm !align-baseline" width={55.19} height={42} />
-						{props.title}
+						<LogoIcon
+							className="svg-inline--fa mr-4 fa-sm !align-baseline"
+							width={55.19}
+							height={42}
+						/>
+						{title}
 					</motion.h1>
 				</a>
-				<p className="text-center">{props.children}</p>
+				<p className="text-center">{children}</p>
 			</SingleColumnLayout>
 		</header>
 	);
 }
-
-Header.defaultProps = {
-	className: '',
-};
