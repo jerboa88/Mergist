@@ -42,12 +42,12 @@
 		"upgrade-interactive": "bunx npm-check-updates -i --format group -p bun"
 	},
 	"dependencies": {
-		"@fontsource/roboto-condensed": "^4.5.9",
-		"@fontsource/roboto-flex": "^4.5.5",
+		"@fontsource/roboto-condensed": "^5.2.5",
+		"@fontsource/roboto-flex": "^5.2.5",
 		"@fortawesome/fontawesome-svg-core": "^6.7.2",
 		"@fortawesome/free-brands-svg-icons": "^6.7.2",
 		"@fortawesome/free-solid-svg-icons": "^6.7.2",
-		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@fortawesome/react-fontawesome": "^0.2.2",
 		"daisyui": "^2.52.0",
 		"framer-motion": "^10.18.0",
 		"gatsby": "^5.14.3",
@@ -60,11 +60,11 @@
 		"gatsby-plugin-robots-txt": "^1.8.0",
 		"gatsby-plugin-sitemap": "^6.14.0",
 		"pdf-lib": "^1.17.1",
-		"pretty-bytes": "^6.1.1",
+		"pretty-bytes": "^7.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet": "^6.1.0",
-		"sharp": "^0.31.3",
+		"sharp": "^0.34.2",
 		"svg-react-loader": "^0.4.6",
 		"svgo": "^3.3.2"
 	},
@@ -77,6 +77,6 @@
 		"autoprefixer": "^10.4.21",
 		"postcss": "^8.5.3",
 		"tailwindcss": "^3.4.1",
-		"typescript": "^4.9.5"
+		"typescript": "^5.8.3"
 	}
 }
