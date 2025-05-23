@@ -69,7 +69,7 @@ export function Alert(props: { statusMsg: StatusMsg }) {
 					{...animationProps}
 				>
 					<div>
-						<Icon icon={alertTypes[type].icon} tw="mr-2 fa-lg" />
+						<Icon icon={alertTypes[type].icon} className="mr-2 fa-lg" />
 						<span>{props.statusMsg.getMsg}</span>
 					</div>
 				</motion.div>

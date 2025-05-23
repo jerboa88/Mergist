@@ -2,7 +2,7 @@ import type { ChangeEvent, ReactNode } from 'react';
 import { ignoreDefault } from '../../common/utilities';
 
 type Props = {
-	className: string;
+	className?: string;
 	children: ReactNode;
 	onFilesAdded: (files: FileList) => void;
 };

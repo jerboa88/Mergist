@@ -8,7 +8,7 @@ import {
 } from '../../common/utilities.ts';
 
 type Props = {
-	className: string;
+	className?: string;
 	title: string;
 	children: ReactNode;
 };

@@ -57,9 +57,7 @@ export function OptionsModal(props: {
 			buttonIcon={faEye}
 			buttonLabel="Looks good"
 		>
-			<p>
-				You can change various options for the site here.
-			</p>
+			<p>You can change various options for the site here.</p>
 			<br />
 			<div className="flex-col w-fit">
 				<MotionToggle />

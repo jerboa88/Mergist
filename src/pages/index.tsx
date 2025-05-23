@@ -133,7 +133,6 @@ export default function IndexPage() {
 
 				<Section
 					visible={fileIds.length === 0}
-					tabIndex={0}
 					className="flex-1 rounded-none border bg-base-100 border-base-300 sm:rounded-box"
 				>
 					<LargeDropzone onFilesAdded={handleAddFiles} />
@@ -141,7 +140,6 @@ export default function IndexPage() {
 
 				<Section
 					visible={fileIds.length > 0}
-					tabIndex={0}
 					className="rounded-none border bg-base-100 border-base-300 sm:rounded-box"
 				>
 					<FileManager

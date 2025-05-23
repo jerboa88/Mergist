@@ -3,7 +3,7 @@ import { Icon } from '../icon.tsx';
 
 type Props = {
 	icon: IconDefinition;
-	fake: boolean;
+	fake?: boolean;
 	onClick?: () => void;
 	children: string;
 };

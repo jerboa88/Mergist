@@ -11,7 +11,7 @@ type Props = {
 	htmlAttribute: string;
 	disabled: [string, IconDefinition];
 	enabled: [string, IconDefinition];
-}
+};
 
 /**
  * A reskinned checkbox that toggles a context value
@@ -33,15 +33,13 @@ export function Toggle({
 					{/* Modify the html data attribute */}
 					<Helmet
 						htmlAttributes={{
-							[htmlAttribute]: isEnabled
-								? enabled[0]
-								: disabled[0],
+							[htmlAttribute]: isEnabled ? enabled[0] : disabled[0],
 						}}
 					/>
 
 					<Icon
 						icon={isEnabled ? enabled[1] : disabled[1]}
-						tw="mr-2 !align-middle"
+						className="mr-2 !align-middle"
 					/>
 					<span className="mr-4 text-base font-bold uppercase label-text font-button">
 						{label}

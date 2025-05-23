@@ -14,7 +14,7 @@ export function IconButton(props: {
 			type="button"
 			onClick={props.onClick}
 		>
-			<Icon icon={props.icon} tw="fa-lg" />
+			<Icon icon={props.icon} className="fa-lg" />
 		</button>
 	);
 }

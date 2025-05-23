@@ -5,7 +5,7 @@ import { LinkWrapper } from './wrapper.tsx';
  * A normal link
  */
 export function InlineLink(props: {
-	to?: string;
+	to: string;
 	isInternal?: boolean;
 	rel?: string;
 	children: ReactNode;

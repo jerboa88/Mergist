@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
 type Props = {
-	className: string;
+	className?: string;
 	to: string;
-	isInternal: boolean;
-	rel: string;
+	isInternal?: boolean | undefined;
+	rel?: string | undefined;
 	children: ReactNode;
 };
 
