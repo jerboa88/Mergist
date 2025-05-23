@@ -44,7 +44,7 @@ export function Header(props: {
 						className="text-5xl font-black uppercase font-heading text-secondary-header"
 						{...animationProps}
 					>
-						<LogoIcon className="svg-inline--fa mr-4 fa-sm !align-baseline" />
+						<LogoIcon className="svg-inline--fa mr-4 fa-sm !align-baseline" width={55.19} height={42} />
 						{props.title}
 					</motion.h1>
 				</a>
