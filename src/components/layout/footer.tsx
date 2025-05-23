@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from './single-column-layout.tsx';
 import { AboutModal, PrivacyModal } from '../modal-components.tsx';
-import { IconButtonLink } from '../link-components.tsx';
+import { IconButtonLink } from '../links/icon-button.tsx';
 
 /**
  * Page footer

@@ -10,7 +10,8 @@ import {
 	faThumbsUp,
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { InlineLink, LinkWrapper } from '../components/link-components';
+import { LinkWrapper } from './links/wrapper';
+import { InlineLink } from './links/inline';
 import { PrimaryButton } from './buttons/primary';
 import { MotionToggle, ThemeToggle } from '../components/toggle-components';
 
