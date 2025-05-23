@@ -5,8 +5,10 @@ import {
 	faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { SingleColumnLayout } from './single-column-layout.tsx';
-import { AboutModal, PrivacyModal } from '../modal-components.tsx';
+import { AboutModal } from '../modals/about.tsx';
+import { PrivacyModal } from '../modals/privacy-policy.tsx';
 import { IconButtonLink } from '../links/icon-button.tsx';
+import { OptionsModal } from '../modals/options.tsx';
 
 /**
  * Page footer
