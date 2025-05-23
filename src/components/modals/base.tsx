@@ -18,11 +18,12 @@ export function Modal(props: {
 			id={props.id}
 			className="overflow-hidden visible modal modal-bottom sm:modal-middle sm:backdrop-blur-sm group has-motion"
 		>
-			<div className="modal-box sm:w-5/6 sm:max-w-4xl flex-col p-8 sm:px-16 overflow-hidden transition-[opacity, transform] has-motion scale-90 group-target:scale-100 ">
+			<div className="modal-box sm:w-5/6 sm:max-w-xl flex-col items-center p-8 sm:px-16 overflow-hidden transition-[opacity, transform] has-motion scale-90 group-target:scale-100">
 				<h3 className="text-lg font-bold text-center">{props.title}</h3>
 				<br />
-				{props.children}
-
+				<div className="w-fit">
+					{props.children}
+				</div>
 				<div className="justify-center modal-action">
 					<LinkWrapper to="#" isInternal>
 						<PrimaryButton icon={props.buttonIcon}>
