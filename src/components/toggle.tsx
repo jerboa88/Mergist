@@ -1,22 +1,8 @@
-/*
-	Component to toggle the page theme
-	----------------------------------
-*/
-
 import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import {
-	faMoon,
-	faSun,
-	faWandMagic,
-	faWandMagicSparkles,
-	type IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { AllowMotionContext, DarkThemeContext } from '../common/utilities';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import type { ToggleContextInterface } from '../common/types';
 import { Icon } from './icon';
-
-// Base components
 
 interface TogglePropsInterface {
 	label: string;
@@ -26,8 +12,10 @@ interface TogglePropsInterface {
 	enabled: [string, IconDefinition];
 }
 
-// A toggle input element
-function Toggle(props: TogglePropsInterface) {
+/**
+ * A reskinned checkbox that toggles a context value
+ */
+export function Toggle(props: TogglePropsInterface) {
 	const { isEnabled, toggle } = useContext(props.context);
 
 	return (
@@ -62,33 +50,5 @@ function Toggle(props: TogglePropsInterface) {
 				</label>
 			</div>
 		</div>
-	);
-}
-
-// Exports
-
-// A toggle component used to change the page theme
-export function ThemeToggle() {
-	return (
-		<Toggle
-			label="dark theme"
-			context={DarkThemeContext}
-			htmlAttribute="data-theme"
-			disabled={['light', faSun]}
-			enabled={['dark', faMoon]}
-		/>
-	);
-}
-
-// A toggle component used to change the `motion-allowed` property
-export function MotionToggle() {
-	return (
-		<Toggle
-			label="animations"
-			context={AllowMotionContext}
-			htmlAttribute="data-motion"
-			disabled={['reduce', faWandMagic]}
-			enabled={['allow', faWandMagicSparkles]}
-		/>
 	);
 }

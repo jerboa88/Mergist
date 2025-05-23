@@ -1,6 +1,46 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { MotionToggle, ThemeToggle } from '../toggle-components.tsx';
+import {
+	faEye,
+	faMoon,
+	faSun,
+	faWandMagic,
+	faWandMagicSparkles,
+} from '@fortawesome/free-solid-svg-icons';
 import { Modal } from './base.tsx';
+import { Toggle } from '../toggle.tsx';
+import {
+	AllowMotionContext,
+	DarkThemeContext,
+} from '../../common/utilities.ts';
+
+/**
+ * A toggle component used to change the page theme
+ */
+function ThemeToggle() {
+	return (
+		<Toggle
+			label="dark theme"
+			context={DarkThemeContext}
+			htmlAttribute="data-theme"
+			disabled={['light', faSun]}
+			enabled={['dark', faMoon]}
+		/>
+	);
+}
+
+/**
+ * A toggle component used to change the `motion-allowed` property
+ */
+function MotionToggle() {
+	return (
+		<Toggle
+			label="animations"
+			context={AllowMotionContext}
+			htmlAttribute="data-motion"
+			disabled={['reduce', faWandMagic]}
+			enabled={['allow', faWandMagicSparkles]}
+		/>
+	);
+}
 
 /**
  * A modal that allows setting options for the site
