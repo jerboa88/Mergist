@@ -1,7 +1,3 @@
-/**
- * An action button that changes based on the current state
- */
-
 import {
 	faFileArrowDown,
 	faLayerGroup,
@@ -103,6 +99,9 @@ export function DownloadActionButton(props: { downloadUrl: string }) {
 	);
 }
 
+/**
+ * An action button that is used to start the merge process and changes based on the current state
+ */
 export function ActionButton(props: {
 	numOfFiles: number;
 	progress: number;

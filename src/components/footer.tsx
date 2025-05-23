@@ -1,8 +1,3 @@
-/*
-	Page footer component
-	---------------------
-*/
-
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
 	faCircleQuestion,
@@ -17,6 +12,9 @@ import {
 } from '../components/modal-components.tsx';
 import { IconButtonLink } from '../components/link-components.tsx';
 
+/**
+ * Page footer
+ */
 export function Footer(props: {
 	author: string;
 	githubUrl: string;

@@ -1,10 +1,9 @@
-/**
- * A generic button component with an icon only
- */
-
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Icon } from '../icon-components.tsx';
 
+/**
+ * A generic button with an icon only
+ */
 export function IconButton(props: {
 	icon: IconDefinition;
 	onClick?: () => void;

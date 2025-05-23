@@ -1,8 +1,3 @@
-/*
-	Page header component
-	---------------------
-*/
-
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -12,6 +7,9 @@ import {
 import { SingleColumnLayout } from '../components/layout-components.tsx';
 import LogoIcon from '../images/icon.svg';
 
+/**
+ * Page header
+ */
 export function Header(props: {
 	className: string;
 	title: string;

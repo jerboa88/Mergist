@@ -1,8 +1,3 @@
-/*
-	An alert component for displaying status messages
-	-------------------------------------------------
-*/
-
 import { useEffect, useState } from 'react';
 import {
 	faTriangleExclamation,
@@ -29,6 +24,9 @@ const alertTypes = {
 	},
 };
 
+/**
+ * An alert for displaying status messages
+ */
 export function Alert(props: { statusMsg: StatusMsg }) {
 	const delayMs = 5000;
 	const type = props.statusMsg.getSeverity;

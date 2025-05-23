@@ -1,9 +1,8 @@
-/**
- * A full width button component
- */
-
 import type { ReactNode } from 'react';
 
+/**
+ * A full width button
+ */
 export function FullWidthButton(props: {
 	className: string;
 	children: ReactNode;
