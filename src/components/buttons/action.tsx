@@ -67,14 +67,15 @@ function MergeActionButton(props: { onClick: () => void; disabled: boolean }) {
 function ProgressActionButton(props: { progress: number }) {
 	const isSaving = props.progress >= 1;
 	const percentString = `${(props.progress * 100).toFixed(0)}%`;
+	const content = isSaving ? <span className="loading" /> : percentString;
 
 	return (
 		<div className="flex-col gap-2 w-full text-center">
 			<FullWidthButton
-				className={`btn-primary flex-col justify-end p-0 border-0 overflow-hidden ${isSaving ? 'loading' : ''}`}
+				className="overflow-hidden flex-col justify-end p-0 border-0 btn-primary"
 				disabled={true}
 			>
-				{!isSaving && percentString}
+				{content}
 				<ProgressBar progress={percentString} />
 			</FullWidthButton>
 		</div>

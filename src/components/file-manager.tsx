@@ -115,8 +115,8 @@ export function FileManager(props: FileManagerPropsInterface) {
 	}
 
 	return (
-		<div className="collapse">
-			<div className="flex-col gap-4 justify-between items-center p-6 text-lg font-medium sm:flex-row sm:pl-10 collapse-title">
+		<>
+			<div className="flex-col gap-4 justify-between items-center p-6 text-lg font-medium sm:flex-row sm:pl-10">
 				<h2>
 					{props.fileIds.length} file{props.fileIds.length !== 1 && 's'} added (
 					{getEstimatedFileSize()})
@@ -149,6 +149,6 @@ export function FileManager(props: FileManagerPropsInterface) {
 					disabled={props.disabled}
 				/>
 			</div>
-		</div>
+		</>
 	);
 }

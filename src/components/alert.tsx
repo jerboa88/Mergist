@@ -68,10 +68,8 @@ export function Alert(props: { statusMsg: StatusMsg }) {
 					key={props.statusMsg.getId}
 					{...animationProps}
 				>
-					<div>
-						<Icon icon={alertTypes[type].icon} className="mr-2 fa-lg" />
-						<span>{props.statusMsg.getMsg}</span>
-					</div>
+					<Icon icon={alertTypes[type].icon} className="mr-2 fa-lg" />
+					<span>{props.statusMsg.getMsg}</span>
 				</motion.div>
 			)}
 		</AnimatePresence>
