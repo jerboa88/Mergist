@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import LogoIcon from '../../images/icon.svg';
+import { SingleColumnLayout } from './single-column-layout.tsx';
 import {
-	getIsMotionAllowed,
 	getDefaultTransition,
-} from '../common/utilities.ts';
-import { SingleColumnLayout } from '../components/layout-components.tsx';
-import LogoIcon from '../images/icon.svg';
+	getIsMotionAllowed,
+} from '../../common/utilities.ts';
 
 /**
  * Page header

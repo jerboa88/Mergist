@@ -4,13 +4,9 @@ import {
 	faCookie,
 	faGear,
 } from '@fortawesome/free-solid-svg-icons';
-import { SingleColumnLayout } from '../components/layout-components.tsx';
-import {
-	AboutModal,
-	OptionsModal,
-	PrivacyModal,
-} from '../components/modal-components.tsx';
-import { IconButtonLink } from '../components/link-components.tsx';
+import { SingleColumnLayout } from './single-column-layout.tsx';
+import { AboutModal, PrivacyModal } from '../modal-components.tsx';
+import { IconButtonLink } from '../link-components.tsx';
 
 /**
  * Page footer

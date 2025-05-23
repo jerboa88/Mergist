@@ -9,14 +9,16 @@ import {
 	PDFManager,
 	type StatusMsg,
 } from '../common/utilities.ts';
-import { Main, PageLayout, Section } from '../components/layout-components.tsx';
 import { LargeDropzone } from '../components/dropzones/large.tsx';
 import { FullPageDropzone } from '../components/dropzones/full-page.tsx';
 import { Alert } from '../components/alert.tsx';
 import { ActionButton } from '../components/buttons/action.tsx';
-import { Footer } from '../components/footer.tsx';
-import { Header } from '../components/header.tsx';
+import { Footer } from '../components/layout/footer.tsx';
+import { Header } from '../components/layout/header.tsx';
 import { FileManager } from '../components/file-manager.tsx';
+import { Section } from '../components/layout/section.tsx';
+import { Main } from '../components/layout/main.tsx';
+import { PageLayout } from '../components/layout/page-layout.tsx';
 
 // Constants
 

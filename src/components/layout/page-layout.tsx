@@ -1,23 +1,18 @@
-/*
-	Reusable layout components
-	--------------------------
-*/
-
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { MotionConfig } from 'framer-motion';
-import type { MetadataInterface } from '../common/types';
+import type { MetadataInterface } from '../../common/types.ts';
 import {
 	StorageManager,
 	DarkThemeContext,
 	AllowMotionContext,
 	useIsMount,
 	mediaFeatureMatches,
-} from '../common/utilities';
+} from '../../common/utilities.ts';
 
-// Exports
-
-// Layout component that provides basic styles and metadata tags for the whole page
+/**
+ * Layout that provides basic styles and metadata tags for the whole page
+ */
 export function PageLayout(props: {
 	className: string;
 	metadata: MetadataInterface;
@@ -182,62 +177,4 @@ export function PageLayout(props: {
 
 PageLayout.defaultProps = {
 	className: '',
-};
-
-// Create an interface for SingleColumnLayout props since there are a lot of types to define
-interface SingleColumnLayoutPropsInterface {
-	className?: string;
-	collapse?: boolean;
-	children: ReactNode;
-	// Allow prop injection
-	[propName: string]: any;
-}
-
-// Inner layout container that limits the width of its content and accepts arbitrary props
-export function SingleColumnLayout(props: SingleColumnLayoutPropsInterface) {
-	const { className, collapse, children, ...injectedProps } = props;
-
-	return (
-		<div
-			className={`max-w-4xl h-full flex-col mx-auto gap-8 ${(collapse && 'w-full') || 'w-5/6'} ${className}`}
-			{...injectedProps}
-		>
-			{children}
-		</div>
-	);
-}
-
-SingleColumnLayout.defaultProps = {
-	className: '',
-};
-
-// Wrapper component that applies a single column layout to the main page content
-export function Main(props: { children: ReactNode }) {
-	return (
-		<main className="flex-col flex-1 w-full h-full">
-			<SingleColumnLayout className="flex-1 sm:w-5/6" collapse>
-				{props.children}
-			</SingleColumnLayout>
-		</main>
-	);
-}
-
-// A wrapper component that can be hidden
-export function Section(props: {
-	className: string;
-	visible: boolean;
-	children: ReactNode;
-}) {
-	return (
-		<section
-			className={`flex-col justify-center w-full h-full ${props.visible ? '' : 'hidden overflow-hidden '}${props.className}`}
-		>
-			{props.children}
-		</section>
-	);
-}
-
-Section.defaultProps = {
-	className: '',
-	visible: true,
 };
