@@ -1,6 +1,6 @@
 /*
-	Header component
-	----------------
+	Page header component
+	---------------------
 */
 
 import type { ReactNode } from 'react';
@@ -12,10 +12,7 @@ import {
 import { SingleColumnLayout } from '../components/layout-components.tsx';
 import LogoIcon from '../images/icon.svg';
 
-// Exports
-
-// A basic header component
-export default function Header(props: {
+export function Header(props: {
 	className: string;
 	title: string;
 	children: ReactNode;

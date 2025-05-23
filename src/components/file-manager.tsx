@@ -1,6 +1,6 @@
 /*
-	Component for displaying a list of files and associated action buttons
-	----------------------------------------------------------------------
+	A component that allows the user to add and remove PDF files from a list
+	------------------------------------------------------------------------
 */
 
 import {
@@ -16,8 +16,6 @@ import type { PDFFileMapInterface } from '../common/types';
 import { PrimaryButton } from './buttons/primary';
 import { IconButton } from './buttons/icon';
 import { DropzoneWrapper } from '../components/dropzone-components';
-
-// Base components
 
 // A reorderable list item
 function SortableItem(props: {
@@ -101,16 +99,13 @@ function SortableFileList(props: SortableFileListPropsInterface) {
 	);
 }
 
-// Exports
-
 // Create an interface for FileManager props since there are a lot of types to define
 interface FileManagerPropsInterface extends SortableFileListPropsInterface {
 	onFileAdded: (inputFiles: FileList) => void;
 	onAllFilesRemoved: () => void;
 }
 
-// A component that allows the user to add and remove PDF files from a list
-export default function FileManager(props: FileManagerPropsInterface) {
+export function FileManager(props: FileManagerPropsInterface) {
 	// Calculate the combined size of all files using a reduction
 	function getEstimatedFileSize() {
 		return prettyBytes(

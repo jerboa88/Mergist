@@ -1,6 +1,6 @@
 /*
-	Footer component
-	----------------
+	Page footer component
+	---------------------
 */
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -17,10 +17,7 @@ import {
 } from '../components/modal-components.tsx';
 import { IconButtonLink } from '../components/link-components.tsx';
 
-// Exports
-
-// A basic footer component
-export default function Footer(props: {
+export function Footer(props: {
 	author: string;
 	githubUrl: string;
 	homepageDomain: string;

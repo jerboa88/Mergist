@@ -1,6 +1,6 @@
 /*
-	Alert component for displaying status messages
-	----------------------------------------------
+	An alert component for displaying status messages
+	-------------------------------------------------
 */
 
 import { useEffect, useState } from 'react';
@@ -29,9 +29,7 @@ const alertTypes = {
 	},
 };
 
-// Exports
-
-export default function Alert(props: { statusMsg: StatusMsg }) {
+export function Alert(props: { statusMsg: StatusMsg }) {
 	const delayMs = 5000;
 	const type = props.statusMsg.getSeverity;
 	const [visible, setVisible] = useState(true);

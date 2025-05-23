@@ -1,15 +1,12 @@
 /*
-	Reusable accordion components
-	-----------------------------
+	An expandable accordion component
+	---------------------------------
 */
 
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { getDefaultTransition } from '../common/utilities.ts';
 
-// Exports
-
-// A basic accordion component
 export function Accordion(props: { children: ReactNode; isOpen: boolean }) {
 	const animationProps = {
 		initial: 'closed',
