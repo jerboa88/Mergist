@@ -15,10 +15,10 @@ export function IconButtonLink(props: {
 }) {
 	return (
 		<LinkWrapper to={props.to} isInternal={props.isInternal} rel={props.rel}>
-			<button className="flex-nowrap flex-none gap-2 p-0 btn-ghost text-secondary sm:p-4">
+			<div className="flex-nowrap flex-none gap-2 p-0 btn-ghost text-secondary sm:p-4">
 				<Icon icon={props.icon} />
 				{props.children}
-			</button>
+			</div>
 		</LinkWrapper>
 	);
 }
