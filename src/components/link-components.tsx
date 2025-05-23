@@ -5,7 +5,7 @@
 
 import type { ReactNode } from 'react';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { Icon } from '../components/icon-components';
+import { Icon } from './icon';
 
 // Exports
 

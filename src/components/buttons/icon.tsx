@@ -1,5 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { Icon } from '../icon-components.tsx';
+import { Icon } from '../icon.tsx';
 
 /**
  * A generic button with an icon only

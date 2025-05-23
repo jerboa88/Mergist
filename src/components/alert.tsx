@@ -7,7 +7,7 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 import { SeverityTypes } from '../common/types.ts';
 import { getDefaultTransition, type StatusMsg } from '../common/utilities.ts';
-import { Icon } from '../components/icon-components.tsx';
+import { Icon } from './icon.tsx';
 
 const alertTypes = {
 	[SeverityTypes.SUCCESS]: {

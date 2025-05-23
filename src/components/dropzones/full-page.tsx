@@ -82,7 +82,7 @@ export function FullPageDropzone(props: {
 
 	return (
 		<div
-			className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '':'hidden'}`}
+			className={`fixed inset-0 flex-col justify-center items-center p-16 bg-base-100/50 z-10 ${isDragging ? '' : 'hidden'}`}
 		/>
 	);
 }

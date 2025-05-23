@@ -14,7 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { AllowMotionContext, DarkThemeContext } from '../common/utilities';
 import type { ToggleContextInterface } from '../common/types';
-import { Icon } from '../components/icon-components';
+import { Icon } from './icon';
 
 // Base components
 

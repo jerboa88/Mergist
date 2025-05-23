@@ -1,5 +1,5 @@
 import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { Icon } from '../icon-components';
+import { Icon } from '../icon';
 import { DropzoneWrapper } from './wrapper';
 
 /**

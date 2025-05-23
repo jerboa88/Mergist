@@ -4,7 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FullWidthButton } from './full-width.tsx';
 import { motion } from 'framer-motion';
-import { Icon } from '../icon-components.tsx';
+import { Icon } from '../icon.tsx';
 
 // A simple progress bar component for the progress action button
 function ProgressBar(props: { progress: string }) {
