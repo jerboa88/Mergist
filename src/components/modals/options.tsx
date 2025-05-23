@@ -18,6 +18,7 @@ import {
 function ThemeToggle() {
 	return (
 		<Toggle
+			className="pl-0"
 			label="dark theme"
 			context={DarkThemeContext}
 			htmlAttribute="data-theme"
@@ -33,6 +34,7 @@ function ThemeToggle() {
 function MotionToggle() {
 	return (
 		<Toggle
+			className="pl-0"
 			label="animations"
 			context={AllowMotionContext}
 			htmlAttribute="data-motion"
@@ -55,7 +57,11 @@ export function OptionsModal(props: {
 			buttonIcon={faEye}
 			buttonLabel="Looks good"
 		>
-			<div className="flex-col m-auto w-fit">
+			<p>
+				You can change various options for the site here.
+			</p>
+			<br />
+			<div className="flex-col w-fit">
 				<MotionToggle />
 				<ThemeToggle />
 			</div>
