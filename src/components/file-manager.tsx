@@ -1,8 +1,3 @@
-/*
-	A component that allows the user to add and remove PDF files from a list
-	------------------------------------------------------------------------
-*/
-
 import {
 	faFileCirclePlus,
 	faGripVertical,
@@ -15,7 +10,7 @@ import { getDefaultTransition, ignoreDefault } from '../common/utilities';
 import type { PDFFileMapInterface } from '../common/types';
 import { PrimaryButton } from './buttons/primary';
 import { IconButton } from './buttons/icon';
-import { DropzoneWrapper } from '../components/dropzone-components';
+import { DropzoneWrapper } from './dropzones/wrapper';
 
 // A reorderable list item
 function SortableItem(props: {
@@ -105,6 +100,9 @@ interface FileManagerPropsInterface extends SortableFileListPropsInterface {
 	onAllFilesRemoved: () => void;
 }
 
+/**
+ * A component that allows the user to add and remove PDF files from a list
+ */
 export function FileManager(props: FileManagerPropsInterface) {
 	// Calculate the combined size of all files using a reduction
 	function getEstimatedFileSize() {
