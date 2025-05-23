@@ -15,7 +15,6 @@ export interface DaisyUiThemeInterface {
 	'base-content': string;
 	neutral: string;
 	'neutral-content': string;
-	'neutral-focus': string;
 	primary: string;
 	'primary-content': string;
 	secondary: string;

@@ -15,7 +15,7 @@ export function LargeDropzone(props: {
 			className="flex-col flex-1"
 			onFilesAdded={props.onFilesAdded}
 		>
-			<div className="z-20 flex-col flex-1 gap-8 justify-center p-8 m-8 text-center rounded-lg border-2 border-dashed bg-base-100 hover:bg-base-200">
+			<div className="z-20 flex-col flex-1 gap-8 justify-center p-8 m-8 text-center rounded-lg border-2 border-dashed transition-colors bg-base-100 hover:bg-base-200">
 				<Icon icon={faFileCirclePlus} className="fa-3x" />
 				<p className="flex-grow-0">
 					Drag and drop PDF files here, or click to select files
